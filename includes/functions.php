@@ -13,5 +13,5 @@ function obtenerUsuarios()
         echo "</pre>";
 
 }
-
+//no comments
 obtenerUsuarios();
