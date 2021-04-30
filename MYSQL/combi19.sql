@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2021 a las 21:33:49
+-- Tiempo de generación: 01-05-2021 a las 01:05:20
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 7.3.27
 
@@ -24,12 +24,105 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `camino`
+--
+
+CREATE TABLE `camino` (
+  `cod_ruta` int(11) NOT NULL,
+  `cod_postal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `choferes_combis`
+--
+
+CREATE TABLE `choferes_combis` (
+  `email` varchar(30) NOT NULL,
+  `patente` varchar(20) NOT NULL,
+  `fecha_desde` datetime NOT NULL,
+  `fecha_hasta` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `combis`
+--
+
+CREATE TABLE `combis` (
+  `patente` varchar(20) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
+  `modelo` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `comentarios`
+--
+
+CREATE TABLE `comentarios` (
+  `email` varchar(30) NOT NULL,
+  `nro_viaje` int(11) NOT NULL,
+  `fecha_y_hora` datetime NOT NULL,
+  `texto_comentario` varchar(120) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `insumos`
 --
 
 CREATE TABLE `insumos` (
   `nombre` varchar(40) NOT NULL,
-  `inventario` int(11) NOT NULL
+  `inventario` int(11) NOT NULL,
+  `precio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `insumos_usuarios_viajes`
+--
+
+CREATE TABLE `insumos_usuarios_viajes` (
+  `email` varchar(30) NOT NULL,
+  `nombre` int(30) NOT NULL,
+  `nro_viaje` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pasajes`
+--
+
+CREATE TABLE `pasajes` (
+  `nro_pasaje` int(11) NOT NULL,
+  `nro_asiento` int(11) NOT NULL,
+  `precio` int(11) NOT NULL,
+  `pago` tinyint(1) NOT NULL,
+  `sospechoso_covid` tinyint(1) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `nro_viaje` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `rutas`
+--
+
+CREATE TABLE `rutas` (
+  `codigo_ruta` int(11) NOT NULL,
+  `cod_postal_origen` int(11) NOT NULL,
+  `cod_postal_destino` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -42,13 +135,34 @@ CREATE TABLE `usuarios` (
   `email` varchar(30) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
+  `DNI` int(11) NOT NULL,
   `clave` varchar(50) NOT NULL,
   `tipo_usuario` varchar(20) NOT NULL,
   `suspendido` tinyint(1) NOT NULL,
   `suscrito` tinyint(1) NOT NULL,
-  `nro_tarjeta` int(11) NOT NULL,
-  `cod_seguridad` int(11) NOT NULL,
-  `fecha_vencimiento` date NOT NULL
+  `nro_tarjeta` int(11) DEFAULT NULL,
+  `cod_seguridad` int(11) DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`) VALUES
+('admin@admin.com', 'admin', 'admin', 1111111, 'admin', 'administrador', 0, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `viajes`
+--
+
+CREATE TABLE `viajes` (
+  `nro_viaje` int(11) NOT NULL,
+  `imprevisto` varchar(50) NOT NULL,
+  `patente` int(11) NOT NULL,
+  `codigo_ruta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -56,10 +170,64 @@ CREATE TABLE `usuarios` (
 --
 
 --
+-- Indices de la tabla `camino`
+--
+ALTER TABLE `camino`
+  ADD PRIMARY KEY (`cod_ruta`);
+
+--
+-- Indices de la tabla `choferes_combis`
+--
+ALTER TABLE `choferes_combis`
+  ADD PRIMARY KEY (`email`,`patente`);
+
+--
+-- Indices de la tabla `combis`
+--
+ALTER TABLE `combis`
+  ADD PRIMARY KEY (`patente`);
+
+--
+-- Indices de la tabla `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD PRIMARY KEY (`email`,`nro_viaje`);
+
+--
+-- Indices de la tabla `insumos`
+--
+ALTER TABLE `insumos`
+  ADD PRIMARY KEY (`nombre`);
+
+--
+-- Indices de la tabla `insumos_usuarios_viajes`
+--
+ALTER TABLE `insumos_usuarios_viajes`
+  ADD PRIMARY KEY (`email`,`nombre`,`nro_viaje`);
+
+--
+-- Indices de la tabla `pasajes`
+--
+ALTER TABLE `pasajes`
+  ADD PRIMARY KEY (`nro_pasaje`);
+
+--
+-- Indices de la tabla `rutas`
+--
+ALTER TABLE `rutas`
+  ADD PRIMARY KEY (`codigo_ruta`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indices de la tabla `viajes`
+--
+ALTER TABLE `viajes`
+  ADD PRIMARY KEY (`nro_viaje`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
