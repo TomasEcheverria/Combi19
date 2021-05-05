@@ -17,10 +17,16 @@
     <title>Hello, world!</title>
   </head>
   <body>
+  <ul class="list-group list-group-flush">
   <?php
-    $choferes = new Chofer();
-    $choferes->showAllChoferes();
+      $choferes = new Chofer();
+      $nombreChoferes = $choferes->showAllChoferes();
+    foreach ($nombreChoferes as $key => $value) {
+        echo "<li class='list-group-item'>". $value . "</li>";
+    }
     ?>
+</ul>
+
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
