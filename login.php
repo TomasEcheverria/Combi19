@@ -23,7 +23,13 @@
             $usuario = mysqli_fetch_assoc($resultado);      
 
             if ( $password === $usuario['clave'] ){
-                echo "golazo nene";
+                session_start();
+
+                $_SESSION['usuario'] = $usuario['email'];
+                $_SESSION['login'] = true;
+                
+                //sesion iniciada
+
             } else {
                 echo "La contraseña es incorrecta";
             }
