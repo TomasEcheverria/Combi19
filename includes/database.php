@@ -1,6 +1,6 @@
 <?php
 
-function connectDB(){
+function connectDB() : mysqli {
 
     $db = mysqli_connect('localhost', 'root', '','combi19');
     if(!$db){
