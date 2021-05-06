@@ -1,5 +1,5 @@
 <?php
-    include_once 'database.php';
+    include_once '../otras cosas/database.php';
 
     $firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
@@ -13,4 +13,4 @@
     ('$email', '$firstName', '$lastName', $dni, '$password', 'chofer', 0, 0, NULL, NULL, NULL);";
     mysqli_query($db,$sql);
 
-    header("Location: ../choferes/vista_choferes.php?insert=success");
+    header("Location: ../vista_choferes.php?insert=success");
