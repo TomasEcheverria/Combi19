@@ -36,8 +36,8 @@ function registrarsepassword(){
   } else {
     pass1.type = "password";
   }
-  if (pass2.type === "password") {
-    pass2.type = "text";
+ if (pass2.type === "password") {
+   pass2.type = "text";
   } else {
     pass2.type = "password";
   }

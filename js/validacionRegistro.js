@@ -65,48 +65,32 @@ function validacion(){
 	var valormail = document.registro.user_mail.value;
 	var valornombre = document.registro.nombre.value;
 	var valorapellido = document.registro.apellido.value;
-	var valorusername = document.registro.user_name.value;
 	var valorclave = document.registro.clave.value;
 	var valorclave1 = document.registro.clave1.value;
-	var varimagen = document.registro.imagen.value;
+	var valordni = document.registro.dni.value;
 	if(valornombre){
 		if(valorapellido){
-		if(esAlfabetico(valornombre) && esAlfabetico(valorapellido)){
+		if(esAlfanumerico(valornombre) && esAlfanumerico(valorapellido)){
 			if(emailIsValid(valormail)){
-				if(valorusername.length >= 6 ){
-					if(esAlfanumerico(valorusername)){
 						if(valorclave.length >=6){
-							if(validarContrasenia(valorclave)){
-								if(valorclave == valorclave1){
-									if(varimagen){
-										if(Checkfiles){	
+							if(valorclave == valorclave1){
+								if(valordni >= 8){// consultar si se debe de verificar que las 2 contraseñas coincidan
 										document.registro.submit();
-										}
-									}
-									else{
-										alert('debe de cargar una imagen');
-									}
-									
 								}
 								else{
-									alert('las claves no coinciden');
+									alert('el dni es invalido');
 								}
 							}
 							else{
-								alert('la clave debe de tener mayusucalas , minusculas y un simbolo o numero');
+								alert('las contraseñas no coinciden')
 							}
+							
 						}
 						else{
 							alert('la clave debe de tener 6 o mas caracteres');
 						}
-					}
-					else{
-						alert('el nombre de usuario solo debe  de tener caracteres alfanumericos');
-					}
-				}
-				else{
-					alert('el nombre de usuario debe de tener  6 o mas caracteres');
-				}
+				
+				
 			}
 			else{
 				alert('inserte un mail valido');

@@ -13,7 +13,7 @@
 				$_SESSION['conti']=$password;
 				if((!empty($nombre)) || (!empty($password))){
 				//validacion del lado del servidor
-				if ((strlen($nombre)>=6) and (strlen($password)>=6) and (ctype_alnum($nombre))){
+				if ((strlen($nombre)>=6) and (strlen($password)>=6) ){
 					$nombre = mysqli_real_escape_string ($link, $_POST['nombre']);
 					$password = mysqli_real_escape_string ($link, $_POST['cont']);
 					//realizamos la consulta sql 

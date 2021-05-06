@@ -1,4 +1,4 @@
-?php
+<?php
 	include "BD.php";// conectar y seleccionar la base de datos
 	$link = conectar();
 	include "php/classLogin.php";
@@ -27,8 +27,8 @@
 		$name='';
 		$password='';
 		if (isset($_GET['mensaje'])){
-			$name=$_SESSION['email'];// en nombrei pongamos el email que es la clave
-			$password=$_SESSION['clave'];// aca la contraseña
+			$name=$_SESSION['nombrei'];// en nombrei pongamos el email que es la clave
+			$password=$_SESSION['conti'];// aca la contraseña
 		}
 	?>
 		<div class="div_registro">
