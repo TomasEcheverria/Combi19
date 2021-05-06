@@ -17,40 +17,91 @@
     <title>Hello, world!</title>
   </head>
   <body>
-  <ul class="list-group list-group-flush">
-  <?php
-      $choferes = new Chofer();
-      $nombreChoferes = $choferes->showAllChoferes();
-    foreach ($nombreChoferes as $key => $value) {
-        echo "<li class='list-group-item'>". $value . "</li>";
-    }
-    ?>
-</ul>
-<form action ="php/alta_chofer.php" class="row g-3" method ="POST">
-  <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">Nombre</label>
-    <input type="text" class="form-control" name="firstName" placeholder="" value="" required="">
+
+  <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Listado de Choferes
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <ul class="list-group list-group-flush">
+          <?php
+              $choferes = new Chofer();
+              $nombreChoferes = $choferes->showAllChoferes();
+            foreach ($nombreChoferes as $key => $value) {
+                echo "<li class='list-group-item'>". $value . "</li>";
+            }
+            ?>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Apellido</label>
-    <input type="text" class="form-control" name="lastName" placeholder="" value="" required="">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Agregar chofer
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <form action ="php/alta_chofer.php" class="row g-3" method ="POST">
+          <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="firstName" placeholder="" value="" required="">
+          </div>
+          <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Apellido</label>
+            <input type="text" class="form-control" name="lastName" placeholder="" value="" required="">
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email">
+          </div>
+          <div class="col-md-2">
+            <label for="inputZip" class="form-label">DNI</label>
+            <input type="text" class="form-control" name="dni">
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" name="password">
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+    </div>
   </div>
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">Email</label>
-    <input type="email" class="form-control" name="email">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Editar choferes
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Falta Implementar</strong>
+      </div>
+    </div>
   </div>
-  <div class="col-md-2">
-    <label for="inputZip" class="form-label">DNI</label>
-    <input type="text" class="form-control" name="dni">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFour">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        Eliminar choferes
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Falta Implementar</strong>
+      </div>
+    </div>
   </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">Contraseña</label>
-    <input type="password" class="form-control" name="password">
-  </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-</form>
+</div>
+
+
+
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
