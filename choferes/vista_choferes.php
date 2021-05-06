@@ -26,7 +26,31 @@
     }
     ?>
 </ul>
-
+<form action ="../includes/alta_chofer.php" class="row g-3" method ="POST">
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Nombre</label>
+    <input type="text" class="form-control" name="firstName" placeholder="" value="" required="">
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Apellido</label>
+    <input type="text" class="form-control" name="lastName" placeholder="" value="" required="">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Email</label>
+    <input type="email" class="form-control" name="email">
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">DNI</label>
+    <input type="text" class="form-control" name="dni">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Contraseña</label>
+    <input type="password" class="form-control" name="password">
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
