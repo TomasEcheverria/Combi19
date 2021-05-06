@@ -3,3 +3,4 @@ CLASSLOGIN:
 en nombre y cont estan los datos del formulario, 
 en session nombrei y conti se va a guardar la contraseña y el nombre de usuario,
 en session nombrei se guarda el nombre de usuario, que en este caso es el email
+esto es para borrar
