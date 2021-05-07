@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2021 a las 01:05:20
+-- Tiempo de generación: 07-05-2021 a las 04:46:42
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 7.3.27
 
@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `camino` (
   `cod_ruta` int(11) NOT NULL,
-  `cod_postal` int(11) NOT NULL
+  `cod_postal` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -42,7 +43,8 @@ CREATE TABLE `choferes_combis` (
   `email` varchar(30) NOT NULL,
   `patente` varchar(20) NOT NULL,
   `fecha_desde` datetime NOT NULL,
-  `fecha_hasta` datetime NOT NULL
+  `fecha_hasta` datetime NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -55,7 +57,8 @@ CREATE TABLE `combis` (
   `patente` varchar(20) NOT NULL,
   `tipo` varchar(20) NOT NULL,
   `modelo` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL
+  `email` varchar(30) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -68,7 +71,8 @@ CREATE TABLE `comentarios` (
   `email` varchar(30) NOT NULL,
   `nro_viaje` int(11) NOT NULL,
   `fecha_y_hora` datetime NOT NULL,
-  `texto_comentario` varchar(120) NOT NULL
+  `texto_comentario` varchar(120) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -80,7 +84,8 @@ CREATE TABLE `comentarios` (
 CREATE TABLE `insumos` (
   `nombre` varchar(40) NOT NULL,
   `inventario` int(11) NOT NULL,
-  `precio` int(11) NOT NULL
+  `precio` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -94,7 +99,24 @@ CREATE TABLE `insumos_usuarios_viajes` (
   `nombre` int(30) NOT NULL,
   `nro_viaje` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `precio` int(11) NOT NULL
+  `precio` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mensaje`
+--
+
+CREATE TABLE `mensaje` (
+  `id` int(11) NOT NULL,
+  `texto` varchar(140) NOT NULL,
+  `imagen_contenido` longblob DEFAULT NULL,
+  `imagen_tipo` varchar(4) DEFAULT NULL,
+  `usuarios_id` int(11) NOT NULL,
+  `fechayhora` datetime NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -110,7 +132,8 @@ CREATE TABLE `pasajes` (
   `pago` tinyint(1) NOT NULL,
   `sospechoso_covid` tinyint(1) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `nro_viaje` int(11) NOT NULL
+  `nro_viaje` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -122,7 +145,8 @@ CREATE TABLE `pasajes` (
 CREATE TABLE `rutas` (
   `codigo_ruta` int(11) NOT NULL,
   `cod_postal_origen` int(11) NOT NULL,
-  `cod_postal_destino` int(11) NOT NULL
+  `cod_postal_destino` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -142,15 +166,19 @@ CREATE TABLE `usuarios` (
   `suscrito` tinyint(1) NOT NULL,
   `nro_tarjeta` int(11) DEFAULT NULL,
   `cod_seguridad` int(11) DEFAULT NULL,
-  `fecha_vencimiento` date DEFAULT NULL
+  `fecha_vencimiento` date DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`) VALUES
-('admin@admin.com', 'admin', 'admin', 1111111, 'admin', 'administrador', 0, 0, NULL, NULL, NULL);
+INSERT INTO `usuarios` (`email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`, `activo`) VALUES
+('admin@admin.com', 'admin', 'admin', 1111111, 'admin', 'administrador', 0, 0, NULL, NULL, NULL, 1),
+('diego@example.com', 'diego', 'aguilar', 999999, '1234', 'chofer', 0, 0, NULL, NULL, NULL, 1),
+('john@gmail.com', 'john', 'doe', 111119, 'test', 'chofer', 0, 0, NULL, NULL, NULL, 0),
+('juanperez@example.com', 'juan', 'perez', 9111111, '1234', 'chofer', 0, 0, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +190,8 @@ CREATE TABLE `viajes` (
   `nro_viaje` int(11) NOT NULL,
   `imprevisto` varchar(50) NOT NULL,
   `patente` int(11) NOT NULL,
-  `codigo_ruta` int(11) NOT NULL
+  `codigo_ruta` int(11) NOT NULL,
+  `activo` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
