@@ -14,7 +14,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Bienvenido a Combi 19</title>
   </head>
   <body>
 
@@ -52,7 +52,7 @@
                     "<td>".$value['email'] . "</td>".
                     "<td>".                    
                       "<a href='vista_choferes.php?edit=$email'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='vista_choferes.php?delete=$email'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                      "<a href='php/baja_chofer.php?delete=$email'class='btn btn-outline-danger ml-1'>Borrar</a>".
                     "</td>".
                   "</tr>";
               }
