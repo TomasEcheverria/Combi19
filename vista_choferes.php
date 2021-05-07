@@ -34,6 +34,7 @@
               <th scope="col">Apellido</th>
               <th scope="col">Dni</th>
               <th scope="col">Correo</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -42,12 +43,17 @@
                 $choferes = new Chofer();
                 $nombreChoferes = $choferes->showAllChoferes();
               foreach ($nombreChoferes as $value) {
+                  $email = $value['email'];
                   echo 
                   "<tr>".
                     "<td>". $value['nombre'] . "</td>".
                     "<td>". $value['apellido'] . "</td>".
                     "<td>". $value['DNI'] . "</td>".
                     "<td>".$value['email'] . "</td>".
+                    "<td>".                    
+                      "<a href='vista_choferes.php?edit=$email'class='btn btn btn-outline-success'>Editar</a>".
+                      "<a href='vista_choferes.php?delete=$email'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                    "</td>".
                   "</tr>";
               }
               ?>
@@ -93,30 +99,6 @@
         </form>
       <!-- Formulario para agregar un chofer -->
               
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        Editar choferes
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>Falta Implementar</strong>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingFour">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-        Eliminar choferes
-      </button>
-    </h2>
-    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>Falta Implementar</strong>
-      </div>
     </div>
   </div>
 </div>
