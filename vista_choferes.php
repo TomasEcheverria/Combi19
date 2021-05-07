@@ -27,15 +27,32 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <ul class="list-group list-group-flush">
-          <?php
-              $choferes = new Chofer();
-              $nombreChoferes = $choferes->showAllChoferes();
-            foreach ($nombreChoferes as $key => $value) {
-                echo "<li class='list-group-item'>". $value . "</li>";
-            }
-            ?>
-        </ul>
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Dni</th>
+              <th scope="col">Correo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              // Tabla de choferes
+                $choferes = new Chofer();
+                $nombreChoferes = $choferes->showAllChoferes();
+              foreach ($nombreChoferes as $value) {
+                  echo 
+                  "<tr>".
+                    "<td>". $value['nombre'] . "</td>".
+                    "<td>". $value['apellido'] . "</td>".
+                    "<td>". $value['DNI'] . "</td>".
+                    "<td>".$value['email'] . "</td>".
+                  "</tr>";
+              }
+              ?>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -47,6 +64,8 @@
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
+
+      <!-- Formulario para agregar un chofer -->
         <form action ="php/alta_chofer.php" class="row g-3" method ="POST">
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Nombre</label>
@@ -72,6 +91,8 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
+      <!-- Formulario para agregar un chofer -->
+              
     </div>
   </div>
   <div class="accordion-item">
