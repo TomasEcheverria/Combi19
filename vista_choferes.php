@@ -2,6 +2,7 @@
     include 'php/dbh.php';
     include 'php/choferes.php';
     include 'php/query_choferes.php';
+    include __DIR__.'/php/editar_choferes.php';
 ?>
 
 <!doctype html>
@@ -75,23 +76,23 @@
         <form action ="php/alta_chofer.php" class="row g-3" method ="POST">
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="firstName" placeholder="" value="" required="">
+            <input type="text" class="form-control" name="firstName" placeholder="" value="<?php echo $nombre?>" required="">
           </div>
           <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Apellido</label>
-            <input type="text" class="form-control" name="lastName" placeholder="" value="" required="">
+            <input type="text" class="form-control" name="lastName" placeholder="" value="<?php echo $apellido?>" required="">
           </div>
           <div class="col-12">
             <label for="inputAddress" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email">
+            <input type="email" class="form-control" name="email" placeholder="" value="<?php echo $correo?>" required="">
           </div>
           <div class="col-md-2">
             <label for="inputZip" class="form-label">DNI</label>
-            <input type="text" class="form-control" name="dni">
+            <input type="text" class="form-control" name="dni" placeholder="" value="<?php echo $dni?>" required="">
           </div>
           <div class="col-12">
             <label for="inputAddress2" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" name="password">
+            <input type="password" class="form-control" name="password" placeholder="" value="<?php echo $clave?>" required="">
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Submit</button>

@@ -1,5 +1,5 @@
 <?php
-    include_once '../otras cosas/database.php';
+    include_once '../otras_cosas/database.php';
 
     $firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];

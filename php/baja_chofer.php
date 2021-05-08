@@ -1,5 +1,5 @@
 <?php
-    include_once '../otras cosas/database.php';
+    include_once '../otras_cosas/database.php';
 
     if(isset($_GET['delete'])){
         $id = $_GET['delete'];
