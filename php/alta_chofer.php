@@ -1,5 +1,5 @@
 <?php
-    include_once '../otras cosas/database.php';
+    include_once '../BD.php';
 
     $firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
@@ -7,7 +7,7 @@
     $dni = $_POST["dni"];
     $password = $_POST["password"];
 
-    $db = connectDB();
+    $db = conectar();
 
     $sql = "INSERT INTO usuarios (`email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`, `activo`) VALUES
     ('$email', '$firstName', '$lastName', $dni, '$password', 'chofer', 0, 0, NULL, NULL, NULL,1);";
