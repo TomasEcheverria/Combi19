@@ -2,6 +2,10 @@
 
     $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
     $update= false;
+    $id ='';
+    $nombre = '';
+    $inventario = '';
+    $precio = '';
 
     // Alta de insumos
     if(isset($_POST['submit'])){
@@ -24,3 +28,20 @@
         mysqli_query($db,$sql);
         header("Location: ../vista_insumos.php");
     }
+
+    //Cambia el boton de submit a update, y trae los datos del chofer correspondiente 
+    if(isset($_GET['edit'])){
+        $id = $_GET['edit'];
+        $update = true;
+
+        $sql = "SELECT * from insumos WHERE activo=1 AND nombre='$id'";
+        $result = $db->query($sql) or die ($db->error());
+
+        //Usuario buscado de la BD
+        if($result->num_rows == 1){
+            $row = $result->fetch_array();
+            $nombre = $row["nombre"];
+            $inventario = $row["inventario"];
+            $precio = $row["precio"];
+        }
+    }    

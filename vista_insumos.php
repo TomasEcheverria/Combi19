@@ -40,15 +40,15 @@
             <!--<input type="hidden" name="id" value="<?php// echo $id ?>">-->
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="nombre" placeholder="" value="<?php //echo $nombre?>" required="">
+                <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $nombre?>" required="">
             </div>
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Inventario</label>
-                <input type="text" class="form-control" name="inventario" placeholder="" value="<?php //echo $apellido?>" required="">
+                <input type="text" class="form-control" name="inventario" placeholder="" value="<?php echo $inventario?>" required="">
             </div>
             <div class="col-12">
                 <label for="inputZip" class="form-label">Precio</label>
-                <input type="text" class="form-control" name="precio" placeholder="" value="<?php //echo $correo?>" required="">
+                <input type="text" class="form-control" name="precio" placeholder="" value="<?php echo $precio?>" required="">
             </div>
                 <?php if($update == true){
                     echo "<div class='col-12'> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
