@@ -29,7 +29,7 @@
         header("Location: ../vista_insumos.php");
     }
 
-    //Cambia el boton de submit a update, y trae los datos del chofer correspondiente 
+    //Cambia el boton de submit a update, y trae los datos del insumo correspondiente 
     if(isset($_GET['edit'])){
         $id = $_GET['edit'];
         $update = true;
@@ -44,4 +44,17 @@
             $inventario = $row["inventario"];
             $precio = $row["precio"];
         }
-    }    
+    }
+    
+    //Actualiza los datos del insumo seleccionado
+    if(isset($_POST['update'])){
+        $id = $_POST['id'];
+        $nombre = $_POST["nombre"];
+        $inventario = $_POST["inventario"];
+        $precio = $_POST["precio"];
+        $sql = "UPDATE insumos SET nombre='$nombre', inventario='$inventario', precio='$precio' WHERE nombre='$id'";
+        $db->query($sql) or die($db->error);
+        
+        header("Location: ../vista_insumos.php");
+    }
+    

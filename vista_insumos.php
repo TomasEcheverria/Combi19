@@ -37,7 +37,7 @@
     <div class="card-body">
         <blockquote class="blockquote mb-0">
             <form action ="php/acciones_insumos.php" class="row g-3" method ="POST">
-            <!--<input type="hidden" name="id" value="<?php// echo $id ?>">-->
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombre</label>
                 <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $nombre?>" required="">
