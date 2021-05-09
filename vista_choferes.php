@@ -2,7 +2,7 @@
     include 'php/dbh.php';
     include 'php/choferes.php';
     include 'php/query_choferes.php';
-    include __DIR__.'/php/editar_choferes.php';
+    include __DIR__.'/php/alta_chofer.php';
 ?>
 
 <!doctype html>
@@ -22,7 +22,7 @@
   <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      <button class="accordion-button" id='acordionButton1' type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
         Listado de Choferes
       </button>
     </h2>
@@ -65,7 +65,7 @@
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+      <button class="accordion-button collapsed" id='acordionButton2' type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         Agregar chofer
       </button>
     </h2>
@@ -74,6 +74,7 @@
 
       <!-- Formulario para agregar un chofer -->
         <form action ="php/alta_chofer.php" class="row g-3" method ="POST">
+          <input type="hidden" name="id" value="<?php echo $id ?>">
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Nombre</label>
             <input type="text" class="form-control" name="firstName" placeholder="" value="<?php echo $nombre?>" required="">
@@ -94,9 +95,14 @@
             <label for="inputAddress2" class="form-label">Contraseña</label>
             <input type="password" class="form-control" name="password" placeholder="" value="<?php echo $clave?>" required="">
           </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
+
+          <?php if($update == true){
+            echo "<div class='col-12'> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
+          }else{
+            echo "<div class='col-12'> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
+          }          
+          ?>
+
         </form>
       <!-- Formulario para agregar un chofer -->
               
