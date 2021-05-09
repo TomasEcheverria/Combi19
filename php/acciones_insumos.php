@@ -16,3 +16,11 @@
     
         header("Location: ../vista_insumos.php");
     }
+
+    //Baja de insumos
+    if(isset($_GET['delete'])){
+        $id = $_GET['delete'];
+        $sql = "UPDATE insumos SET activo=0 WHERE activo=1 AND nombre='$id'";
+        mysqli_query($db,$sql);
+        header("Location: ../vista_insumos.php");
+    }
