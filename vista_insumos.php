@@ -1,6 +1,7 @@
 <!--Funcion para traer insumos de la BD -->
 <?php
     include 'BD.php';
+    include 'php/acciones_insumos.php';
 
     function getInsumos(){
         $db = conectar();
@@ -15,6 +16,8 @@
         }
     }
 ?>
+<!--Funcion para traer insumos de la BD -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +29,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
+
     <div class="card">
     <div class="card-header text-center">
         <strong>Agregar Insumo</strong>
@@ -36,16 +40,23 @@
             <!--<input type="hidden" name="id" value="<?php// echo $id ?>">-->
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="firstName" placeholder="" value="<?php //echo $nombre?>" required="">
+                <input type="text" class="form-control" name="nombre" placeholder="" value="<?php //echo $nombre?>" required="">
             </div>
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Inventario</label>
-                <input type="text" class="form-control" name="lastName" placeholder="" value="<?php //echo $apellido?>" required="">
+                <input type="text" class="form-control" name="inventario" placeholder="" value="<?php //echo $apellido?>" required="">
             </div>
             <div class="col-12">
                 <label for="inputZip" class="form-label">Precio</label>
-                <input type="text" class="form-control" name="email" placeholder="" value="<?php //echo $correo?>" required="">
+                <input type="text" class="form-control" name="precio" placeholder="" value="<?php //echo $correo?>" required="">
             </div>
+                <?php if($update == true){
+                    echo "<div class='col-12'> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
+                    }else{
+                    echo "<div class='col-12'> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
+                    }          
+                ?>
+            </form>
         </blockquote>
     </div>
     </div>
@@ -60,9 +71,9 @@
             </tr>
           </thead>
           <tbody>
+
             <?php
               // Tabla de choferes
-
               $insumos = getInsumos();
               foreach ($insumos as $value) {
                   $nombre = $value['nombre'];
