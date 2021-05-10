@@ -1,6 +1,6 @@
 <?php
 
-    $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
+    $db = mysqli_connect('localhost', 'root', '','combi19') or die("error". mysqli_error ($db));
 
     $update= false;
     $id ='';
@@ -51,7 +51,7 @@
         $update = true;
 
         $sql = "SELECT * from combis WHERE activo=1 AND patente='$id'";
-        $result = $db->query($sql) or die ($db->error());
+        $result = $db->query($sql) or die("error". mysqli_error ($db));
 
 
 
@@ -77,7 +77,7 @@
         $tipo = $_POST["tipo"];
         $modelo = $_POST["modelo"];
         $email = $_POST["email"];
-        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo' WHERE patente='$id'";
+        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', email='$email' WHERE patente='$id'";
         $db->query($sql) or die($db->error);
         
         header("Location: ../vista_combis.php");
