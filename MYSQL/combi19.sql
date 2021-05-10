@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2021 a las 04:39:45
+-- Tiempo de generación: 10-05-2021 a las 07:06:23
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -20,18 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `combi19`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `camino`
---
-
-CREATE TABLE `camino` (
-  `cod_ruta` int(11) NOT NULL,
-  `cod_postal` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -67,7 +55,11 @@ CREATE TABLE `combis` (
 --
 
 INSERT INTO `combis` (`patente`, `cantidad_asientos`, `tipo`, `modelo`, `email`, `activo`) VALUES
-('SZM 758', 0, 'Super Comoda', '223', '', 1);
+('ADF 3133', 11, 'Comoda', '3333', '', 1),
+('BHS 334', 12, 'Super Comoda', '1998', '', 1),
+('MMM 132', 12, 'Comoda', '1999', '', 1),
+('PHD 131', 33, 'Comoda', '2001', '', 0),
+('SZM 7583', 11, 'Comoda', '2004', '', 1);
 
 -- --------------------------------------------------------
 
@@ -116,6 +108,18 @@ CREATE TABLE `insumos_usuarios_viajes` (
   `cantidad` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `lugares`
+--
+
+CREATE TABLE `lugares` (
+  `cod_postal` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `activo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -212,12 +216,6 @@ CREATE TABLE `viajes` (
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `camino`
---
-ALTER TABLE `camino`
-  ADD PRIMARY KEY (`cod_ruta`);
 
 --
 -- Indices de la tabla `choferes_combis`
