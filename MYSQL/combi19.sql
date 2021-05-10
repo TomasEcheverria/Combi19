@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2021 a las 07:06:23
+-- Tiempo de generación: 10-05-2021 a las 10:09:25
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -117,10 +117,20 @@ CREATE TABLE `insumos_usuarios_viajes` (
 --
 
 CREATE TABLE `lugares` (
-  `cod_postal` int(11) NOT NULL,
+  `codigo_postal` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `activo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `lugares`
+--
+
+INSERT INTO `lugares` (`codigo_postal`, `nombre`, `activo`) VALUES
+(1896, 'City Bell', 0),
+(6988, 'Buenos Aires', 1),
+(6696, 'La Plata', 1),
+(4554, 'La Matanza', 1);
 
 -- --------------------------------------------------------
 
@@ -163,10 +173,18 @@ CREATE TABLE `pasajes` (
 
 CREATE TABLE `rutas` (
   `codigo_ruta` int(11) NOT NULL,
-  `cod_postal_origen` int(11) NOT NULL,
-  `cod_postal_destino` int(11) NOT NULL,
+  `codigo_postal_origen` int(11) NOT NULL,
+  `codigo_postal_destino` int(11) NOT NULL,
+  `kilometros` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `rutas`
+--
+
+INSERT INTO `rutas` (`codigo_ruta`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
+(1, 1896, 6988, 43, 1);
 
 -- --------------------------------------------------------
 
