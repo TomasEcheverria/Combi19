@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2021 a las 04:46:42
+-- Tiempo de generación: 10-05-2021 a las 04:39:45
 -- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 7.3.27
+-- Versión de PHP: 8.0.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,11 +55,19 @@ CREATE TABLE `choferes_combis` (
 
 CREATE TABLE `combis` (
   `patente` varchar(20) NOT NULL,
+  `cantidad_asientos` int(100) NOT NULL,
   `tipo` varchar(20) NOT NULL,
   `modelo` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `combis`
+--
+
+INSERT INTO `combis` (`patente`, `cantidad_asientos`, `tipo`, `modelo`, `email`, `activo`) VALUES
+('SZM 758', 0, 'Super Comoda', '223', '', 1);
 
 -- --------------------------------------------------------
 
@@ -87,6 +95,13 @@ CREATE TABLE `insumos` (
   `precio` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `insumos`
+--
+
+INSERT INTO `insumos` (`nombre`, `inventario`, `precio`, `activo`) VALUES
+('Botella de aguaaa', 66, 35, 0);
 
 -- --------------------------------------------------------
 
