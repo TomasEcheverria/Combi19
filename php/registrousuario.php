@@ -53,7 +53,7 @@
 	}
 	
 	if (($cumple1== true) and ($cumple2== true)){
-		$query31= "INSERT INTO usuarios (email, nombre, apellido, dni,clave,tipo_usuario,suspendido,suscrito) values ('$_POST[user_mail]', '$_POST[nombre]', '$_POST[apellido]', '$_POST[dni]', '$_POST[clave]','0','0','0')";//falta subir la imagen y su tipo
+		$query31= "INSERT INTO usuarios (email, nombre, apellido, DNI,clave,tipo_usuario,suspendido,suscrito) values ('$_POST[user_mail]', '$_POST[nombre]', '$_POST[apellido]', '$_POST[dni]', '$_POST[clave]','0','0','0')";//falta subir la imagen y su tipo
 		$result31= mysqli_query ($link, $query31) or die ('Consuluta query31 fallida: ' .mysqli_error($link) );
 		$exito= true;
 	}

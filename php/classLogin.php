@@ -23,7 +23,6 @@
 					luego nos envia a la pagina inicioSesion, con las variables de sesion creados y exito setado */
 					if($datosUsuario =mysqli_fetch_array($resultado58)) {
 						$_SESSION['email'] = $datosUsuario ['email'];
-						$_SESSION['id'] = $datosUsuario ['id'];
 						$_SESSION['nombre'] = $datosUsuario['nombre'];
 						$_SESSION['apellido'] = $datosUsuario['apellido'];
 						$_SESSION['DNI']=$datosUsuario['DNI'];

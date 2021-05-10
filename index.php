@@ -41,11 +41,12 @@
 				<input type="password" name="cont" size=30  id="contra"	value="<?php echo $password ?>" minlength="6" placeholder="Clave" ><br>
 				<input type="checkbox" onclick="indexpassword()">Mostrar Contraseña<br></p>
 				<input type="submit" value="Iniciar Sesion"  class="btn"><br><br>
-				<a href="Registrarse.php" class="button">Registrarse como nuevo usuario </a>
+				<a href="Registrarse.php" class="button">Registrarse como nuevo usuario </a><br><br>
 				<br>
 			</form>			
 		</div>
 		<br>
+		<a href="pagprincipal.php" class="button"> Proceder a pagina principal como usuario invitado </a>
 	</div>
 	<?php
 			if (isset($_GET['mensaje'])){
