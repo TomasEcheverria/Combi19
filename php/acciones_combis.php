@@ -45,7 +45,7 @@
 
 
 
-    //Cambia el boton de submit a update, y trae los datos del insumo correspondiente 
+    //Cambia el boton de submit a update, y trae los datos de la combi correspondiente 
     if(isset($_GET['edit'])){
         $id = $_GET['edit'];
         $update = true;
@@ -55,7 +55,7 @@
 
 
 
-        //Usuario buscado de la BD
+        //Combi buscada en la BD
         if($result->num_rows == 1){
             $row = $result->fetch_array();
             $patente = $row["patente"];
@@ -69,8 +69,7 @@
 
 
 
-    
-    //Actualiza los datos del insumo seleccionado
+    //Actualiza los datos de la combi seleccionado
     if(isset($_POST['update'])){
         $id = $_POST['id'];
         $patente = $_POST["patente"];
