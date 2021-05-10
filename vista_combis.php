@@ -38,11 +38,17 @@
         <blockquote class="blockquote mb-0">
             <form action ="php/acciones_combis.php" class="row g-3" method ="POST">
             <input type="hidden" name="id" value="<?php echo $id ?>">
+            
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Patente</label>
                 <input type="text" class="form-control" name="patente" placeholder="" value="<?php echo $patente?>" required="">
             </div>
-
+            
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Cantidad de asientos</label>
+                <input type="number" class="form-control" name="cantidad_asientos" placeholder="" value="<?php echo $cantidad_asientos?>" required="" min=1 max=99>
+            </div>
+            
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Tipo</label>
                 <select name="tipo" class="form-select">
@@ -51,9 +57,12 @@
                     <option value="Super Comoda">Super Comoda</option>
                 </select>
             </div>
-            <div class="col-12">
+            
+            <div class="col-md-6">
                 <label for="inputZip" class="form-label">Modelo</label>
                 <input type="text" class="form-control" name="modelo" placeholder="" value="<?php echo $modelo?>" required="">
+            
+            
             </div>
                 <?php if($update == true){
                     echo "<div class='col-12'> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
@@ -70,6 +79,7 @@
           <thead class="table-dark">
             <tr>
               <th scope="col">Patente</th>
+              <th scope="col">Cantidad de asientos</th>
               <th scope="col">Tipo</th>
               <th scope="col">Modelo</th>
               <th scope="col">Email</th>
@@ -78,13 +88,14 @@
           <tbody>
 
             <?php
-              // Tabla de choferes
+              // Tabla de Combis
               $combis = getCombis();
               foreach ($combis as $value) {
                   $patente = $value['patente'];
                   echo 
                   "<tr>".
                     "<td>". $value['patente'] . "</td>".
+                    "<td>". $value['cantidad_asientos'] . "</td>".
                     "<td>". $value['tipo'] . "</td>".
                     "<td>". $value['modelo'] . "</td>".
                     "<td>". $value['email'] . "</td>".
