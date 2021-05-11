@@ -19,59 +19,12 @@
   </head>
   <body>
 
-  <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" id='acordionButton1' type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Listado de Choferes
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <table class="table table-striped">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Apellido</th>
-              <th scope="col">Dni</th>
-              <th scope="col">Correo</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-              // Tabla de choferes
-                $choferes = new Chofer();
-                $nombreChoferes = $choferes->showAllChoferes();
-              foreach ($nombreChoferes as $value) {
-                  $email = $value['email'];
-                  echo 
-                  "<tr>".
-                    "<td>". $value['nombre'] . "</td>".
-                    "<td>". $value['apellido'] . "</td>".
-                    "<td>". $value['DNI'] . "</td>".
-                    "<td>".$value['email'] . "</td>".
-                    "<td>".                    
-                      "<a href='vista_choferes.php?edit=$email'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/baja_chofer.php?delete=$email'class='btn btn-outline-danger ml-1'>Borrar</a>".
-                    "</td>".
-                  "</tr>";
-              }
-              ?>
-          </tbody>
-        </table>
-      </div>
+  <div class="card">
+    <div class="card-header text-center">
+        <strong>Agregar Chofer</strong>
     </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" id='acordionButton2' type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Agregar chofer
-      </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-
+    <div class="card-body">
+        <blockquote class="blockquote mb-0">
       <!-- Formulario para agregar un chofer -->
         <form action ="php/alta_chofer.php" class="row g-3" method ="POST">
           <input type="hidden" name="id" value="<?php echo $id ?>">
@@ -102,13 +55,43 @@
             echo "<div class='col-12'> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
           }          
           ?>
-
         </form>
-      <!-- Formulario para agregar un chofer -->
-              
+        </blockquote>
     </div>
-  </div>
-</div>
+    </div>  
+
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Dni</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              // Tabla de choferes
+                $choferes = new Chofer();
+                $nombreChoferes = $choferes->showAllChoferes();
+              foreach ($nombreChoferes as $value) {
+                  $id = $value['id'];
+                  echo 
+                  "<tr>".
+                    "<td>". $value['nombre'] . "</td>".
+                    "<td>". $value['apellido'] . "</td>".
+                    "<td>". $value['DNI'] . "</td>".
+                    "<td>".$value['email'] . "</td>".
+                    "<td>".                    
+                      "<a href='vista_choferes.php?edit=$id'class='btn btn btn-outline-success'>Editar</a>".
+                      "<a href='php/baja_chofer.php?delete=$id'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                    "</td>".
+                  "</tr>";
+              }
+              ?>
+          </tbody>
+        </table>
 
 
 

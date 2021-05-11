@@ -4,7 +4,7 @@
     if(isset($_GET['delete'])){
         $id = $_GET['delete'];
         $db = conectar();
-        $sql = "UPDATE usuarios SET activo=0 WHERE activo=1 AND email='$id'";
+        $sql = "UPDATE usuarios SET activo=0 WHERE activo=1 AND id='$id'";
         mysqli_query($db,$sql);
     }
 

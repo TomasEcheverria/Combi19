@@ -32,7 +32,7 @@
         $id = $_GET['edit'];
         $update = true;
 
-        $sql = "SELECT * from usuarios WHERE activo=1 AND email='$id'";
+        $sql = "SELECT * from usuarios WHERE activo=1 AND id='$id'";
         $result = $db->query($sql) or die ($db->error());
 
         //Usuario buscado de la BD
@@ -54,7 +54,7 @@
         $dni = $_POST['dni'];
         $correo = $_POST['email'];
         $clave = $_POST['password'];
-        $sql = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido', DNI='$dni', email='$correo', clave='$clave' WHERE email='$id'";
+        $sql = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido', DNI='$dni', email='$correo', clave='$clave' WHERE id='$id'";
         $db->query($sql) or die($db->error);
         
         header("Location: ../vista_choferes.php");
