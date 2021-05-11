@@ -149,6 +149,29 @@ function validaciones(){
 function validacion1(){
 	document.editarviaje.submit;
 }
+function altaviaje(){
+	var n1 = document.publicarviaje.nro_viaje.value;
+	var n3 = document.publicarviaje.email.value;
+	var n4 = document.publicarviaje.codigo.value;
+	if (n3){
+	if(n1){
+			if(emailIsValid(n3)){
+				if(n4){
+					document.publicarviaje.submit();
+				}else{
+					alert('codigo esta vacio');
+				}
+			}else{
+				alert('email es invalido');
+			}
+		
+	}else{
+		alert('numero de viaje esta vacio');
+	}
+}else{
+	alert('el mail esta vacio');        
+}
+}
 function validacionesviaje(){
 	var n1 = document.editarviaje.nro_viaje.value;
 	var n3 = document.editarviaje.email.value;
