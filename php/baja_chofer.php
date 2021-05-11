@@ -8,4 +8,4 @@
         mysqli_query($db,$sql);
     }
 
-    header("Location: ../vista_choferes.php?delete=success");
+    header("Location: ../vista_choferes.php");

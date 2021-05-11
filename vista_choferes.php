@@ -75,20 +75,25 @@
               // Tabla de choferes
                 $choferes = new Chofer();
                 $nombreChoferes = $choferes->showAllChoferes();
-              foreach ($nombreChoferes as $value) {
-                  $id = $value['id'];
-                  echo 
-                  "<tr>".
-                    "<td>". $value['nombre'] . "</td>".
-                    "<td>". $value['apellido'] . "</td>".
-                    "<td>". $value['DNI'] . "</td>".
-                    "<td>".$value['email'] . "</td>".
-                    "<td>".                    
-                      "<a href='vista_choferes.php?edit=$id'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/baja_chofer.php?delete=$id'class='btn btn-outline-danger ml-1'>Borrar</a>".
-                    "</td>".
-                  "</tr>";
-              }
+
+                //chequear si se trajeron datos
+                if(!empty($nombreChoferes)){
+                  foreach ($nombreChoferes as $value) {
+                    $id = $value['id'];
+                    echo 
+                    "<tr>".
+                      "<td>". $value['nombre'] . "</td>".
+                      "<td>". $value['apellido'] . "</td>".
+                      "<td>". $value['DNI'] . "</td>".
+                      "<td>".$value['email'] . "</td>".
+                      "<td>".                    
+                        "<a href='vista_choferes.php?edit=$id'class='btn btn btn-outline-success'>Editar</a>".
+                        "<a href='php/baja_chofer.php?delete=$id'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                      "</td>".
+                    "</tr>";
+                }
+                }
+
               ?>
           </tbody>
         </table>
