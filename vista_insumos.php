@@ -3,6 +3,7 @@
     include 'BD.php';
     include 'php/acciones_insumos.php';
 
+
     function getInsumos(){
         $db = conectar();
         $sql = "SELECT * FROM `insumos` WHERE activo = 1";
@@ -13,7 +14,7 @@
                 $data[] = $row;
             }
             return $data;
-        }
+        } 
     }
 ?>
 <!--Funcion para traer insumos de la BD -->
@@ -73,21 +74,25 @@
           <tbody>
 
             <?php
-              // Tabla de choferes
+              // Tabla de insumos
               $insumos = getInsumos();
-              foreach ($insumos as $value) {
-                  $nombre = $value['nombre'];
-                  echo 
-                  "<tr>".
-                    "<td>". $value['nombre'] . "</td>".
-                    "<td>". $value['inventario'] . "</td>".
-                    "<td>". $value['precio'] . "</td>".
-                    "<td>".                    
-                      "<a href='vista_insumos.php?edit=$nombre'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_insumos.php?delete=$nombre'class='btn btn-outline-danger ml-1'>Borrar</a>".
-                    "</td>".
-                  "</tr>";
+              if(!empty($insumos)){ // Esto seguramente deberia ser una excepcion
+                  // Se chequea que existan datos para mostrar
+                foreach ($insumos as $value) {
+                    $id = $value['idi'];
+                    echo 
+                    "<tr>".
+                      "<td>". $value['nombre'] . "</td>".
+                      "<td>". $value['inventario'] . "</td>".
+                      "<td>". $value['precio'] . "</td>".
+                      "<td>".                    
+                        "<a href='vista_insumos.php?edit=$id'class='btn btn btn-outline-success'>Editar</a>".
+                        "<a href='php/acciones_insumos.php?delete=$id'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                      "</td>".
+                    "</tr>";
+                }
               }
+
               ?>
           </tbody>
         </table>
