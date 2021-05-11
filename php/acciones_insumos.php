@@ -24,7 +24,7 @@
     //Baja de insumos
     if(isset($_GET['delete'])){
         $id = $_GET['delete'];
-        $sql = "UPDATE insumos SET activo=0 WHERE activo=1 AND nombre='$id'";
+        $sql = "UPDATE insumos SET activo=0 WHERE activo=1 AND idi='$id'";
         mysqli_query($db,$sql);
         header("Location: ../vista_insumos.php");
     }
@@ -34,7 +34,7 @@
         $id = $_GET['edit'];
         $update = true;
 
-        $sql = "SELECT * from insumos WHERE activo=1 AND nombre='$id'";
+        $sql = "SELECT * from insumos WHERE activo=1 AND idi='$id'";
         $result = $db->query($sql) or die ($db->error());
 
         //Usuario buscado de la BD
@@ -52,7 +52,7 @@
         $nombre = $_POST["nombre"];
         $inventario = $_POST["inventario"];
         $precio = $_POST["precio"];
-        $sql = "UPDATE insumos SET nombre='$nombre', inventario='$inventario', precio='$precio' WHERE nombre='$id'";
+        $sql = "UPDATE insumos SET nombre='$nombre', inventario='$inventario', precio='$precio' WHERE idi='$id'";
         $db->query($sql) or die($db->error);
         
         header("Location: ../vista_insumos.php");
