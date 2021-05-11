@@ -125,7 +125,7 @@
               // Tabla de Combis
               $combis = getCombis();
               foreach ($combis as $value) {
-                  $patente = $value['patente'];
+                  $idc = $value['idc'];
                   echo 
                   "<tr>".
                     "<td>". $value['patente'] . "</td>".
@@ -134,8 +134,8 @@
                     "<td>". $value['modelo'] . "</td>".
                     "<td>". $value['nombre'] . " " . $value['apellido'] . " " . $value['DNI'] . "</td>".
                     "<td>".                    
-                      "<a href='vista_combis.php?edit=$patente'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_combis.php?delete=$patente'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                      "<a href='vista_combis.php?edit=$idc'class='btn btn btn-outline-success'>Editar</a>".
+                      "<a href='php/acciones_combis.php?delete=$idc'class='btn btn-outline-danger ml-1'>Borrar</a>".
                     "</td>".
                   "</tr>";
               }

@@ -36,7 +36,7 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $sql = "UPDATE combis SET activo=0, idu='' WHERE activo=1 AND patente='$id'";
+        $sql = "UPDATE combis SET activo=0, idu='' WHERE activo=1 AND idc='$id'";
         mysqli_query($db,$sql);
         header("Location: ../vista_combis.php");
 
@@ -50,7 +50,7 @@
         $id = $_GET['edit'];
         $update = true;
 
-        $sql = "SELECT * from combis WHERE activo=1 AND patente='$id'";
+        $sql = "SELECT * from combis WHERE activo=1 AND idc='$id'";
         $result = $db->query($sql) or die("error". mysqli_error ($db));
 
 
@@ -77,7 +77,7 @@
         $tipo = $_POST["tipo"];
         $modelo = $_POST["modelo"];
         $idu = $_POST["idu"];
-        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE patente='$id'";
+        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE idc='$id'";
         $db->query($sql) or die($db->error);
         
         header("Location: ../vista_combis.php");
