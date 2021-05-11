@@ -18,7 +18,7 @@
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
         $chofer=(mysqli_fetch_array($result55));
 		$row=mysqli_num_rows($result55);
-		if($row == 0){
+		if(($row == 0) or (!$chofer['activo'])){
 			$mensaje2 = 'no se encontro a un chofer con el email especificado';
 			$full = false;
 		}
@@ -28,7 +28,7 @@
         $result56=mysqli_query ($link, $query56) or die ('Consulta query56 fallida: ' .mysqli_error($link));
         $ruta=(mysqli_fetch_array($result56)); 
 		$row=mysqli_num_rows($result56);
-		if($row == 0){
+		if(($row == 0) or (!$ruta['activo'])){
 			$mensaje2 = 'no se encontro a ninguna ruta con el mail especificado';
 			$full = false;
 		}
