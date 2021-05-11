@@ -26,7 +26,8 @@
 	try {
 		$usuario -> administrador($tipo);	
 		?>
-        <a href="listarviajes.php"> listarViaje </a> 
+       	<h3> <a href="listarviajes.php"> listarViaje </a> </h3>
+		   <h3> <a href="altaviaje.php"> Publicar un viaje </a> </h3>
 		<div class= "div_foot">
 		<p> Made by : Grupo 40 </p>
 	</div> 

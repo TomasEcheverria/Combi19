@@ -11,8 +11,6 @@
 	$full = true;
 	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['codigo'])) ){
 		$nro_viaje= $_POST['nro_viaje'];
-        $imprevisto = $_POST['imprevisto'];
-		$idv = $_POST['viaje'];
 
         $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
@@ -22,7 +20,7 @@
 			$mensaje2 = 'no se encontro a un chofer con el email especificado';
 			$full = false;
 		}
-		if($chofer['tipo_usuario'] != "chofer"){
+        if($chofer['tipo_usuario'] != "chofer"){
             $full=false;
             $mensaje2= 'el usuario especificado no es un conductor, seleccione un conductor';
         }
@@ -36,23 +34,32 @@
 			$mensaje2 = 'no se encontro a ninguna ruta con el codigo especificado';
 			$full = false;
 		}
+        
+        $query25= ("SELECT nro_viaje FROM viajes");//hacer consulta 
+		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
+		while ($viajetabla= mysqli_fetch_array ($result25)){
+			if ($nro_viaje == $viajetabla['nro_viaje']){
+				$full= false;
+				$mensaje2="El numero de viaje  ya existe, por favor elija otro";
+			}
+		}
 
 		$email= $_POST['email'];
 		$codigo = $_POST['codigo'];	
 			if($full){
-			$query72= ("UPDATE viajes SET nro_viaje='$nro_viaje', imprevisto='$imprevisto', idc='$chofer[id]', idr='$ruta[idr]' WHERE idv='$_POST[viaje]'");
-			$result72= (mysqli_query ($link, $query72) or die ('Consuluta query72 fallida: ' .mysqli_error($link)));
-			$mensaje1= "El viaje  se ha editado correctamente";
+            $query31= "INSERT INTO viajes (nro_viaje, idc, idr) values ('$_POST[nro_codigo]', '$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
+            $result31= mysqli_query ($link, $query31) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
+			$mensaje1= "El viaje se publico correctamente";
 			$error=false;
 			}else{
 				$mensajeEditar = $mensaje1 . $mensaje2 . $mensaje3;
-	header ("Location: ../modificarviaje.php?idv=$idv&mensajeEditar=$mensajeEditar&error=$error");
+	header ("Location: ../altaviaje.php?mensajeEditar=$mensajeEditar&error=$error");
 			}
 		     
 	}else{
 	$mensaje1="Por favor, no deje ningun campo en blanco (el imprevisto es opcional).";
 	$mensajeEditar = $mensaje1 . $mensaje2 . $mensaje3;
-	header ("Location: ../modificarviaje.php?idv=$idv&mensajeEditar=$mensajeEditar&error=$error");}
+	header ("Location: ../altaviaje.php?mensajeEditar=$mensajeEditar&error=$error");}
 	
 	$mensajeEditar = $mensaje1 . $mensaje2 . $mensaje3 ;
-	header ("Location: ../modificarviaje.php?idv=$idv&mensajeEditar=$mensajeEditar&error=$error");
+	header ("Location: ../altaviaje.php?mensajeEditar=$mensajeEditar&error=$error");

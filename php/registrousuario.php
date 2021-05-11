@@ -43,7 +43,7 @@
 	$cumple2=true;// verificacion de la existencia del nombre de usuario
 	if ($cumple1 == true){
 		$query25= ("SELECT email FROM usuarios");//hacer consulta 
-		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error());
+		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
 		while ($usuarioTabla= mysqli_fetch_array ($result25)){
 			if ($usuario == $usuarioTabla['email']){
 				$cumple2= false;

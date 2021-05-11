@@ -47,23 +47,36 @@
                        
                       
 			    		{ ?>
-
-			<div class="div_usuario">
-				<?php   
+						<?php   
                         $idv=$viajes['idv'];
                         $nro_viaje=$viajes['nro_viaje'];
-				         $imprevisto=$viajes['imprevisto'];
-				         $idc=$viajes['idc']; 
-				         $idr=$viajes['idr'];?>
+				        $imprevisto=$viajes['imprevisto'];
+				        $idc=$viajes['idc']; 
+				        $idr=$viajes['idr'];
+						$activo=$viajes['activo'];
+							
+        					$query51 ="SELECT * FROM usuarios WHERE id='$idc'";
+        					$result51=mysqli_query ($link, $query51) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+       						 $chofer=(mysqli_fetch_array($result51)); 
+		
+       						 $query52 ="SELECT * FROM rutas WHERE idr='$idr'";
+        					$result52=mysqli_query ($link, $query52) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+      						  $ruta=(mysqli_fetch_array($result52));
+						if(($chofer['activo'] == 1) and ($ruta['activo']  == 1 ) and ($viajes['activo']== 1 )){	
+						?>
+			<div class="div_usuario">
 				<div class="div_btn_usuario">
                     <a href="modificarviaje.php?idv=<?php echo $idv?>">
                       Modificar viaje
                     </a>
                     <br>
-                    <a> </a><!-- acordarse de poner el borrar pagina como formulario, fijarse con el boton de eliminar mensaje y su forma-->
+					<form  action="php/bajaviaje.php" method="post">    
+				                  <button name="borrar Viaje" class="btn_borarr_mensaje" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar mensaje</button>
+				                  <input type="hidden" name="idv" value="<?php echo $idv; ?>" />
+				     </form>
 				</div>
 				<div class="div_info_usuario" >
-						<a class="div_info_usuario" href="usuario.php?idu=<?php echo$idBusqueda?>">
+						<a class="div_info_usuario" href="">
 						<p>Numero de viaje : <?php  echo  $nro_viaje ?></p>
 						<p>id conductor:<?php echo $idc ?> id ruta: <?php echo $idr ?>  ID:<?php echo $idv ?> </p>
 						</a>
@@ -71,6 +84,7 @@
 			</div>	
 			
     	<?php	
+						}
 			    	}
 			    }
 		      ?>

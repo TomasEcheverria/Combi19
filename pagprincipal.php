@@ -21,7 +21,7 @@
 	<body class = "body" >
 		<div class="div_body" id="div_body">
         <div class="div_superior" >
-			 <a class = "div_superior" href="pagprincipal.html" >  
+			 <a class = "div_superior" href="pagprincipal.php" >  
 				<p> Combi 19  <img src="css/images/muro.jpg" class="div_icono">	
 				</a></p>
 			</div>
@@ -32,7 +32,7 @@
 			<div class= "div_listadomensajes">
 			<div class = "div_mensaje">
 				<div class="div_info_mensaje">
-					<a class="div_info_usuario" href="usuario.html">
+					<a class="div_info_usuario" href="usuario.php">
 					<span> Nombre usuario </span> 
 					</a>
 					<span> 30/01/1969 16:00</span>  &nbsp;
@@ -47,7 +47,7 @@
 			</div>
 			<div class = "div_mensaje">
 				<div class="div_info_mensaje">
-					<a class="div_info_usuario" href="usuario.html">
+					<a class="div_info_usuario" href="usuario.php">
 					<span> usuario 2  </span>
 					</a>
 					<span> 30/01/1969 16:00</span>
