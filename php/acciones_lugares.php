@@ -23,7 +23,7 @@
     //Baja de lugares
     if(isset($_GET['delete'])){
         $id = $_GET['delete'];
-        $sql = "UPDATE lugares SET activo=0 WHERE activo=1 AND codigo_postal='$id'";
+        $sql = "UPDATE lugares SET activo=0 WHERE activo=1 AND idl='$id'";
         mysqli_query($db,$sql);
         header("Location: ../vista_lugares.php");
     }
@@ -33,7 +33,7 @@
         $id = $_GET['edit'];
         $update = true;
 
-        $sql = "SELECT * from lugares WHERE activo=1 AND codigo_postal='$id'";
+        $sql = "SELECT * from lugares WHERE activo=1 AND idl='$id'";
         $result = $db->query($sql) or die("error". mysqli_error ($db));
 
         //Usuario buscado de la BD
@@ -49,7 +49,7 @@
         $id = $_POST['id'];
         $codigo_postal = $_POST["codigo_postal"];
         $nombre = $_POST["nombre"];
-        $sql = "UPDATE lugares SET codigo_postal='$codigo_postal', nombre='$nombre' WHERE codigo_postal='$id'";
+        $sql = "UPDATE lugares SET codigo_postal='$codigo_postal', nombre='$nombre' WHERE idl='$id'";
         $db->query($sql) or die("error". mysqli_error ($db));
         
         header("Location: ../vista_lugares.php");

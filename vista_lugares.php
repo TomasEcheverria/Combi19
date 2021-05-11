@@ -71,14 +71,14 @@
               // Tabla de lugares
               $lugares = getLugares();
               foreach ($lugares as $value) {
-                  $codigo_postal = $value['codigo_postal'];
+                  $idl = $value['idl'];
                   echo 
                   "<tr>".
                     "<td>". $value['codigo_postal'] . "</td>".
                     "<td>". $value['nombre'] . "</td>".
                     "<td>".                    
-                      "<a href='vista_lugares.php?edit=$codigo_postal'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_lugares.php?delete=$codigo_postal'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                      "<a href='vista_lugares.php?edit=$idl'class='btn btn btn-outline-success'>Editar</a>".
+                      "<a href='php/acciones_lugares.php?delete=$idl'class='btn btn-outline-danger ml-1'>Borrar</a>".
                     "</td>".
                   "</tr>";
               }
