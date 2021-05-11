@@ -8,7 +8,7 @@
     $cantidad_asientos = 0;
     $tipo = '';
     $modelo = '';
-    $email = '';
+    $idu = '';
 
 
 
@@ -18,11 +18,11 @@
         $cantidad_asientos = $_POST["cantidad_asientos"];
         $tipo = $_POST["tipo"];
         $modelo = $_POST["modelo"];
-        $email = $_POST["email"];
+        $idu = $_POST["idu"];
     
     
-        $sql = "INSERT INTO combis (`patente`, `cantidad_asientos`, `tipo`, `modelo`, `email`, `activo`) VALUES
-        ('$patente', '$cantidad_asientos', '$tipo', '$modelo', '$email', 1);";
+        $sql = "INSERT INTO combis (`patente`, `cantidad_asientos`, `tipo`, `modelo`, `idu`, `activo`) VALUES
+        ('$patente', '$cantidad_asientos', '$tipo', '$modelo', '$idu', 1);";
         mysqli_query($db,$sql);
     
         header("Location: ../vista_combis.php");
@@ -36,7 +36,7 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $sql = "UPDATE combis SET activo=0 WHERE activo=1 AND patente='$id'";
+        $sql = "UPDATE combis SET activo=0, idu='' WHERE activo=1 AND idc='$id'";
         mysqli_query($db,$sql);
         header("Location: ../vista_combis.php");
 
@@ -50,7 +50,7 @@
         $id = $_GET['edit'];
         $update = true;
 
-        $sql = "SELECT * from combis WHERE activo=1 AND patente='$id'";
+        $sql = "SELECT * from combis WHERE activo=1 AND idc='$id'";
         $result = $db->query($sql) or die("error". mysqli_error ($db));
 
 
@@ -62,7 +62,7 @@
             $cantidad_asientos = $row["cantidad_asientos"];
             $tipo = $row["tipo"];
             $modelo = $row["modelo"];
-            $email = $row["email"];
+            $idu = $row["idu"];
         }
     }
 
@@ -76,8 +76,8 @@
         $cantidad_asientos = $_POST["cantidad_asientos"];
         $tipo = $_POST["tipo"];
         $modelo = $_POST["modelo"];
-        $email = $_POST["email"];
-        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', email='$email' WHERE patente='$id'";
+        $idu = $_POST["idu"];
+        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE idc='$id'";
         $db->query($sql) or die($db->error);
         
         header("Location: ../vista_combis.php");

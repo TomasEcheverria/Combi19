@@ -2,10 +2,18 @@
 <?php
     include 'BD.php';
     include 'php/acciones_combis.php';
+    $db = conectar();
+
+    //Consulta para obtener choferes
+    $consulta_choferes = "SELECT * FROM usuarios WHERE activo=1 AND tipo_usuario = 'chofer' AND id NOT IN (SELECT idu FROM combis)";
+    $resultado = mysqli_query($db, $consulta_choferes);
+
+
+
 
     function getCombis(){
         $db = conectar();
-        $sql = "SELECT * FROM `combis` WHERE activo = 1";
+        $sql = "SELECT * FROM `usuarios` u INNER JOIN `combis` c ON (u.id=c.idu) WHERE c.activo=1 AND u.activo=1";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
         if ($numRows > 0) {
@@ -51,19 +59,44 @@
             
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Tipo</label>
-                <select name="tipo" class="form-select">
+                <select name="tipo" class="form-select" required>
                     <option value="">--Seleccione--</option>
-                    <option value="Comoda">Comoda</option>
-                    <option value="Super Comoda">Super Comoda</option>
+                    <option <?php echo $tipo == "Comoda" ? 'selected' :''; ?> value="Comoda">Comoda</option>
+                    <option <?php echo $tipo == "Super Comoda" ? 'selected' :''; ?> value="Super Comoda">Super Comoda</option>
                 </select>
             </div>
             
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Modelo</label>
                 <input type="text" class="form-control" name="modelo" placeholder="" value="<?php echo $modelo?>" required="">
-            
-            
             </div>
+
+            
+            <?php
+            // Consulta super parchada para que al momento de editar, figure a demás de todos los conductores, el conductor seleccionado
+            $sql2 = "SELECT * FROM `usuarios` u INNER JOIN `combis` c ON (u.id=c.idu) WHERE c.activo=1 AND u.activo=1 AND u.id='$idu'";
+            $result2 = mysqli_query($db,$sql2);
+            ?>
+
+            <div class="col-md-6">
+                <label for="inputZip" class="form-label">Chofer</label>
+                <select name="idu" class="form-select" required>
+                    <option value="">--Seleccione--</option>
+                    <?php while ($mismo_chofer = mysqli_fetch_assoc($result2) ) : ?>
+                        <option <?php echo $idu === $mismo_chofer['id'] ? 'selected' : ''; ?> value="<?php echo $mismo_chofer['id']; ?>"> <?php echo $mismo_chofer['nombre'] . " " . $mismo_chofer['apellido']; ?>
+                        </option>
+                    <?php endwhile; ?>
+                    <?php while ($choferes = mysqli_fetch_assoc($resultado) ) : ?>
+                        <option value="<?php echo $choferes['id']; ?>"> <?php echo $choferes['nombre'] . " " . $choferes['apellido']; ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+
+
+
+
+
                 <?php if($update == true){
                     echo "<div class='col-12'> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
                     }else{
@@ -82,7 +115,8 @@
               <th scope="col">Cantidad de asientos</th>
               <th scope="col">Tipo</th>
               <th scope="col">Modelo</th>
-              <th scope="col">Email</th>
+              <th scope="col">Chofer</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -91,17 +125,17 @@
               // Tabla de Combis
               $combis = getCombis();
               foreach ($combis as $value) {
-                  $patente = $value['patente'];
+                  $idc = $value['idc'];
                   echo 
                   "<tr>".
                     "<td>". $value['patente'] . "</td>".
                     "<td>". $value['cantidad_asientos'] . "</td>".
                     "<td>". $value['tipo'] . "</td>".
                     "<td>". $value['modelo'] . "</td>".
-                    "<td>". $value['email'] . "</td>".
+                    "<td>". $value['nombre'] . " " . $value['apellido'] . " " . $value['DNI'] . "</td>".
                     "<td>".                    
-                      "<a href='vista_combis.php?edit=$patente'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_combis.php?delete=$patente'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                      "<a href='vista_combis.php?edit=$idc'class='btn btn btn-outline-success'>Editar</a>".
+                      "<a href='php/acciones_combis.php?delete=$idc'class='btn btn-outline-danger ml-1'>Borrar</a>".
                     "</td>".
                   "</tr>";
               }
