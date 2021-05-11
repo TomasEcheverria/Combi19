@@ -6,7 +6,8 @@
 	$usuario= new usuario();
 	$usuario -> session ($usuarioID);
 	//$usuario -> id($id);
-	$usuario -> email($id)
+	$usuario -> id($id);
+	$usuario -> tipoUsuario($tipo);
 ?>
 <html>
 	<head>
@@ -15,6 +16,7 @@
 		</title>
 		<link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" > 
 		<script  src= "js/menu.js"></script>
+		<script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
 	</head>
 	<body class = "body" >
 		<div class="div_body" id="div_body">
@@ -23,17 +25,12 @@
 				<p> Combi 19  <img src="css/images/muro.jpg" class="div_icono">	
 				</a></p>
 			</div>
-			<?php echo menu($id); ?>
+			<?php echo menu($tipo); ?>
 		<div class= "div_superior">
-				<p> Mensajes</p>
+				<p> Comentarios</p>
 			</div>
 			<div class= "div_listadomensajes">
 			<div class = "div_mensaje">
-				<div class = "div_img_usuario">
-					<a href="usuario.html">
-					<img src="css/images/John Lennon.jpg" class="div_img_usuario_mensaje"/>
-					</a>
-				</div>
 				<div class="div_info_mensaje">
 					<a class="div_info_usuario" href="usuario.html">
 					<span> Nombre usuario </span> 
@@ -49,11 +46,6 @@
 				</div>
 			</div>
 			<div class = "div_mensaje">
-				<div class = "div_img_usuario">
-					<a href="usuario.html">
-					<img src="css/images/John Lennon.jpg" class="div_img_usuario_mensaje"/>
-					</a>
-				</div>
 				<div class="div_info_mensaje">
 					<a class="div_info_usuario" href="usuario.html">
 					<span> usuario 2  </span>

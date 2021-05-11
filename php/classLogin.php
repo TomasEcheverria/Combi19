@@ -22,6 +22,7 @@
 					/*si el número de filas devuelto por la variable resultado es 1,significa que en la base de datos blog, en la tabla usuarios existe una fila que coincide con los datos ingresados.
 					luego nos envia a la pagina inicioSesion, con las variables de sesion creados y exito setado */
 					if($datosUsuario =mysqli_fetch_array($resultado58)) {
+						$_SESSION['id'] = $datosUsuario['id'];
 						$_SESSION['email'] = $datosUsuario ['email'];
 						$_SESSION['nombre'] = $datosUsuario['nombre'];
 						$_SESSION['apellido'] = $datosUsuario['apellido'];
@@ -62,6 +63,11 @@
 		public function iniciada ($usuarioID) { //tira la exception si la sesion NO esta iniciada
 			if (!isset ($usuarioID)) { 
 				throw new Exception ('Es necesario iniciar sesion para acceder a este contenido');
+			}
+		}
+		public function administrador($tipo) {
+			if( $tipo != "administrador") {
+				throw new Exception ('usted no es administrador');
 			}
 		}
 		

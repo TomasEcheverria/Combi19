@@ -146,6 +146,32 @@ function validaciones(){
 		document.editar.submit();
 	}
 }
+function validacion1(){
+	document.editarviaje.submit;
+}
+function validacionesviaje(){
+	var n1 = document.editarviaje.nro_viaje.value;
+	var n3 = document.editarviaje.email.value;
+	var n4 = document.editarviaje.codigo.value;
+	if (n3){
+	if(n1){
+			if(emailIsValid(n3)){
+				if(n4){
+					document.editarviaje.submit();
+				}else{
+					alert('codigo esta vacio');
+				}
+			}else{
+				alert('email es invalido');
+			}
+		
+	}else{
+		alert('numero de viaje esta vacio');
+	}
+}else{
+	alert('el mail esta vacio');        
+}
+}
 function validarclave(){
 var valorclave = document.editarclave.clave_vieja.value;// no esta funcionando el obtener el valor.
 	var valorclave1 = document.editarclave.clave1.value;
