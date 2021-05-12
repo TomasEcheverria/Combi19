@@ -26,8 +26,13 @@
 	try {
 		$usuario -> administrador($tipo);	
 		?>
-       	<h3> <a href="listarviajes.php"> listarViaje </a> </h3>
+       	<h3> <a href="listarviajes.php"> Listar viajes </a> </h3>
 		   <h3> <a href="altaviaje.php"> Publicar un viaje </a> </h3>
+		   <h3> <a href="vista_choferes.php"> Adminstrar choferes </a> </h3>
+		   <h3> <a href="vista_insumos.php"> Administrar insumos </a> </h3>
+		   <h3> <a href="vista_combis.php"> Administrar combis </a> </h3>
+		   <h3> <a href="vista_lugares.php"> Administrar lugares </a> </h3>
+		   <h3> <a href="vista_rutas.php"> Administrar rutas </a> </h3>
 		<div class= "div_foot">
 		<p> Made by : Grupo 40 </p>
 	</div> 

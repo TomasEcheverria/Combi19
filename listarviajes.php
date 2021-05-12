@@ -71,14 +71,14 @@
                     </a>
                     <br>
 					<form  action="php/bajaviaje.php" method="post">    
-				                  <button name="borrar Viaje" class="btn_borarr_mensaje" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar mensaje</button>
+				                  <button name="borrar" class="btn_borarr_mensaje" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar Viaje</button>
 				                  <input type="hidden" name="idv" value="<?php echo $idv; ?>" />
 				     </form>
 				</div>
 				<div class="div_info_usuario" >
 						<a class="div_info_usuario" href="">
 						<p>Numero de viaje : <?php  echo  $nro_viaje ?></p>
-						<p>id conductor:<?php echo $idc ?> id ruta: <?php echo $idr ?>  ID:<?php echo $idv ?> </p>
+						<p>Mail conductor:<?php echo $chofer['email']; ?> codigo de  ruta: <?php echo $ruta['codigo_ruta'] ?>  ID viaje:<?php echo $idv ?> </p>
 						</a>
 				</div>							
 			</div>	

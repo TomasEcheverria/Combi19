@@ -37,6 +37,15 @@
 			$full = false;
 		}
 
+		$query25= ("SELECT nro_viaje FROM viajes");//hacer consulta 
+		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
+		while ($viajetabla= mysqli_fetch_array ($result25)){
+			if ($nro_viaje == $viajetabla['nro_viaje']){
+				$full= false;
+				$mensaje2="El numero de viaje  ya existe, por favor elija otro";
+			}
+		}
+
 		$email= $_POST['email'];
 		$codigo = $_POST['codigo'];	
 			if($full){
