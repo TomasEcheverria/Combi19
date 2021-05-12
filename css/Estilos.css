@@ -54,7 +54,7 @@
 	text-decoration:none;
 }
 .div_icono{
- width: 60px;
+ width: 200px;
  vertical-align: baseline;
  padding: 5px;
 }
@@ -68,7 +68,7 @@ div.reset {/*deja un lina en blaco entre las personas*/
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
   left: 0;
-  background-color: #111; /* Black*/
+  background-color: #95a5a6; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -79,7 +79,7 @@ div.reset {/*deja un lina en blaco entre las personas*/
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #2c3e50;
   display: block;
   transition: 0.3s;
 }
@@ -136,7 +136,7 @@ div.reset {/*deja un lina en blaco entre las personas*/
 /* Nuevos */
 
 .body {
-	background-image: url("images/Fondo colores.jpg");
+	/*background-image: url("images/Fondo colores.jpg");*/
 }
 
 .btn_buscar {
