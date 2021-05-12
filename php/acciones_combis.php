@@ -20,10 +20,14 @@
         $modelo = $_POST["modelo"];
         $idu = $_POST["idu"];
     
-    
-        $sql = "INSERT INTO combis (`patente`, `cantidad_asientos`, `tipo`, `modelo`, `idu`, `activo`) VALUES
-        ('$patente', '$cantidad_asientos', '$tipo', '$modelo', '$idu', 1);";
-        mysqli_query($db,$sql);
+        $patente_existe="SELECT * FROM combis WHERE ((patente='$patente') AND activo=1)";
+        $resultado_patente_existe = mysqli_query($db,$patente_existe);
+        if (empty(mysqli_fetch_assoc($resultado_patente_existe))){
+
+            $sql = "INSERT INTO combis (`patente`, `cantidad_asientos`, `tipo`, `modelo`, `idu`, `activo`) VALUES
+            ('$patente', '$cantidad_asientos', '$tipo', '$modelo', '$idu', 1);";
+            mysqli_query($db,$sql);
+        }
     
         header("Location: ../vista_combis.php");
     }
@@ -77,9 +81,15 @@
         $tipo = $_POST["tipo"];
         $modelo = $_POST["modelo"];
         $idu = $_POST["idu"];
-        $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE idc='$id'";
-        $db->query($sql) or die($db->error);
-        
+
+        $patente_existe_edit="SELECT * FROM combis WHERE ((patente='$patente') AND activo=1)";
+        $resultado_patente_existe_edit = mysqli_query($db,$patente_existe_edit);
+        if (empty(mysqli_fetch_assoc($resultado_patente_existe_edit))){
+
+            $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE idc='$id'";
+            $db->query($sql) or die($db->error);
+        }
+
         header("Location: ../vista_combis.php");
     }
     
