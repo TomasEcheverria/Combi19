@@ -11,16 +11,24 @@
 			Combi 19
 		</title>
 		<link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" > 
+		<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
 		<script  src= "js/Passwordcheckbox.js"></script>
 		<script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
 	</head>
 		</div>
 	<body class = "body" >
-		<div class="div_body">
-			<div class="div_superior" >
-				<p> Combi 19 <img src="css/images/muro.jpg" class="div_icono">
-				</p>
-			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col text-center">
+						<div class="row"> </row>
+						<div class="row"> </row>
+					</div>
+					<div class="col">
+					<img src="css/images/logo_is.png" class="div_icono">
+					</div>
+				</div>
+				 
+
 	<?php
 	try {
 		$usuario -> noIniciada($usuarioID);	
