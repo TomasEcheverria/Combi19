@@ -11,8 +11,21 @@
 	$full = true;
 	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['codigo'])) ){
 		$nro_viaje= $_POST['nro_viaje'];
-        $imprevisto = $_POST['imprevisto'];
-		$idv = $_POST['viaje'];
+        $imprevisto= $_POST['imprevisto'];
+		$precio= $_POST['precio'];
+		$estado= $_POST['estado'];
+		$fecha= $_POST['fecha'];
+		$idv= $_POST['viaje'];
+		$email= $_POST['email'];
+		$codigo= $_POST['codigo'];
+
+		$query50 ="SELECT * FROM viajes  WHERE idv='$idv'";
+        $result50=mysqli_query ($link, $query50) or die ('Consulta query50 fallida: ' .mysqli_error($link));
+        $datos=(mysqli_fetch_array($result50)); 
+		
+		$choferactual= $datos['idc'];
+		$fechaactual= $datos['fecha'];
+		$numeroactual= $datos['nro_viaje'];
 
         $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
@@ -37,7 +50,8 @@
 			$full = false;
 		}
 
-		$query25= ("SELECT nro_viaje FROM viajes");//hacer consulta 
+		if($numeroactual != $nro_viaje){
+		$query25= ("SELECT * FROM viajes WHERE activo='1'");//hacer consulta 
 		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
 		while ($viajetabla= mysqli_fetch_array ($result25)){
 			if ($nro_viaje == $viajetabla['nro_viaje']){
@@ -45,11 +59,20 @@
 				$mensaje2="El numero de viaje  ya existe, por favor elija otro";
 			}
 		}
-
-		$email= $_POST['email'];
-		$codigo = $_POST['codigo'];	
+	}
+		if(($choferactual != $chofer['id']) or ($fechaactual != $fecha)){
+		$query57= ("SELECT * FROM viajes WHERE idc='$chofer[id]'");//hacer consulta 
+		$result57= mysqli_query ($link, $query57) or die ('Consulta fallida ' .mysqli_error($link));
+		while ($viajetabla= mysqli_fetch_array ($result57)){
+			if ($fecha == $viajetabla['fecha']){
+				$full= false;
+				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada, por favor seleccione otro";
+			}
+		}
+	}
+	
 			if($full){
-			$query72= ("UPDATE viajes SET nro_viaje='$nro_viaje', imprevisto='$imprevisto', idc='$chofer[id]', idr='$ruta[idr]' WHERE idv='$_POST[viaje]'");
+			$query72= ("UPDATE viajes SET nro_viaje='$nro_viaje', imprevisto='$imprevisto', precio='$precio', estado='$estado', fecha='$fecha', idc='$chofer[id]', idr='$ruta[idr]' WHERE idv='$_POST[viaje]'");
 			$result72= (mysqli_query ($link, $query72) or die ('Consuluta query72 fallida: ' .mysqli_error($link)));
 			$mensaje1= "El viaje  se ha editado correctamente";
 			$error=false;
