@@ -25,7 +25,6 @@
         $id = $_GET['delete'];
         $viaje_existe = "SELECT v.* FROM viajes v INNER JOIN rutas r ON ((r.idr=v.idr) AND ((v.activo=1) AND (r.activo=1)) AND ((r.codigo_postal_origen='$id') OR (r.codigo_postal_destino='$id')))";
         $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
-
         $ruta_existe= "SELECT * FROM rutas WHERE (((codigo_postal_origen='$id') OR (codigo_postal_destino='$id')) AND activo=1)";
         $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
 
