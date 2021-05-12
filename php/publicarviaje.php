@@ -58,7 +58,7 @@
 		}
 
 			if($full){
-            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, idc, idr) values ('$_POST[nro_codigo]', '$precio', 'pendiente', '$fecha','$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
+            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, idc, idr) values ('$_POST[nro_viaje]', '$precio', 'pendiente', '$fecha','$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
             $result31= mysqli_query ($link, $query31) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			$mensaje1= "El viaje se publico correctamente";
 			$error=false;
