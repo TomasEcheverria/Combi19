@@ -14,7 +14,7 @@
             ?>
 			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Cerrar Sesion </a>
 		</div>
-		<button class="btn" onclick="openNav()"><i class="fa fa-bars"></i> Menu</button>
+		<button class="btn btn-secondary" onclick="openNav()"><i class="fa fa-bars"></i> Menu</button>
  <?php  
  } 
 ?>
