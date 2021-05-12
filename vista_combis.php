@@ -122,23 +122,26 @@
           <tbody>
 
             <?php
-              // Tabla de Combis
-              $combis = getCombis();
-              foreach ($combis as $value) {
-                  $idc = $value['idc'];
-                  echo 
-                  "<tr>".
-                    "<td>". $value['patente'] . "</td>".
-                    "<td>". $value['cantidad_asientos'] . "</td>".
-                    "<td>". $value['tipo'] . "</td>".
-                    "<td>". $value['modelo'] . "</td>".
-                    "<td>". $value['nombre'] . " " . $value['apellido'] . " " . $value['DNI'] . "</td>".
-                    "<td>".                    
-                      "<a href='vista_combis.php?edit=$idc'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_combis.php?delete=$idc'class='btn btn-outline-danger ml-1'>Borrar</a>".
-                    "</td>".
-                  "</tr>";
-              }
+            
+            // Tabla de Combis
+            $combis = getCombis();
+            if(!empty($combis)){
+                foreach ($combis as $value) {
+                    $idc = $value['idc'];
+                    echo 
+                    "<tr>".
+                        "<td>". $value['patente'] . "</td>".
+                        "<td>". $value['cantidad_asientos'] . "</td>".
+                        "<td>". $value['tipo'] . "</td>".
+                        "<td>". $value['modelo'] . "</td>".
+                        "<td>". $value['nombre'] . " " . $value['apellido'] . " " . $value['DNI'] . "</td>".
+                        "<td>".                    
+                            "<a href='vista_combis.php?edit=$idc'class='btn btn btn-outline-success'>Editar</a>".
+                            "<a href='php/acciones_combis.php?delete=$idc'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                        "</td>".
+                    "</tr>";
+                }
+            }
               ?>
           </tbody>
         </table>
