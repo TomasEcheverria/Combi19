@@ -4,7 +4,7 @@
 
     $update= false;
     $id =0;
-    $codigo_ruta = 0;
+    $codigo_ruta = '';
     $codigo_postal_origen = 0;
     $codigo_postal_destino = 0;
     $kilometros = 0;
@@ -35,7 +35,7 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $sql = "UPDATE rutas SET activo=0 WHERE activo=1 AND codigo_ruta='$id'";
+        $sql = "UPDATE rutas SET activo=0 WHERE activo=1 AND idr='$id'";
         mysqli_query($db,$sql);
         header("Location: ../vista_rutas.php");
 
@@ -49,7 +49,7 @@
         $id = $_GET['edit'];
         $update = true;
 
-        $sql = "SELECT * from rutas WHERE activo=1 AND codigo_ruta='$id'";
+        $sql = "SELECT * from rutas WHERE activo=1 AND idr='$id'";
         $result = $db->query($sql) or die("error". mysqli_error ($db));
 
 
@@ -57,7 +57,7 @@
         //Combi buscada en la BD
         if($result->num_rows == 1){
             $row = $result->fetch_array();
-            $codigo_ruta = $row["codigo_ruta"];
+            $codigo_ruta = $row["idr"];
             $codigo_postal_origen = $row["codigo_postal_origen"];
             $codigo_postal_destino = $row["codigo_postal_destino"];
             $kilometros = $row["kilometros"];
@@ -74,7 +74,7 @@
         $codigo_postal_origen = $_POST["codigo_postal_origen"];
         $codigo_postal_destino = $_POST["codigo_postal_destino"];
         $kilometros = $_POST["kilometros"];
-        $sql = "UPDATE rutas SET codigo_ruta='$codigo_ruta', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE codigo_ruta='$id'";
+        $sql = "UPDATE rutas SET codigo_ruta='$codigo_ruta', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE idr='$id'";
         $db->query($sql) or die($db->error);
         
         header("Location: ../vista_rutas.php");
