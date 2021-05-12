@@ -78,9 +78,9 @@
 	} catch (Exception $e){
 			echo $e->getMessage();
 	?>
-		 <div class="body">
+		 <div class="mensajes">
 		 <br><br>		
-			<a href="pagprincipal.php" > click aqui para volver a la pagina principal </a><br><br>	
+			<a href="pagprincipal.php"  class=""> click aqui para volver a la pagina principal </a><br><br>	
 			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
 	</div>	 
 		 <div class= "div_foot">
