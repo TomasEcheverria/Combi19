@@ -3,6 +3,9 @@
     include 'php/choferes.php';
     include 'php/query_choferes.php';
     include __DIR__.'/php/alta_chofer.php';
+    include 'php/classLogin.php';
+    $usuario= new usuario();
+    $usuario -> tipoUsuario($tipo); 
 ?>
 
 <!doctype html>
@@ -17,6 +20,10 @@
 
     <title>Bienvenido a Combi 19</title>
   </head>
+  <?php try{ 
+    $usuario -> administrador($tipo);
+    ?>
+    
   <body>
 
   <div class="card">
@@ -103,4 +110,17 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
+  <?php
+	} catch (Exception $e){
+			echo $e->getMessage();
+	?>
+		 <br><br>		
+			<a href="pagprincipal.php" > Click aqui para volver a la pagina principal </a><br><br>	
+			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
+		<div class= "div_foot">
+		<p> Made by : Grupo 40 </p>
+	</div>
+		<?php	
+	}
+	?> 
 </html>

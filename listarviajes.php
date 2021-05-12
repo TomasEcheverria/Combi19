@@ -95,9 +95,16 @@
 	</body>
 		</body>
 	    <?php
-           } catch (Exception $e) {
-           	   $mensaje=$e->getMessage();
-               header ("Location: index.php?mensaje=$mensaje");	
-    }  
-    ?>
+	} catch (Exception $e){
+			echo $e->getMessage();
+	?>
+		 <br><br>		
+			<a href="pagprincipal.php" > Click aqui para volver a la pagina principal </a><br><br>	
+			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
+		<div class= "div_foot">
+		<p> Made by : Grupo 40 </p>
+	</div>
+		<?php	
+	}
+	?> 
 </html>

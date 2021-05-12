@@ -4,7 +4,8 @@
 	include "php/classLogin.php";
 	$usuario= new usuario();
 	$usuario -> session ($usuarioID);
-    $usuario -> tipoUsuario($tipo)
+    $usuario -> tipoUsuario($tipo);
+	$usuario->email($email)
 ?>
 <html>
 	<head>
@@ -43,7 +44,7 @@
 	} catch (Exception $e){
 			echo $e->getMessage();
 	?>
-		como <?php echo $_SESSION['nombreUsuario'] ?> <br><br>		
+		 <br><br>		
 			<a href="pagprincipal.php" > Click aqui para volver a la pagina principal </a><br><br>	
 			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
 		<div class= "div_foot">
