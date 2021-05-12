@@ -68,25 +68,28 @@
     </div>
     </div>
 
-    <table class="table table-striped">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Inventario</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
 
             <?php
               // Tabla de insumos
               $insumos = getInsumos();
               if(!empty($insumos)){ // Esto seguramente deberia ser una excepcion
                   // Se chequea que existan datos para mostrar
+                  $tabla = "
+                  <table class='table table-striped'>
+                  <thead class='table-dark'>
+                    <tr>
+                      <th scope='col'>Nombre</th>
+                      <th scope='col'>Inventario</th>
+                      <th scope='col'>Precio</th>
+                      <th scope='col'>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>                         
+                  ";
+                  $datos_tabla = "";
                 foreach ($insumos as $value) {
                     $id = $value['idi'];
-                    echo 
+                    $datos_tabla = $datos_tabla . 
                     "<tr>".
                       "<td>". $value['nombre'] . "</td>".
                       "<td>". $value['inventario'] . "</td>".
@@ -97,7 +100,8 @@
                       "</td>".
                     "</tr>";
                 }
-              }
+                echo $tabla . $datos_tabla;
+              } else echo "<p class='text-center fs-1 text-muted'> <strong> No hay datos para mostrar </strong> </p>";
 
               ?>
           </tbody>
