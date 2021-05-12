@@ -82,7 +82,7 @@
         $modelo = $_POST["modelo"];
         $idu = $_POST["idu"];
 
-        $patente_existe_edit="SELECT * FROM combis WHERE ((patente='$patente') AND activo=1)";
+        $patente_existe_edit="SELECT * FROM combis WHERE (((patente='$patente') AND (idc<>'$id')) AND activo=1)";
         $resultado_patente_existe_edit = mysqli_query($db,$patente_existe_edit);
         if (empty(mysqli_fetch_assoc($resultado_patente_existe_edit))){
 
