@@ -5,7 +5,7 @@
     $db = conectar();
     include 'php/classLogin.php';
     $usuario= new usuario();
-    $usuario -> tipoUsuario($tipo);
+    $usuario -> tipoUsuario($tipo2);
 
     //Consulta para obtener choferes
     $consulta_choferes = "SELECT * FROM usuarios WHERE activo=1 AND tipo_usuario = 'chofer' AND id NOT IN (SELECT idu FROM combis)";
@@ -40,7 +40,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <?php try{ 
-    $usuario -> administrador($tipo);
+    $usuario -> administrador($tipo2);
     ?>
 <body>
 
@@ -63,6 +63,7 @@
                 <input type="number" class="form-control" name="cantidad_asientos" placeholder="" value="<?php echo $cantidad_asientos?>" required="" min=1 max=99>
             </div>
             
+
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Tipo</label>
                 <select name="tipo" class="form-select" required>
