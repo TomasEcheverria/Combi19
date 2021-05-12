@@ -6,12 +6,11 @@
 
     //Consulta para obtener lugares
     $consulta_lugares = "SELECT * FROM lugares WHERE activo = 1";
-    $resultado = mysqli_query($db, $consulta_lugares);
     
 
     function getRutas(){
         $db = conectar();        
-        $sql = "SELECT * FROM `rutas` WHERE activo = 1";
+        $sql = "SELECT * FROM `rutas` WHERE activo=1 EXCEPT (SELECT r1.* FROM `rutas` r1 INNER JOIN `lugares` l1 ON (r1.codigo_postal_origen=l1.idl) AND (l1.activo=0) UNION (SELECT r2.* FROM `rutas` r2 INNER JOIN `lugares` l2 ON (r2.codigo_postal_destino=l2.idl) AND (l2.activo=0)))";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
         if ($numRows > 0) {
@@ -21,6 +20,7 @@
             return $data;
         }
     }
+
 ?>
 <!--Funcion para traer rutas de la BD -->
 
@@ -45,38 +45,41 @@
             <form action ="php/acciones_rutas.php" class="row g-3" method ="POST">
             <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Código de ruta</label>
-                <input type="number" class="form-control" name="codigo_ruta" placeholder="" value="<?php echo $codigo_ruta?>" required="" min=0>
+                <label for="inputEmail4" class="form-label">Nombre de Ruta</label>
+                <input type="text" class="form-control" name="codigo_ruta" placeholder="" value="<?php echo $codigo_ruta?>" required="" min=0>
             </div>
 
-
+            
+            <?php $resultado = mysqli_query($db, $consulta_lugares); ?>
             <div class="col-md-6">
-                <label for="inputZip" class="form-label">Lugar de origen</label>
+                <label for="inputZip" class="form-label">Lugar de origen/Código Postal</label>
                 <select name="codigo_postal_origen" class="form-select">
                     <option value="">--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
-                        <option value="<?php echo $lugares['codigo_postal']; ?>"> <?php echo $lugares['nombre'] . " " . $lugares['codigo_postal']; ?>
+                        <option value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "   #" . $lugares['codigo_postal']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
             </div>
+
+
 
             <?php $resultado = mysqli_query($db, $consulta_lugares); ?>                
             <div class="col-md-6">
-                <label for="inputZip" class="form-label">Lugar de destino</label>
+                <label for="inputZip" class="form-label">Lugar de destino/Código Postal</label>
                 <select name="codigo_postal_destino" class="form-select">
                     <option value="">--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
-                        <option value="<?php echo $lugares['codigo_postal']; ?>"> <?php echo $lugares['nombre'] . " " . $lugares['codigo_postal']; ?>
+                        <option value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "   #" . $lugares['codigo_postal']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
             </div>
 
 
-            
+
             <div class="col-md-6">
-                <label for="inputZip" class="form-label">Cantidad de kilómetros</label>
+                <label for="inputZip" class="form-label">Distancia en kilómetros</label>
                 <input type="number" class="form-control" name="kilometros" placeholder="" value="<?php echo $kilometros?>" required="" min=0>
             </div>
                 <?php if($update == true){
@@ -93,33 +96,52 @@
     <table class="table table-striped">
           <thead class="table-dark">
             <tr>
-              <th scope="col">Código de ruta</th>
-              <th scope="col">Código postal de origen</th>
-              <th scope="col">Código postal de destino</th>
-              <th scope="col">Cantidad de kilómetros</th>
+              <th scope="col">Nombre de Ruta</th>
+              <th scope="col">Origen/Código Postal</th>
+              <th scope="col">Destino/Código Postal</th>
+              <th scope="col">Distancia en kilómetros</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
 
             <?php
-              // Tabla de choferes
-              $rutas = getRutas();
-              foreach ($rutas as $value) {
-                  $codigo_ruta = $value['codigo_ruta'];
-                  echo 
-                  "<tr>".
-                    "<td>". $value['codigo_ruta'] . "</td>".
-                    "<td>". $value['codigo_postal_origen'] . "</td>".
-                    "<td>". $value['codigo_postal_destino'] . "</td>".
-                    "<td>". $value['kilometros'] . "</td>".
-                    "<td>".                    
-                      "<a href='vista_rutas.php?edit=$codigo_ruta'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_rutas.php?delete=$codigo_ruta'class='btn btn-outline-danger ml-1'>Borrar</a>".
-                    "</td>".
-                  "</tr>";
+
+              
+
+
+
+              // Tabla de rutas
+            $rutas = getRutas();
+            if(!empty($rutas)){
+                foreach ($rutas as $value) {
+                    $idr = $value['idr'];
+                  
+                    $idorigen= $value['codigo_postal_origen'];
+                    $consulta_lugareso = "SELECT * FROM lugares WHERE idl = '$idorigen' ";
+
+                    $iddestino= $value['codigo_postal_destino'];
+                    $consulta_lugaresd = "SELECT * FROM lugares WHERE idl = '$iddestino' ";
+
+                    $resultado_origen = mysqli_query($db, $consulta_lugareso);
+                    $resultado_destino = mysqli_query($db, $consulta_lugaresd);
+
+                    $origen= mysqli_fetch_assoc($resultado_origen);
+                    $destino= mysqli_fetch_assoc($resultado_destino);
+                    echo 
+                    "<tr>".
+                        "<td>". $value['codigo_ruta'] . "</td>".
+                        "<td>". $origen['nombre'] . " #" . $origen['codigo_postal'] . "</td>".
+                        "<td>". $destino['nombre'] . " #" . $destino['codigo_postal'] . "</td>".
+                        "<td>". $value['kilometros'] . " Km". "</td>".
+                        "<td>".                    
+                            "<a href='vista_rutas.php?edit=$idr'class='btn btn btn-outline-success'>Editar</a>".
+                            "<a href='php/acciones_rutas.php?delete=$idr'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                        "</td>".
+                    "</tr>";
               }
-              ?>
+            }
+            ?>
           </tbody>
         </table>
 
