@@ -12,7 +12,7 @@
         $codigo_postal = $_POST["codigo_postal"];
         $nombre = $_POST["nombre"];
     
-    
+        
         $sql = "INSERT INTO lugares (`codigo_postal`, `nombre`, `activo`) VALUES
         ('$codigo_postal', '$nombre', 1);";
         mysqli_query($db,$sql);
@@ -23,8 +23,20 @@
     //Baja de lugares
     if(isset($_GET['delete'])){
         $id = $_GET['delete'];
-        $sql = "UPDATE lugares SET activo=0 WHERE activo=1 AND idl='$id'";
-        mysqli_query($db,$sql);
+        $viaje_existe = "SELECT v.* FROM viajes v INNER JOIN rutas r ON ((r.idr=v.idr) AND ((v.activo=1) AND (r.activo=1)) AND ((r.codigo_postal_origen='$id') OR (r.codigo_postal_destino='$id')))";
+        $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
+
+        $ruta_existe= "SELECT * FROM rutas WHERE (((codigo_postal_origen='$id') OR (codigo_postal_destino='$id')) AND activo=1)";
+        $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
+
+        if (empty(mysqli_fetch_assoc($resultado_viaje_existe)) && (empty(mysqli_fetch_assoc($resultado_ruta_existe)))){
+            $sql = "UPDATE lugares SET activo=0 WHERE activo=1 AND idl='$id'"; 
+            mysqli_query($db,$sql);                   
+        }
+        else {
+            echo "no hagas eso bro :(";
+        }
+
         header("Location: ../vista_lugares.php");
     }
 
@@ -32,7 +44,6 @@
     if(isset($_GET['edit'])){
         $id = $_GET['edit'];
         $update = true;
-
         $sql = "SELECT * from lugares WHERE activo=1 AND idl='$id'";
         $result = $db->query($sql) or die("error". mysqli_error ($db));
 
