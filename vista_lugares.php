@@ -68,21 +68,24 @@
           <tbody>
 
             <?php
-              // Tabla de lugares
-              $lugares = getLugares();
-              foreach ($lugares as $value) {
-                  $idl = $value['idl'];
-                  echo 
-                  "<tr>".
-                    "<td>". $value['codigo_postal'] . "</td>".
-                    "<td>". $value['nombre'] . "</td>".
-                    "<td>".                    
-                      "<a href='vista_lugares.php?edit=$idl'class='btn btn btn-outline-success'>Editar</a>".
-                      "<a href='php/acciones_lugares.php?delete=$idl'class='btn btn-outline-danger ml-1'>Borrar</a>".
-                    "</td>".
-                  "</tr>";
-              }
-              ?>
+            // Tabla de lugares
+            $lugares = getLugares();
+            if(!empty($lugares)){
+                foreach ($lugares as $value) {
+                    $idl = $value['idl'];
+                    echo 
+                    "<tr>".
+                        "<td>". $value['codigo_postal'] . "</td>".
+                        "<td>". $value['nombre'] . "</td>".
+                        "<td>".                    
+                            "<a href='vista_lugares.php?edit=$idl'class='btn btn btn-outline-success'>Editar</a>".
+                            "<a href='php/acciones_lugares.php?delete=$idl'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                        "</td>".
+                    "</tr>";
+                }
+            }
+            ?>
+            
           </tbody>
         </table>
 
