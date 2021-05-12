@@ -35,8 +35,13 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $sql = "UPDATE rutas SET activo=0 WHERE activo=1 AND idr='$id'";
-        mysqli_query($db,$sql);
+        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1)";
+        $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
+        if (empty(mysqli_fetch_assoc($resultado_viaje_existe))){
+            
+            $sql = "UPDATE rutas SET activo=0 WHERE activo=1 AND idr='$id'";
+            mysqli_query($db,$sql);
+        }
         header("Location: ../vista_rutas.php");
 
     }
