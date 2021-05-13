@@ -1,5 +1,5 @@
 <?php
-	include "../BD.php";// conectar y seleccionar la base de datosssss
+	include "../BD.php";// conectar y seleccionar la base de datos
 	$link = conectar();
 	$cumple= false;
 	$cumple1= false;
