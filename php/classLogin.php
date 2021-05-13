@@ -1,6 +1,6 @@
 <?php
 	session_start(); //iniciamos la sesion
-	//creamos la clase usuarios
+	//creamos la clase usuario
 	class usuario {
 		//esta función será la encargada de comprobar si existe el usuario en la base de datos
 		public function validar_usuario ($link) {

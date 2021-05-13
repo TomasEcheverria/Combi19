@@ -13,10 +13,18 @@
         $inventario = $_POST["inventario"];
         $precio = $_POST["precio"];
     
-    
-        $sql = "INSERT INTO insumos (`nombre`, `inventario`, `precio`, `activo`) VALUES
-        ('$nombre', '$inventario', '$precio', 1);";
-        mysqli_query($db,$sql);
+        $nombre_existe ="SELECT * FROM insumos WHERE ((nombre='$nombre') AND activo=1)";
+        $resultado_nombre_existe = mysqli_query($db,$patente_existe);
+        // Se agrega solo si el nombre que se quiere usar no existe
+        if(empty(mysqli_fetch_assoc($resultado_nombre_existe))){
+
+            $sql = "INSERT INTO insumos (`nombre`, `inventario`, `precio`, `activo`) VALUES
+            ('$nombre', '$inventario', '$precio', 1);";
+            mysqli_query($db,$sql);
+
+        }
+
+
     
         header("Location: ../vista_insumos.php");
     }
@@ -52,9 +60,17 @@
         $nombre = $_POST["nombre"];
         $inventario = $_POST["inventario"];
         $precio = $_POST["precio"];
-        $sql = "UPDATE insumos SET nombre='$nombre', inventario='$inventario', precio='$precio' WHERE idi='$id'";
-        $db->query($sql) or die($db->error);
+
+        $nombre_existe_edit="SELECT * FROM combis WHERE (((nombre='$nombre') AND (idi<>'$id')) AND activo=1)";
+        $resultado_nombre_existe_edit =  mysqli_query($db,$nombre_existe_edit);
+
         
+        if(empty(mysqli_fetch_assoc($resultado_nombre_existe_edit))){
+
+            $sql = "UPDATE insumos SET nombre='$nombre', inventario='$inventario', precio='$precio' WHERE idi='$id'";
+            $db->query($sql) or die($db->error);
+        }
+       
         header("Location: ../vista_insumos.php");
     }
     
