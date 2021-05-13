@@ -61,8 +61,30 @@
 		
        						 $query52 ="SELECT * FROM rutas WHERE idr='$idr'";
         					$result52=mysqli_query ($link, $query52) or die ('Consulta query51 fallida: ' .mysqli_error($link));
-      						  $ruta=(mysqli_fetch_array($result52));
-						if(($chofer['activo'] == 1) and ($ruta['activo']  == 1 ) and ($viajes['activo']== 1 )){	
+      						  $rutas=(mysqli_fetch_array($result52));
+							
+							
+								$id= $chofer['id'];
+								$query53 ="SELECT * FROM combis WHERE idu='$id'";
+								$result53=mysqli_query ($link, $query53) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+      						  	$combi=(mysqli_fetch_array($result53));
+								$asientos= $combi['cantidad_asientos'];
+
+								$query54="SELECT * FROM pasajes WHERE idv='$idv'";
+								$result54=mysqli_query ($link, $query54) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+      						  	$pasajes=(mysqli_num_rows($result54));
+
+								$cantidad = $asientos - $pasajes;
+
+								$query58="SELECT * FROM lugar WHERE idl='$rutas[codigo_postal_origen]'";
+								$result58=mysqli_query ($link, $query58) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+      						  	$origen=(mysqli_fetch_array($result58));
+								
+								$query59="SELECT * FROM lugar WHERE idl='$rutas[codigo_postal_detino]'";
+								$result59=mysqli_query ($link, $query59) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+								$destino=(mysqli_fetch_array($result59));
+
+						if(($chofer['activo'] == 1) and ($rutas['activo']  == 1 ) and ($viajes['activo']== 1 )){	
 						?>
 			<div class="div_usuario">
 				<div class="div_btn_usuario">
@@ -78,7 +100,12 @@
 				<div class="div_info_usuario" >
 						<a class="div_info_usuario" href="">
 						<p>Numero de viaje : <?php  echo  $nro_viaje ?></p>
-						<p>Mail conductor:<?php echo $chofer['email']; ?> codigo de  ruta: <?php echo $ruta['codigo_ruta'] ?>  ID viaje:<?php echo $idv ?> </p>
+						<p> asientos disponibles: <?php  echo  $cantidad ?></p>
+						<p> Tipo de combi:<?php  echo  $combi['tipo'] ?></p>
+						<p>Mail conductor:<?php echo $chofer['email']; ?>  </p>
+						<p>Origen:<?php echo $origen['nombre']; ?>  </p>
+						<p>Origen:<?php echo $destino['nombre']; ?>  </p>
+
 						</a>
 				</div>							
 			</div>	
