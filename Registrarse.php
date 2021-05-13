@@ -1,11 +1,10 @@
 <html>
 
 <head>
-<title> Combi 19
- </title>
- <link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
-<script language="JavaScript" type="text/javascript" src ="js/validacionRegistro.js"> </script>
-<script  src= "js/Passwordcheckbox.js"></script>
+	<title> Combi 19</title>
+	<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
+	<script language="JavaScript" type="text/javascript" src ="js/validacionRegistro.js"> </script>
+
 </head>
 
 <body style="margin: 1%" >
@@ -18,12 +17,12 @@
 					</div>
 
 					<div class="card-body">
-						<input type="text" class="form-control" name="nombre" placeholder=" Nombre"> <br>          
-						<input type="text" class="form-control" name="apellido" size=50 placeholder=" Apellido"> <br>
-						<input type="email" class="form-control" id="mail" name="user_mail"  placeholder=" Email de usuario" size=50 autofocus > <br>
-						<input type="text" class="form-control" name="dni" size=50 placeholder=" DNI"> <br>          
-						<input type ="password" class="form-control" name="clave" size=50  minlength="6" placeholder=" Clave"><br>
-						<input type="password" name="clave1" class="form-control" size=50   minlength= "6 " placeholder=" Confirmar Clave"> <br>			
+						<input type="text" class="form-control" name="nombre" placeholder=" Nombre" required> <br>          
+						<input type="text" class="form-control" name="apellido" size=50 placeholder=" Apellido" required> <br>
+						<input type="email" class="form-control" id="mail" name="user_mail"  placeholder=" Email de usuario" size=50 autofocus required> <br>
+						<input type="text" class="form-control" name="dni" size=50 placeholder=" DNI" required> <br>          
+						<input type ="password" class="form-control" name="clave" size=50  minlength="6" placeholder=" Clave" required><br>
+						<input type="password" name="clave1" class="form-control" size=50   minlength= "6 " placeholder=" Confirmar Clave" requierd> <br>			
       				
 						<div class="form-check form-switch">
 							<input class="form-check-input" type="checkbox" onclick="registrarsepassword()">Mostrar Contraseña<br><br>
