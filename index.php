@@ -54,28 +54,25 @@
       					<small id="emailHelp" class="form-text text-muted">No compartiremos tu email con terceros.</small>
 						<br>
 
-
       					<label for="exampleInputPassword1" class="form-label mt-4">Contraseña</label>
       						<input type="password" class="form-control"  name="cont" id="contra" value="<?php echo $password ?>" minlength="6" placeholder="Contraseña" required>
 						<br>
 
-      				<div class="form-check form-switch">
-        				<input class="form-check-input" type="checkbox" onclick="indexpassword()" id="flexSwitchCheckDefault">
-        				<label class="form-check-label" for="flexSwitchCheckDefault">Mostrar Contraseña</label>
-      				</div> 
-					<br>
-					<div class="text-center">
-						<input type="submit" value="Iniciar Sesion"  class="btn btn-primary"> <br> <br>
-						<a href="Registrarse.php" class="button">Registrarse como nuevo usuario </a> <br> <br>
-						<a href="pagprincipal.php" class="button"> Ingresar como invitado </a>
+      					<div class="form-check form-switch">
+        					<input class="form-check-input" type="checkbox" onclick="indexpassword()" id="flexSwitchCheckDefault">
+        					<label class="form-check-label" for="flexSwitchCheckDefault">Mostrar Contraseña</label>
+      					</div> 
 						<br>
-					</div>
+						<div class="text-center">
+							<input type="submit" value="Iniciar Sesion"  class="btn btn-primary"> <br> <br>
+							<p>¿No tienes una cuenta? <a href="Registrarse.php" class="button">Registrarse</a></p>
+							<a href="pagprincipal.php" class="button"> Ingresar como invitado </a>
+							<br>
+						</div>
 					</div>
 				</form>			
 			</div>
-
-
-			
+	
 			<br>
 			<br>
 		</div>
