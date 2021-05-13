@@ -1,5 +1,5 @@
 <?php
-	include "../BD.php";// conectar y seleccionar la base de datos
+	include "../BD.php";// conectar y seleccionar la base de datosss
 	$link = conectar();
     include "classLogin.php";
 	$usuario= new usuario();
@@ -11,10 +11,6 @@
 	$full = true;
 	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['codigo'])) ){
 		$nro_viaje= $_POST['nro_viaje'];
-		$fecha= $_POST['fecha'];
-		$precio= $_POST['precio'];
-		$email= $_POST['email'];
-		$codigo = $_POST['codigo'];	
 
         $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
@@ -39,7 +35,7 @@
 			$full = false;
 		}
         
-        $query25= ("SELECT nro_viaje FROM viajes WHERE activo='1'");//hacer consulta 
+        $query25= ("SELECT nro_viaje FROM viajes");//hacer consulta 
 		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
 		while ($viajetabla= mysqli_fetch_array ($result25)){
 			if ($nro_viaje == $viajetabla['nro_viaje']){
@@ -48,17 +44,10 @@
 			}
 		}
 
-		$query57= ("SELECT * FROM viajes WHERE idc='$chofer[id]'");//hacer consulta 
-		$result57= mysqli_query ($link, $query57) or die ('Consulta fallida ' .mysqli_error($link));
-		while ($viajetabla= mysqli_fetch_array ($result57)){
-			if ($fecha == $viajetabla['fecha']){
-				$full= false;
-				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada";
-			}
-		}
-
+		$email= $_POST['email'];
+		$codigo = $_POST['codigo'];	
 			if($full){
-            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, idc, idr) values ('$_POST[nro_viaje]', '$precio', 'pendiente', '$fecha','$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
+            $query31= "INSERT INTO viajes (nro_viaje, idc, idr) values ('$_POST[nro_codigo]', '$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
             $result31= mysqli_query ($link, $query31) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			$mensaje1= "El viaje se publico correctamente";
 			$error=false;
