@@ -12,7 +12,7 @@
 
 
 
-    // Alta de combis
+    // Alta de combisssss
     if(isset($_POST['submit'])){
         $patente = $_POST["patente"];
         $cantidad_asientos = $_POST["cantidad_asientos"];

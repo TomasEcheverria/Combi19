@@ -19,17 +19,10 @@
         $dni = $_POST["dni"];
         $password = $_POST["password"];
     
-        $email_existe = "SELECT * FROM usuarios WHERE ((email='$email') AND activo=1)";
-        $resultado_email_existe = mysqli_query($db,$email_existe);
-
-        // Agrego solo si el email no esta cargado antes en la bd   
-        if(empty(mysqli_fetch_assoc($resultado_email_existe))){
-
-            $sql = "INSERT INTO usuarios (`email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`, `activo`) VALUES
-            ('$email', '$firstName', '$lastName', $dni, '$password', 'chofer', 0, 0, NULL, NULL, NULL,1);";
-            mysqli_query($db,$sql);
-        }
-
+    
+        $sql = "INSERT INTO usuarios (`email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`, `activo`) VALUES
+        ('$email', '$firstName', '$lastName', $dni, '$password', 'chofer', 0, 0, NULL, NULL, NULL,1);";
+        mysqli_query($db,$sql);
     
         header("Location: ../vista_choferes.php?insert=success");
     }
@@ -61,15 +54,8 @@
         $dni = $_POST['dni'];
         $correo = $_POST['email'];
         $clave = $_POST['password'];
-
-        $email_existe_edit = "SELECT * FROM usuarios WHERE (((email='$correo') AND (id<>'$id')) AND activo=1)";
-        $resultado_email_existe_edit = mysqli_query($db,$email_existe_edit);
-
-        if(empty(mysqli_fetch_assoc($resultado_email_existe_edit))){
-            $sql = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido', DNI='$dni', email='$correo', clave='$clave' WHERE id='$id'";
-            $db->query($sql) or die($db->error);
-        }
-
+        $sql = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido', DNI='$dni', email='$correo', clave='$clave' WHERE id='$id'";
+        $db->query($sql) or die($db->error);
         
         header("Location: ../vista_choferes.php");
     }
