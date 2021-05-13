@@ -39,9 +39,9 @@
     ?>
 <body class="body">
 
-    <div class="card border-primary mb-3">
+    <div class="card">
     <div class="card-header text-center">
-        <h3>Agregar Insumo</h3>
+        <strong>Agregar Insumo</strong>
     </div>
     <div class="card-body">
         <blockquote class="blockquote mb-0">
@@ -78,7 +78,7 @@
                   // Se chequea que existan datos para mostrar
                   $tabla = "
                   <table class='table table-striped'>
-                  <thead class='table-primary'>
+                  <thead class='table-dark'>
                     <tr>
                       <th scope='col'>Nombre</th>
                       <th scope='col'>Inventario</th>

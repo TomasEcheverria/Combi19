@@ -61,12 +61,6 @@
                <input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus   value=<?php echo $datos['nro_viaje']; ?> ></input><br><br>           
 			   <p> imprevisto </p>
 			   <input type="text"  name="imprevisto"  placeholder="imprevisto" size=50 autofocus   value=<?php echo $datos['imprevisto']; ?> ></input><br><br>    
-			   <p> precio del viaje </p>
-			   <input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    value=<?php echo $datos['precio']; ?> ></input><br><br>    
-               <p> fecha de salida </p>
-			   <input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus   value=<?php echo $datos['fecha']; ?>  ></input><br><br>    
-			   <p> estado del viaje </p>
-			   <input type="text"  name="estado"  placeholder="Estado del viaje" size=50 autofocus   value=<?php echo $datos['estado']; ?>  ></input><br><br>    
 			   <p> email del conductor </p>
 			   <input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus   value=<?php echo $chofer['email']; ?> ></input><br><br>    
                <p> codigo de ruta </p>
@@ -84,9 +78,9 @@
 	} catch (Exception $e){
 			echo $e->getMessage();
 	?>
-		 <div class="mensajes">
+		 <div class="body">
 		 <br><br>		
-			<a href="pagprincipal.php"  class=""> click aqui para volver a la pagina principal </a><br><br>	
+			<a href="pagprincipal.php" > click aqui para volver a la pagina principal </a><br><br>	
 			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
 	</div>	 
 		 <div class= "div_foot">
