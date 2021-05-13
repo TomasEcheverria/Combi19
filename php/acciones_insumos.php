@@ -61,7 +61,7 @@
         $inventario = $_POST["inventario"];
         $precio = $_POST["precio"];
 
-        $nombre_existe_edit="SELECT * FROM combis WHERE (((nombre='$nombre') AND (idi<>'$id')) AND activo=1)";
+        $nombre_existe_edit="SELECT * FROM insumos WHERE (((nombre='$nombre') AND (idi<>'$id')) AND activo=1)";
         $resultado_nombre_existe_edit =  mysqli_query($db,$nombre_existe_edit);
 
         
