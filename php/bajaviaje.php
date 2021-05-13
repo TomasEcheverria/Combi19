@@ -9,7 +9,7 @@
         $result50=mysqli_query ($link, $query50) or die ('Consulta query50 fallida: ' .mysqli_error($link));
         $datos=(mysqli_fetch_array($result50)); 
 
-		if($datos['estado'] != 'en curso'){
+		if($datos['estado'] != 'curso'){
 		$query10="UPDATE viajes SET activo='0' WHERE idv='$idv'";
 		$result10= mysqli_query ($link, $query10) or die ('Consulta 10 fallida ' .mysqli_error($link));
 		 if($result10){
