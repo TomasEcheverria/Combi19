@@ -46,9 +46,9 @@
 						<input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus    ></input><br><br>      
 						<p> Precio del viaje </p>
 						<input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    ></input><br><br>    
-						<p> Fecha de salida </p>						
+						<p> Hora </p>   						
 			   			<input type="time"  name="hora"  placeholder="Hora de salida" size=50 autofocus  required ></input><br><br>
-						<p> Hora </p>   
+						<p> Fecha de salida </p>
 						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
 						<p> Email del conductor </p>
 						<input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus    ></input><br><br>    

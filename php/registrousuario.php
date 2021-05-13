@@ -61,15 +61,22 @@
 <html>
 <head> 
 	<title> Registro </title>
-	<link rel="stylesheet" type="text/css" href= " ../css/Estilos.css" media="all" > 
+	<link rel="stylesheet" type="text/css" href= "../css/bootstrap.min.css" media="all" > 
 </head>
-<body class = "body" >
+<body  >
 	<div class="div_body">
-			<div class="div_superior" >
-				<p> Combi 19 <img src="../css/images/muro.jpg" class="div_icono">
-				</p>
-			</div>
+
+	<div style="margin: 1%" >
+		<div class="mx-auto">
+			<a  href="pagprincipal.php" >  
+				<div class ="text-center"><img src="../css/images/logo_is.png" style="max-width: 15rem;"></div>	
+			</a>
+		</div> <br> 
+	</div>	
 	<br> <br>
+
+
+	<div class="text-center"> 
 	<?php 
 	if ((isset($exito)) and (($exito==true))){
 	?>
@@ -87,6 +94,7 @@
 	<?php
 	}
 	?>
+	</div>
 	</div>
 </body>
 </html>
