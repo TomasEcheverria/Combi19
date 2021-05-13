@@ -51,6 +51,8 @@
                         $idv=$viajes['idv'];
                         $nro_viaje=$viajes['nro_viaje'];
 				        $imprevisto=$viajes['imprevisto'];
+						$fecha=$viajes['fecha'];
+						$hora=$viajes['hora'];
 				        $idc=$viajes['idc']; 
 				        $idr=$viajes['idr'];
 						$activo=$viajes['activo'];
@@ -75,12 +77,13 @@
       						  	$pasajes=(mysqli_num_rows($result54));
 
 								$cantidad = $asientos - $pasajes;
+								echo ($rutas['codigo_postal_destino']);
 
-								$query58="SELECT * FROM lugar WHERE idl='$rutas[codigo_postal_origen]'";
+								$query58="SELECT * FROM lugares WHERE idl='$rutas[codigo_postal_origen]'";
 								$result58=mysqli_query ($link, $query58) or die ('Consulta query51 fallida: ' .mysqli_error($link));
       						  	$origen=(mysqli_fetch_array($result58));
 								
-								$query59="SELECT * FROM lugar WHERE idl='$rutas[codigo_postal_detino]'";
+								$query59="SELECT * FROM lugares WHERE idl='$rutas[codigo_postal_destino]'";
 								$result59=mysqli_query ($link, $query59) or die ('Consulta query51 fallida: ' .mysqli_error($link));
 								$destino=(mysqli_fetch_array($result59));
 
@@ -104,8 +107,9 @@
 						<p> Tipo de combi:<?php  echo  $combi['tipo'] ?></p>
 						<p>Mail conductor:<?php echo $chofer['email']; ?>  </p>
 						<p>Origen:<?php echo $origen['nombre']; ?>  </p>
-						<p>Origen:<?php echo $destino['nombre']; ?>  </p>
-
+						<p>Destino:<?php echo $destino['nombre']; ?>  </p>
+						<p> Fecha: <?php echo $fecha; ?>  </p>
+						<p>Hora:  <?php echo $hora; ?>  </p>
 						</a>
 				</div>							
 			</div>	

@@ -15,6 +15,7 @@
 		$precio= $_POST['precio'];
 		$estado= $_POST['estado'];
 		$fecha= $_POST['fecha'];
+		$hora=$_POST['hora'];
 		$idv= $_POST['viaje'];
 		$email= $_POST['email'];
 		$codigo= $_POST['codigo'];
@@ -69,6 +70,15 @@
 				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada, por favor seleccione otro";
 			}
 		}
+	}
+
+	$query59 ="SELECT * FROM combis WHERE idu='$chofer[id]'";
+	$result59=mysqli_query ($link, $query59) or die ('Consulta query59 fallida: ' .mysqli_error($link));
+	$combi=(mysqli_fetch_array($result59)); 
+	$cantidad=mysqli_num_rows($result59);
+	if(($cantidad == 0) or (!$combi['activo'])){
+		$mensaje2 = 'el conductor especificado no posee ninguna combi a su nombre';
+		$full = false;
 	}
 	
 			if($full){

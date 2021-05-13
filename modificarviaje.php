@@ -65,6 +65,9 @@
 			   <input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    value=<?php echo $datos['precio']; ?> ></input><br><br>    
                <p> fecha de salida </p>
 			   <input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus   value=<?php echo $datos['fecha']; ?>  ></input><br><br>    
+			   <p> hora de salida </p>
+			   <input type="time"  name="hora"  placeholder="Hora de salida" size=50 autofocus   value=<?php echo $datos['hora'];  ?>  required></input><br><br>    
+			   
 			   <p> estado del viaje </p>
 			   <input type="text"  name="estado"  placeholder="Estado del viaje" size=50 autofocus   value=<?php echo $datos['estado']; ?>  ></input><br><br>    
 			   <p> email del conductor </p>

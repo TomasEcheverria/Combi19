@@ -15,6 +15,7 @@
 		$precio= $_POST['precio'];
 		$email= $_POST['email'];
 		$codigo = $_POST['codigo'];	
+		$hora=$_POST['hora'];
 
         $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
@@ -38,6 +39,7 @@
 			$mensaje2 = 'no se encontro a ninguna ruta con el codigo especificado';
 			$full = false;
 		}
+		
         
         $query25= ("SELECT nro_viaje FROM viajes WHERE activo='1'");//hacer consulta 
 		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
@@ -56,9 +58,18 @@
 				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada";
 			}
 		}
+		
+		$query59 ="SELECT * FROM combis WHERE idu='$chofer[id]'";
+        $result59=mysqli_query ($link, $query59) or die ('Consulta query59 fallida: ' .mysqli_error($link));
+        $combi=(mysqli_fetch_array($result59)); 
+		$cantidad=mysqli_num_rows($result59);
+		if(($cantidad == 0) or (!$combi['activo'])){
+			$mensaje2 = 'el conductor especificado no posee ninguna combi a su nombre';
+			$full = false;
+		}
 
 			if($full){
-            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, idc, idr) values ('$_POST[nro_viaje]', '$precio', 'pendiente', '$fecha','$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
+            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, hora, idc, idr) values ('$_POST[nro_viaje]', '$precio', 'pendiente', '$fecha', '$_POST[hora]','$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
             $result31= mysqli_query ($link, $query31) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			$mensaje1= "El viaje se publico correctamente";
 			$error=false;
