@@ -4,7 +4,7 @@
 	<title> Combi 19</title>
 	<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
 	<script language="JavaScript" type="text/javascript" src ="js/validacionRegistro.js"> </script>
-
+	<script  src= "js/Passwordcheckbox.js"></script>
 </head>
 
 <body style="margin: 1%" >
