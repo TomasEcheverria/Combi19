@@ -13,7 +13,9 @@
 		<title>
 			Combi 19
 		</title>
-		<link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" > 
+		
+		<link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" >
+		<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
 		<script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
 		<script  src= "js/menu.js"></script>
 	</head>
@@ -23,14 +25,16 @@
  
  
   ?>
-	<body class = "body"  id="div_body">
+	<body>
+		
 		<div class="div_body" >
-                	<div class="div_superior"  >
-					 <a class = "div_superior" href="pagprincipal.php" >  
-				<p> Combi 19 <img src="css/images/muro.jpg" class="div_icono">	
-				</a></p>
-			</div>
+
+
       <?php echo menu($tipo); ?>
+
+ 
+		<div class ="text-center"><img src="css/images/logo_is.png" style="max-width: 15rem;"></div>	
+
 		<div class="div_resultados">
 		     <?php
 			    $consulta="SELECT *  FROM viajes WHERE activo='1'";
@@ -40,7 +44,25 @@
 				 	<p><?php echo$result;?> Resultados encontrados.</p>
 				 </h3>
 				
+
+				<table class="table table-striped">
+					<thead class="table-dark">
+            			<tr>
+              				<th scope="col">Numero de viaje</th>
+              				<th scope="col">asientos disponibles:</th>
+              				<th scope="col">Tipo de combi:</th>
+              				<th scope="col">Mail conductor:</th>
+              				<th scope="col">Origen:</th>
+							<th scope="col">Destino:</th>
+							<th scope="col">Fecha:</th>
+							<th scope="col">Hora:</th>	
+							<th scope="col">Acciones:</th>	  
+           		 		</tr>
+        			</thead>
+					<tbody>
 				<?php
+				
+				
 				
 			    if($result>0){
 			    	while ($viajes=mysqli_fetch_array ($resultado))
@@ -77,7 +99,7 @@
       						  	$pasajes=(mysqli_num_rows($result54));
 
 								$cantidad = $asientos - $pasajes;
-								echo ($rutas['codigo_postal_destino']);
+								$rutas['codigo_postal_destino'];
 
 								$query58="SELECT * FROM lugares WHERE idl='$rutas[codigo_postal_origen]'";
 								$result58=mysqli_query ($link, $query58) or die ('Consulta query51 fallida: ' .mysqli_error($link));
@@ -89,43 +111,44 @@
 
 						if(($chofer['activo'] == 1) and ($rutas['activo']  == 1 ) and ($viajes['activo']== 1 )){	
 						?>
-			<div class="div_usuario">
-				<div class="div_btn_usuario">
-                    <a href="modificarviaje.php?idv=<?php echo $idv?>">
-                      Modificar viaje
-                    </a>
-                    <br>
-					<form  action="php/bajaviaje.php" method="post">    
-				                  <button name="borrar" class="btn_borarr_mensaje" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar Viaje</button>
+
+						<tr>
+							<td><?php  echo  $nro_viaje ?></td>
+							<td><?php  echo  $cantidad ?></td>
+							<td><?php  echo  $combi['tipo'] ?></td>
+							<td><?php echo $chofer['email']; ?></td>
+							<td><?php echo $origen['nombre']; ?></td>
+							<td><?php echo $destino['nombre']; ?></td>
+							<td><?php echo $fecha; ?></td>
+							<td><?php echo $hora; ?></td>
+							<td><a class="btn btn btn-outline-success" href="modificarviaje.php?idv=<?php echo $idv?>">Editar</a>
+							<form  action="php/bajaviaje.php" method="post">    
+				                  <button name="borrar" class="btn btn-outline-danger ml-1" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar</button>
 				                  <input type="hidden" name="idv" value="<?php echo $idv; ?>" />
-				     </form>
-				</div>
-				<div class="div_info_usuario" >
-						<a class="div_info_usuario" href="">
-						<p>Numero de viaje : <?php  echo  $nro_viaje ?></p>
-						<p> asientos disponibles: <?php  echo  $cantidad ?></p>
-						<p> Tipo de combi:<?php  echo  $combi['tipo'] ?></p>
-						<p>Mail conductor:<?php echo $chofer['email']; ?>  </p>
-						<p>Origen:<?php echo $origen['nombre']; ?>  </p>
-						<p>Destino:<?php echo $destino['nombre']; ?>  </p>
-						<p> Fecha: <?php echo $fecha; ?>  </p>
-						<p>Hora:  <?php echo $hora; ?>  </p>
-						</a>
-				</div>							
+				    		</form></td>
+						</tr>
+							
 			</div>	
 			
-    	<?php	
+    		<?php	
 						}
 			    	}
 			    }
 		      ?>
 		</div>
-        <div class= "div_foot">
-			<p> Made by : Grupo 40 </p>
-		</div> 
+
+		</tbody>
+		</table>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<div class="div-foot">
+			<figcaption class="blockquote-footer">
+				<cite title="Source Title">Made by : Grupo 40 </cite>
+			</figcaption>
+		</div>
 	</body>
 		</body>
 	    <?php
+		
 	} catch (Exception $e){
 			echo $e->getMessage();
 	?>
@@ -133,9 +156,12 @@
 		 <br><br>		
 			<a href="pagprincipal.php" > click aqui para volver a la pagina principal </a><br><br>	
 			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
-	</div>	 
-		<div class= "div_foot">
-		<p> Made by : Grupo 40 </p>
+	</div>
+
+	<div class="div-foot">
+		<figcaption class="blockquote-footer">
+				<cite title="Source Title">Made by : Grupo 40 </cite>
+		</figcaption>
 	</div>
 		<?php	
 	}
