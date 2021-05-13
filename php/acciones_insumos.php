@@ -14,7 +14,7 @@
         $precio = $_POST["precio"];
     
         $nombre_existe ="SELECT * FROM insumos WHERE ((nombre='$nombre') AND activo=1)";
-        $resultado_nombre_existe = mysqli_query($db,$patente_existe);
+        $resultado_nombre_existe = mysqli_query($db,$nombre_existe);
         // Se agrega solo si el nombre que se quiere usar no existe
         if(empty(mysqli_fetch_assoc($resultado_nombre_existe))){
 

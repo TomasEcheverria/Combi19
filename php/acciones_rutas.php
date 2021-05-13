@@ -62,7 +62,7 @@
         //Combi buscada en la BD
         if($result->num_rows == 1){
             $row = $result->fetch_array();
-            $codigo_ruta = $row["idr"];
+            $codigo_ruta = $row["codigo_ruta"];
             $codigo_postal_origen = $row["codigo_postal_origen"];
             $codigo_postal_destino = $row["codigo_postal_destino"];
             $kilometros = $row["kilometros"];
