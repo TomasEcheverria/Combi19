@@ -10,7 +10,6 @@
 		<title>
 			Combi 19
 		</title>
-
 		<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
 		<script  src= "js/Passwordcheckbox.js"></script>
 		<script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
