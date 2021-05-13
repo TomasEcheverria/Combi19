@@ -1,5 +1,5 @@
 <?php
-	include "BD.php";// conectar y seleccionar la base de datoss
+	include "BD.php";// conectar y seleccionar la base de datos
 	$link = conectar();
     include "php/classLogin.php";
     include "menu.php";
@@ -42,9 +42,12 @@
 		<form name="publicarviaje" method="post" action="php/publicarviaje.php" enctype="multipart/form-data">
 			   <h2>Publicar viaje</h2>
 			   <p> Numero de viaje </p>
+               <input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus    ></input><br><br>      
+			   <p> precio del viaje </p>
+			   <input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    ></input><br><br>    
+               <p> fecha de salida </p>
+			   <input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
                
-               <input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus    ></input><br><br>           
-			   <p> imprevisto </p>   
 			   <p> email del conductor </p>
 			   <input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus    ></input><br><br>    
                <p> codigo de ruta </p>
