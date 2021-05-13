@@ -19,11 +19,15 @@
         $codigo_postal_destino = $_POST["codigo_postal_destino"];
         $kilometros = $_POST["kilometros"];
     
-    
-        $sql = "INSERT INTO rutas (`codigo_ruta`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
-        ('$codigo_ruta', '$codigo_postal_origen', '$codigo_postal_destino', '$kilometros', 1);";
-        mysqli_query($db,$sql);
-    
+        $ruta_existe="SELECT * FROM rutas WHERE ((codigo_ruta='$codigo_ruta') AND activo=1)";
+        $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
+        if (empty(mysqli_fetch_assoc($resultado_ruta_existe))){
+            $sql = "INSERT INTO rutas (`codigo_ruta`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
+            ('$codigo_ruta', '$codigo_postal_origen', '$codigo_postal_destino', '$kilometros', 1);";
+            mysqli_query($db,$sql);      
+
+        }
+
         header("Location: ../vista_rutas.php");
     }
 
