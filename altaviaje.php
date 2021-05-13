@@ -24,13 +24,10 @@
 			$error=$_GET['error'];
 		}
   ?>
-<body id="div_body" >
+  
+<body style="background-color:LightGrey;" id="div_body" >
 	<div class="div_body">
-		<div class="div_superior"  > 
-				 <a class = "div_superior" href="pagprincipal.php" >  
-				<p> Combi 19 <img src="css/images/muro.jpg" class="div_icono">	
-				</a></p>
-			</div>
+
 			<a class="btn btn-outline-primary" href="administracion.php">Volver</a>
             <?php echo menu($tipo);?>
 		<div class=div_registro>
@@ -40,30 +37,34 @@
 			echo $mensaje;
 		}
 			?>
-		<div class= "div_editar">
-		<form name="publicarviaje" method="post" action="php/publicarviaje.php" enctype="multipart/form-data">
-			   <h2>Publicar viaje</h2>
-			   <p> Numero de viaje </p>
-               <input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus    ></input><br><br>      
-			   <p> precio del viaje </p>
-			   <input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    ></input><br><br>    
-               <p> fecha de salida </p>
-			   <input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
-               <p> Hora </p>
-			   <input type="time"  name="hora"  placeholder="Hora de salida" size=50 autofocus  required ></input><br><br>
-			   <p> email del conductor </p>
-			   <input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus    ></input><br><br>    
-               <p> codigo de ruta </p>
-			   <input type="text"  name="codigo"  placeholder="Codigo ruta" size=50 autofocus    ></input><br><br>
-			   <input type="button" value="Editar" class="btn_editar" onclick = "altaviaje()">
-              </form>
-              </div>
-            <div class= "div_foot">
-			<p> Made by : Grupo 40
-			</p>
-		</div> 
-		</div>
-	</body>
+
+			<div class="mx-auto" style="max-width: 40rem;">
+				<div class="card text-white bg-primary mb-3">
+					<form name="publicarviaje" method="post" action="php/publicarviaje.php" enctype="multipart/form-data">
+						<h2>Publicar viaje</h2>
+						<p> Numero de viaje </p>
+						<input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus    ></input><br><br>      
+						<p> Precio del viaje </p>
+						<input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    ></input><br><br>    
+						<p> Fecha de salida </p>
+						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
+						<p> Email del conductor </p>
+						<input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus    ></input><br><br>    
+						<p> Codigo de ruta </p>
+						<input type="text"  name="codigo"  placeholder="Codigo ruta" size=50 autofocus    ></input><br><br>
+						<input type="button" value="Submit" class="btn_editar" onclick = "altaviaje()">
+					</form>
+				</div>
+			</div>
+	</div>
+</body>
+
+	<div class="div-foot">
+			<figcaption class="blockquote-footer">
+				<cite title="Source Title">Made by : Grupo 40 </cite>
+			</figcaption>
+	</div>
+
 <?php
 	} catch (Exception $e){
 			echo $e->getMessage();

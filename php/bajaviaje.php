@@ -14,23 +14,20 @@
 <html>
 <head> 
 	<title> Combi 10 </title>
-	<link rel="stylesheet" type="text/css" href= " ../css/Estilos.css" media="all" > 
+	<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
 </head>
-<body class = "body" >
-	<div class="div_body">
-			<div class="div_superior" >
-				<p>  Combi 19 <img src="../css/images/muro.jpg" class="div_icono">
-				</p>
-			</div>
-	<br> <br>
-	<?php 
-	if ((isset($exito)) and (($exito==true))){
-	?>
-	Viaje Borrado exitosamente <br><br>
-	<a href="../pagprincipal.php"> Click aqui para volver  &nbsp;&nbsp;&nbsp; </a>
-	<?php
-	} 
-	?>
+<body>
+	<div class="text-center">
+			
+		<br> <br>
+		<?php 
+		if ((isset($exito)) and (($exito==true))){
+		?>
+		Viaje Borrado exitosamente <br><br>
+		<a href="../listarviajes.php"> Click aqui para volver  &nbsp;&nbsp;&nbsp; </a>
+		<?php
+		} 
+		?>
 	</div>
 </body>
 </html>
