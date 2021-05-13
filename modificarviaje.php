@@ -13,9 +13,11 @@
 <head>
 	<title>Combi 19 </title>
 	<link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" > 
+	<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" >
 <script language="JavaScript" type="text/javascript" src ="js/validacionEditar.js"> </script>
 <script  src= "js/menu.js"></script>
 <script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
+ 
 </head>
  <?php 
     try {
@@ -36,53 +38,62 @@
 			$error=$_GET['error'];
 		}
   ?>
-<body class="body" id="div_body" >
+<body id="div_body" >
 	<div class="div_body">
-		<div class="div_superior"  > 
-				 <a class = "div_superior" href="pagprincipal.php" >  
-				<p> Combi 19 <img src="css/images/muro.jpg" class="div_icono">	
-				</a></p>
-			</div>
+		
+			<a class="btn btn-outline-primary" href="listarviajes.php">Volver</a>
+
              <?php echo menu($tipo);?>
-             <p> Modificacion del viaje <?php echo $idviaje?>
+             <p > Modificacion del viaje <?php echo $idviaje?>
 		<div class=div_registro>
-			<p> Escriba solo los campos que desea modificar</p>
+			<p class="table"> Escriba solo los campos que desea modificar</p>
+
 			<?php
 		if (isset ($_GET['mensajeEditar'])){
 			$mensaje = $_GET['mensajeEditar'];
-			echo $mensaje;
+
+			echo "<h5 class='table'>". $mensaje . "</h2>";
 		}
 			?>
-		<div class= "div_editar">
-		<form name="editarviaje" method="post" action="php/editarviaje.php" enctype="multipart/form-data">
-			   <h2>Editar Viaje</h2>
-			   <p> Numero de viaje </p>
-               <input type="hidden"  name="viaje"   value=<?php  echo $idviaje ?> ></input>
-               <input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus   value=<?php echo $datos['nro_viaje']; ?> ></input><br><br>           
-			   <p> imprevisto </p>
-			   <input type="text"  name="imprevisto"  placeholder="imprevisto" size=50 autofocus   value=<?php echo $datos['imprevisto']; ?> ></input><br><br>    
-			   <p> precio del viaje </p>
-			   <input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    value=<?php echo $datos['precio']; ?> ></input><br><br>    
-               <p> fecha de salida </p>
-			   <input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus   value=<?php echo $datos['fecha']; ?>  ></input><br><br>    
-			   <p> hora de salida </p>
-			   <input type="time"  name="hora"  placeholder="Hora de salida" size=50 autofocus   value=<?php echo $datos['hora'];  ?>  required></input><br><br>    
-			   
-			   <p> estado del viaje </p>
-			   <input type="text"  name="estado"  placeholder="Estado del viaje" size=50 autofocus   value=<?php echo $datos['estado']; ?>  ></input><br><br>    
-			   <p> email del conductor </p>
-			   <input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus   value=<?php echo $chofer['email']; ?> ></input><br><br>    
-               <p> codigo de ruta </p>
-			   <input type="text"  name="codigo"  placeholder="Codigo ruta" size=50 autofocus   value=<?php echo $ruta['codigo_ruta']; ?> ></input><br><br>
-			   <input type="button" value="Editar" class="btn_editar" onclick = "validacionesviaje()">
-              </form>
-              </div>
-            <div class= "div_foot">
-			<p> Made by : Grupo 40
-			</p>
-		</div> 
+
+		<div class="mx-auto" style="max-width: 40rem;">
+			<div class="card text-white bg-primary mb-3">
+
+				<form name="editarviaje" method="post" action="php/editarviaje.php" enctype="multipart/form-data">
+					<div class="card-header">
+						<h2 >Editar Viaje</h2>
+					</div>
+
+					<div class="card-body">
+						<p > Numero de viaje </p>
+						<input type="hidden" class="form-control" aria-describedby="emailHelp"  name="viaje"   value=<?php  echo $idviaje ?> ></input>
+						<input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus   value=<?php echo $datos['nro_viaje']; ?> ></input><br><br>           
+						<p> Imprevisto </p>
+						<input type="text"  name="imprevisto"  placeholder="imprevisto" size=50 autofocus   value=<?php echo $datos['imprevisto']; ?> ></input><br><br>    
+						<p> Precio del viaje </p>
+						<input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    value=<?php echo $datos['precio']; ?> ></input><br><br>    
+						<p> Fecha de salida </p>
+						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus   value=<?php echo $datos['fecha']; ?>  ></input><br><br>    
+						
+						<p> Estado del viaje </p>
+						<input type="text"  name="estado"  placeholder="Estado del viaje" size=50 autofocus   value=<?php echo $datos['estado']; ?>  ></input><br><br>    
+						<p> Email del conductor </p>
+						<input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus   value=<?php echo $chofer['email']; ?> ></input><br><br>    
+						<p> Codigo de ruta </p>
+						<input type="text"  name="codigo"  placeholder="Codigo ruta" size=50 autofocus   value=<?php echo $ruta['codigo_ruta']; ?> ></input><br><br>
+						<input type="button" value="Editar" class="btn_editar" onclick = "validacionesviaje()">
+					</div>
+				</form>
+			</div>          
 		</div>
-	</body>
+	</div>
+</body>
+
+	<div class="div-foot">
+			<figcaption class="blockquote-footer">
+				<cite title="Source Title">Made by : Grupo 40 </cite>
+			</figcaption>
+	</div>
 	<?php
 	} catch (Exception $e){
 			echo $e->getMessage();
@@ -98,5 +109,5 @@
 		<?php	
 	}
 	?> 
-</body>
+
 </html>

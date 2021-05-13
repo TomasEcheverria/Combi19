@@ -12,6 +12,7 @@
 <head>
 	<title>Combi 19 </title>
 	<link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" > 
+	<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" >
 <script language="JavaScript" type="text/javascript" src ="js/validacionEditar.js"> </script>
 <script  src= "js/menu.js"></script>
 <script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
@@ -23,14 +24,15 @@
 			$error=$_GET['error'];
 		}
   ?>
-<body class="body" id="div_body" >
+<body id="div_body" >
 	<div class="div_body">
 		<div class="div_superior"  > 
 				 <a class = "div_superior" href="pagprincipal.php" >  
 				<p> Combi 19 <img src="css/images/muro.jpg" class="div_icono">	
 				</a></p>
 			</div>
-             <?php echo menu($tipo);?>
+			<a class="btn btn-outline-primary" href="administracion.php">Volver</a>
+            <?php echo menu($tipo);?>
 		<div class=div_registro>
 			<?php
 		if (isset ($_GET['mensajeEditar'])){

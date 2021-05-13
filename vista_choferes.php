@@ -53,13 +53,14 @@
           </div>
           <div class="col-12">
             <label for="inputAddress2" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" name="password" placeholder="" value="<?php echo $clave?>" required="">
+            <input type="password" class="form-control" name="password" minlength="6" placeholder="" value="<?php echo $clave?>" required>
           </div>
 
+ 
           <?php if($update == true){
-            echo "<div class='col-12'> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
+            echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a>  <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
           }else{
-            echo "<div class='col-12'> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
+            echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
           }          
           ?>
         </form>
@@ -105,7 +106,7 @@
           </tbody>
         </table>
 
-
+        
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
@@ -114,6 +115,7 @@
 	} catch (Exception $e){
 			echo $e->getMessage();
 	?>
+    
    <div class="body">
 		 <br><br>		
 			<a href="pagprincipal.php" > click aqui para volver a la pagina principal </a><br><br>	

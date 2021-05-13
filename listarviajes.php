@@ -29,8 +29,9 @@
 		
 		<div class="div_body" >
 
+		<a class="btn btn-outline-primary" href="administracion.php">Volver</a>
 
-      <?php echo menu($tipo); ?>
+      	<?php echo menu($tipo); ?>
 
  
 		<div class ="text-center"><img src="css/images/logo_is.png" style="max-width: 15rem;"></div>	
