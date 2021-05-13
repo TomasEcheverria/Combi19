@@ -1,3 +1,10 @@
+<?php
+	include "BD.php";// conectar y seleccionar la base de datos
+	$link = conectar();
+	include "php/classLogin.php";
+	$usuario= new usuario();
+	$usuario -> session ($usuarioID);
+?>
 <html>
 
 <head>
@@ -8,7 +15,9 @@
 </head>
 
 <body style="margin: 1%" >
-
+<?php try {
+				$usuario -> noIniciada($usuarioID);	
+			?>
 		<div class="mx-auto" style="max-width: 30rem;">
 			<div class="card border-primary mb-3" style="max-width: 30rem;">
 				<form name="registro" action="php/registrousuario.php"  method= "post" enctype="multipart/form-data" >
@@ -44,5 +53,19 @@
 				<cite title="Source Title">Made by : Grupo 40 </cite>
 			</figcaption>
 	</div>
-
+</body>
+<?php
+		} catch (Exception $e){
+			$msg= $e->getMessage();
+		?>
+		
+	<div class="mx-auto" style="max-width: 35rem;">
+		<div class="alert alert-dismissible alert-info">	
+		
+				<?php echo $msg. " como ". $_SESSION['email'] ?> <br><br>					
+				<a href="pagprincipal.php" > Volver a la pagina principal </a><br><br>	
+				<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Cerrar Sesion </a>
+		</div>
+	</div>
+	<?php } ?> 
 </html>
