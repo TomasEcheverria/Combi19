@@ -1,5 +1,5 @@
 <?php
-	include "BD.php";// conectar y seleccionar la base de datos
+	include "BD.php";// conectar y seleccionar la base de datossss
 	$link = conectar();
     include "php/classLogin.php";
     include "menu.php";

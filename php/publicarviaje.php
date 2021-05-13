@@ -1,5 +1,5 @@
 <?php
-	include "../BD.php";// conectar y seleccionar la base de datos
+	include "../BD.php";// conectar y seleccionar la base de datosss
 	$link = conectar();
     include "classLogin.php";
 	$usuario= new usuario();
