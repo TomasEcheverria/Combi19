@@ -25,10 +25,13 @@
             $sql = "INSERT INTO rutas (`codigo_ruta`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
             ('$codigo_ruta', '$codigo_postal_origen', '$codigo_postal_destino', '$kilometros', 1);";
             mysqli_query($db,$sql);      
+            header("Location: ../vista_rutas.php");
+        } else {
+            header("Location: ../vista_rutas.php?errormsg=2");
 
         }
 
-        header("Location: ../vista_rutas.php");
+
     }
 
 
@@ -39,14 +42,17 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1)";
+        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1 AND estado='pendiente')";
         $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
         if (empty(mysqli_fetch_assoc($resultado_viaje_existe))){
             
             $sql = "UPDATE rutas SET activo=0 WHERE activo=1 AND idr='$id'";
-            mysqli_query($db,$sql);
-        }
-        header("Location: ../vista_rutas.php");
+            mysqli_query($db,$sql);        
+            header("Location: ../vista_rutas.php");    
+        }else {
+            header("Location: ../vista_rutas.php?errormsg=1");
+        }           
+
 
     }
 
@@ -83,9 +89,17 @@
         $codigo_postal_origen = $_POST["codigo_postal_origen"];
         $codigo_postal_destino = $_POST["codigo_postal_destino"];
         $kilometros = $_POST["kilometros"];
-        $sql = "UPDATE rutas SET codigo_ruta='$codigo_ruta', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE idr='$id'";
-        $db->query($sql) or die($db->error);
-        
-        header("Location: ../vista_rutas.php");
+
+        //Se comprueba si la ruta existe antes de updatear
+        $ruta_existe="SELECT * FROM rutas WHERE ((codigo_ruta='$codigo_ruta') AND activo=1 AND idr<>'$id')";
+        $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
+        if (empty(mysqli_fetch_assoc($resultado_ruta_existe))){
+            $sql = "UPDATE rutas SET codigo_ruta='$codigo_ruta', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE idr='$id'";
+            $db->query($sql) or die($db->error);
+            header("Location: ../vista_rutas.php");            
+        } else {
+            header("Location: ../vista_rutas.php?errormsg=2");
+        }
+
     }
 

@@ -1,11 +1,15 @@
 <!--Funcion para traer rutas de la BD -->
 <?php
+
+
+
     include 'BD.php';
     include 'php/acciones_rutas.php';
     $db = conectar();
     include 'php/classLogin.php';
     $usuario= new usuario();
     $usuario -> tipoUsuario($tipo);
+
 
     //Consulta para obtener lugares
     $consulta_lugares = "SELECT * FROM lugares WHERE activo = 1";
@@ -60,7 +64,7 @@
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Lugar de origen/Código Postal</label>
                 <select name="codigo_postal_origen" class="form-select">
-                    <option value="">--Seleccione--</option>
+                    <option value="" required>--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
                         <option value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "   #" . $lugares['codigo_postal']; ?>
                         </option>
@@ -98,6 +102,7 @@
         </blockquote>
     </div>
     </div>
+
 
     <table class="table table-striped">
           <thead class="table-dark">
@@ -146,12 +151,30 @@
                         "</td>".
                     "</tr>";
               }
+
+            if(isset($_GET['errormsg'])){
+                switch ($_GET['errormsg']){
+                    case 1:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "No es posible eliminar la ruta porque está siendo utilizada en un viaje pendiente.".
+                            "</div>";
+                        break;
+                    case 2:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "Ya existe una ruta con el nombre ingresado.".
+                            "</div>";
+                        break;
+                }
+            }
+
+              
+
             }
             ?>
           </tbody>
         </table>
-
-
+    
+    
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
