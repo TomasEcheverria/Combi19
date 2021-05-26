@@ -91,6 +91,21 @@
                     "</tr>";
                 }
             }
+            if(isset($_GET['msg'])){
+                switch ($_GET['msg']){
+                    case 1:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "No es posible eliminar el lugar seleccionado porque está siendo utilizado en una ruta.".
+                            "</div>";
+                        break;
+                    case 2:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "Ya existe un lugar con el nombre y código postal ingresados.".
+                            "</div>";
+                        break;
+                }
+            }
+
             ?>
             
           </tbody>

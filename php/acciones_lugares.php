@@ -19,8 +19,12 @@
             $sql = "INSERT INTO lugares (`codigo_postal`, `nombre`, `activo`) VALUES
             ('$codigo_postal', '$nombre', 1);";
             mysqli_query($db,$sql);
+            header("Location: ../vista_lugares.php");
+        }  else {
+            header("Location: ../vista_lugares.php?msg=2");
         }
-        header("Location: ../vista_lugares.php");
+
+
     }
 
     //Baja de lugares
@@ -34,12 +38,13 @@
         if (empty(mysqli_fetch_assoc($resultado_viaje_existe)) && (empty(mysqli_fetch_assoc($resultado_ruta_existe)))){
             $sql = "UPDATE lugares SET activo=0 WHERE activo=1 AND idl='$id'"; 
             mysqli_query($db,$sql);                   
+            header("Location: ../vista_lugares.php");
         }
         else {
-            echo "no hagas eso bro :(";
+            header("Location: ../vista_lugares.php?msg=1");
         }
 
-        header("Location: ../vista_lugares.php");
+        
     }
 
     //Cambia el boton de submit a update, y trae los datos del insumo correspondiente 
@@ -62,13 +67,16 @@
         $id = $_POST['id'];
         $codigo_postal = $_POST["codigo_postal"];
         $nombre = $_POST["nombre"];
-        $lugar_existe="SELECT * FROM lugares WHERE (((codigo_postal='$codigo_postal') AND (nombre='$nombre')) AND activo=1)";
+        $lugar_existe="SELECT * FROM lugares WHERE (((codigo_postal='$codigo_postal') AND (nombre='$nombre')) AND activo=1 AND idl<>'$id')";
         $resultado_lugar_existe = mysqli_query($db,$lugar_existe);
         if (empty(mysqli_fetch_assoc($resultado_lugar_existe))){
 
             $sql = "UPDATE lugares SET codigo_postal='$codigo_postal', nombre='$nombre' WHERE idl='$id'";
             $db->query($sql) or die("error". mysqli_error ($db));
+            header("Location: ../vista_lugares.php");
         }
-        header("Location: ../vista_lugares.php");
+        else {
+            header("Location: ../vista_lugares.php?msg=2");
+        }
     }
     
