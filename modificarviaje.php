@@ -31,7 +31,7 @@
         $result51=mysqli_query ($link, $query51) or die ('Consulta query51 fallida: ' .mysqli_error($link));
         $chofer=(mysqli_fetch_array($result51)); 
 		
-        $query52 ="SELECT codigo_ruta FROM rutas WHERE idr='$datos[idr]'";
+        $query52 ="SELECT descripcion FROM rutas WHERE idr='$datos[idr]'";
         $result52=mysqli_query ($link, $query52) or die ('Consulta query51 fallida: ' .mysqli_error($link));
         $ruta=(mysqli_fetch_array($result52)); 
         if (isset ($_GET['error'])){
@@ -79,8 +79,8 @@
 						<input type="text"  name="estado"  placeholder="Estado del viaje" size=50 autofocus   value=<?php echo $datos['estado']; ?>  ></input><br><br>    
 						<p> Email del conductor </p>
 						<input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus   value=<?php echo $chofer['email']; ?> ></input><br><br>    
-						<p> Codigo de ruta </p>
-						<input type="text"  name="codigo"  placeholder="Codigo ruta" size=50 autofocus   value=<?php echo $ruta['codigo_ruta']; ?> ></input><br><br>
+						<p> Descripcion de ruta </p>
+						<input type="text"  name="descripcion"  placeholder="Descripcion ruta" size=50 autofocus   value=<?php echo $ruta['descripcion']; ?> ></input><br><br>
 						<input type="button" value="Editar" class="btn_editar" onclick = "validacionesviaje()">
 					</div>
 				</form>

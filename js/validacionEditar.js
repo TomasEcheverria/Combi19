@@ -152,7 +152,7 @@ function validacion1(){
 function altaviaje(){
 	var n1 = document.publicarviaje.nro_viaje.value;
 	var n3 = document.publicarviaje.email.value;
-	var n4 = document.publicarviaje.codigo.value;
+	var n4 = document.publicarviaje.descripcion.value;
 	var n5 = document.publicarviaje.fecha.value;
 	var n6 =document.publicarviaje.precio.value
 	if (n3){
@@ -170,7 +170,7 @@ function altaviaje(){
 					}
 					
 				}else{
-					alert('codigo esta vacio');
+					alert('descripcion esta vacio');
 				}
 			}else{
 				alert('email es invalido');
@@ -186,7 +186,7 @@ function altaviaje(){
 function validacionesviaje(){
 	var n1 = document.editarviaje.nro_viaje.value;
 	var n3 = document.editarviaje.email.value;
-	var n4 = document.editarviaje.codigo.value;
+	var n4 = document.editarviaje.descripcion.value;
 	var n5 = document.editarviaje.fecha.value;
 	var n6 =document.editarviaje.precio.value;
 	if (n3){
@@ -203,7 +203,7 @@ function validacionesviaje(){
 						alert('fecha esta vacia');
 					}
 				}else{
-					alert('codigo esta vacio');
+					alert('descripcion esta vacio');
 				}
 			}else{
 				alert('email es invalido');

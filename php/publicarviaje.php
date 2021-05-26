@@ -9,12 +9,12 @@
 	$mensaje3='';
 	$error=true;
 	$full = true;
-	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['codigo'])) ){
+	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['descripcion'])) ){
 		$nro_viaje= $_POST['nro_viaje'];
 		$fecha= $_POST['fecha'];
 		$precio= $_POST['precio'];
 		$email= $_POST['email'];
-		$codigo = $_POST['codigo'];	
+		$descripcion = $_POST['descripcion'];	
 		$hora=$_POST['hora'];
 
         $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
@@ -31,12 +31,12 @@
         }
 
 
-        $query56 ="SELECT * FROM rutas WHERE codigo_ruta='$_POST[codigo]'";
+        $query56 ="SELECT * FROM rutas WHERE descripcion='$_POST[descripcion]'";
         $result56=mysqli_query ($link, $query56) or die ('Consulta query56 fallida: ' .mysqli_error($link));
         $ruta=(mysqli_fetch_array($result56)); 
 		$row=mysqli_num_rows($result56);
 		if(($row == 0) or (!$ruta['activo'])){
-			$mensaje2 = 'no se encontro a ninguna ruta con el codigo especificado';
+			$mensaje2 = 'no se encontro a ninguna ruta con el descripcion especificado';
 			$full = false;
 		}
 		

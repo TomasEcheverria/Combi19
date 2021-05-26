@@ -52,8 +52,8 @@
 						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
 						<p> Email del conductor </p>
 						<input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus    ></input><br><br>    
-						<p> Codigo de ruta </p>
-						<input type="text"  name="codigo"  placeholder="Codigo ruta" size=50 autofocus    ></input><br><br>
+						<p> Descripcion de ruta </p>
+						<input type="text"  name="descripcion"  placeholder="descripcion ruta" size=50 autofocus    ></input><br><br>
 						<input type="button" value="Submit" class="btn_editar" onclick = "altaviaje()">
 					</form>
 				</div>

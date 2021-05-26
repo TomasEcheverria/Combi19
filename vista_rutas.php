@@ -56,7 +56,7 @@
             <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombre de Ruta</label>
-                <input type="text" class="form-control" name="codigo_ruta" placeholder="" value="<?php echo $codigo_ruta?>" required="" min=0>
+                <input type="text" class="form-control" name="descripcion" placeholder="" value="<?php echo $descripcion?>" required="" min=0>
             </div>
 
             
@@ -141,7 +141,7 @@
                     $destino= mysqli_fetch_assoc($resultado_destino);
                     echo 
                     "<tr>".
-                        "<td>". $value['codigo_ruta'] . "</td>".
+                        "<td>". $value['descripcion'] . "</td>".
                         "<td>". $origen['nombre'] . " #" . $origen['codigo_postal'] . "</td>".
                         "<td>". $destino['nombre'] . " #" . $destino['codigo_postal'] . "</td>".
                         "<td>". $value['kilometros'] . " Km". "</td>".

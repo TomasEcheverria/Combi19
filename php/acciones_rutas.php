@@ -4,7 +4,7 @@
 
     $update= false;
     $id =0;
-    $codigo_ruta = '';
+    $descripcion = '';
     $codigo_postal_origen = 0;
     $codigo_postal_destino = 0;
     $kilometros = 0;
@@ -14,16 +14,16 @@
 
     // Alta de rutas
     if(isset($_POST['submit'])){
-        $codigo_ruta = $_POST["codigo_ruta"];
+        $descripcion = $_POST["descripcion"];
         $codigo_postal_origen = $_POST["codigo_postal_origen"];
         $codigo_postal_destino = $_POST["codigo_postal_destino"];
         $kilometros = $_POST["kilometros"];
     
-        $ruta_existe="SELECT * FROM rutas WHERE ((codigo_ruta='$codigo_ruta') AND activo=1)";
+        $ruta_existe="SELECT * FROM rutas WHERE ((descripcion='$descripcion') AND activo=1)";
         $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
         if (empty(mysqli_fetch_assoc($resultado_ruta_existe))){
-            $sql = "INSERT INTO rutas (`codigo_ruta`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
-            ('$codigo_ruta', '$codigo_postal_origen', '$codigo_postal_destino', '$kilometros', 1);";
+            $sql = "INSERT INTO rutas (`descripcion`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
+            ('$descripcion', '$codigo_postal_origen', '$codigo_postal_destino', '$kilometros', 1);";
             mysqli_query($db,$sql);      
             header("Location: ../vista_rutas.php");
         } else {
@@ -72,7 +72,7 @@
         //Combi buscada en la BD
         if($result->num_rows == 1){
             $row = $result->fetch_array();
-            $codigo_ruta = $row["codigo_ruta"];
+            $descripcion = $row["descripcion"];
             $codigo_postal_origen = $row["codigo_postal_origen"];
             $codigo_postal_destino = $row["codigo_postal_destino"];
             $kilometros = $row["kilometros"];
@@ -85,16 +85,16 @@
     //Actualiza los datos de la combi seleccionado
     if(isset($_POST['update'])){
         $id = $_POST['id'];
-        $codigo_ruta = $_POST["codigo_ruta"];
+        $descripcion = $_POST["descripcion"];
         $codigo_postal_origen = $_POST["codigo_postal_origen"];
         $codigo_postal_destino = $_POST["codigo_postal_destino"];
         $kilometros = $_POST["kilometros"];
 
         //Se comprueba si la ruta existe antes de updatear
-        $ruta_existe="SELECT * FROM rutas WHERE ((codigo_ruta='$codigo_ruta') AND activo=1 AND idr<>'$id')";
+        $ruta_existe="SELECT * FROM rutas WHERE ((descripcion='$descripcion') AND activo=1 AND idr<>'$id')";
         $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
         if (empty(mysqli_fetch_assoc($resultado_ruta_existe))){
-            $sql = "UPDATE rutas SET codigo_ruta='$codigo_ruta', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE idr='$id'";
+            $sql = "UPDATE rutas SET descripcion='$descripcion', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE idr='$id'";
             $db->query($sql) or die($db->error);
             header("Location: ../vista_rutas.php");            
         } else {
