@@ -3,21 +3,21 @@
     $db = mysqli_connect('localhost', 'root', '','combi19') or die("error". mysqli_error ($db));
     $update= false;
     $id =0;
-    $codigo_postal = 0;
+    $provincia = '';
     $nombre = '';
 
 
     // Alta de lugares
     if(isset($_POST['submit'])){
-        $codigo_postal = $_POST["codigo_postal"];
+        $provincia = $_POST["provincia"];
         $nombre = $_POST["nombre"];
 
-        $lugar_existe="SELECT * FROM lugares WHERE (((codigo_postal='$codigo_postal') AND (nombre='$nombre')) AND activo=1)";
+        $lugar_existe="SELECT * FROM lugares WHERE (((provincia='$provincia') AND (nombre='$nombre')) AND activo=1)";
         $resultado_lugar_existe = mysqli_query($db,$lugar_existe);
         if (empty(mysqli_fetch_assoc($resultado_lugar_existe))){
       
-            $sql = "INSERT INTO lugares (`codigo_postal`, `nombre`, `activo`) VALUES
-            ('$codigo_postal', '$nombre', 1);";
+            $sql = "INSERT INTO lugares (`provincia`, `nombre`, `activo`) VALUES
+            ('$provincia', '$nombre', 1);";
             mysqli_query($db,$sql);
             header("Location: ../vista_lugares.php");
         }  else {
@@ -57,7 +57,7 @@
         //Usuario buscado de la BD
         if($result->num_rows == 1){
             $row = $result->fetch_array();
-            $codigo_postal = $row["codigo_postal"];
+            $provincia = $row["provincia"];
             $nombre = $row["nombre"];
         }
     }
@@ -65,13 +65,13 @@
     //Actualiza los datos del insumo seleccionado
     if(isset($_POST['update'])){
         $id = $_POST['id'];
-        $codigo_postal = $_POST["codigo_postal"];
+        $provincia = $_POST["provincia"];
         $nombre = $_POST["nombre"];
-        $lugar_existe="SELECT * FROM lugares WHERE (((codigo_postal='$codigo_postal') AND (nombre='$nombre')) AND activo=1 AND idl<>'$id')";
+        $lugar_existe="SELECT * FROM lugares WHERE (((provincia='$provincia') AND (nombre='$nombre')) AND activo=1 AND idl<>'$id')";
         $resultado_lugar_existe = mysqli_query($db,$lugar_existe);
         if (empty(mysqli_fetch_assoc($resultado_lugar_existe))){
 
-            $sql = "UPDATE lugares SET codigo_postal='$codigo_postal', nombre='$nombre' WHERE idl='$id'";
+            $sql = "UPDATE lugares SET provincia='$provincia', nombre='$nombre' WHERE idl='$id'";
             $db->query($sql) or die("error". mysqli_error ($db));
             header("Location: ../vista_lugares.php");
         }

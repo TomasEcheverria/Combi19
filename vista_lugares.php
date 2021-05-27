@@ -42,24 +42,79 @@
         <strong>Agregar lugar</strong>
     </div>
     <div class="card-body">
+
+
+        
         <blockquote class="blockquote mb-0">
-            <form action ="php/acciones_lugares.php" class="row g-3" method ="POST">
-            <input type="hidden" name="id" value="<?php echo $id ?>">
-            <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Código Postal</label>
-                <input type="number" class="form-control" name="codigo_postal" placeholder="" value="<?php echo $codigo_postal?>" required="" min=0>
-            </div>
-            <div class="col-md-6">
-                <label for="inputZip" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $nombre?>" required="">
-            </div>
-                <?php if($update == true){
-                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
-                    }else{
-                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
-                    }          
+        
+        <form action ="php/acciones_lugares.php" method ="POST">
+        <?php if(!isset($_GET['add'])){ ?>
+            <?php
+            // Consulta super parchada para que al momento de editar, figure a demás de todos los conductores, el conductor seleccionado
+            $sql2 = "SELECT DISTINCT `provincia`  FROM `lugares` WHERE activo=1 ORDER BY `provincia`ASC";
+            $result2 = mysqli_query($db,$sql2);
+            ?>
+            
+                <div class="col-md-3">
+                    <label for="inputZip" class="form-label">Provincia</label>
+                    <select name="provincia" class="form-select" required>
+                        <option value="">--Seleccione--</option>
+                        <?php while ($provincias = mysqli_fetch_assoc($result2) ) : ?>
+                                <option <?php echo $provincia === $provincias['provincia'] ? 'selected' : ''; ?> value="<?php echo $provincias['provincia']; ?>"> <?php echo $provincias['provincia']; ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+
+                    <?php if(!isset($_GET['edit'])){?>
+                    <button type="button" class="btn btn-link">
+                        <a href='vista_lugares.php?add'  >Agregar nueva</a>    
+                    </button>
+                    <?php }else { 
+                        echo "<button type='button' class='btn btn-link'>" .
+                        "<a href='vista_lugares.php?add&edit=$id' >Agregar nueva</a>" .
+                        "</button>";
+                     } ?>
+                </div>
+                
+            <?php }else{ ?>
+
+                
+                <input type="hidden" name="id" value="<?php echo $id ?>">
+                <div class="col-md-3">
+                    <label for="inputEmail4" class="form-label">Provincia</label>
+                    <input type="text" class="form-control" name="provincia" placeholder="" value="<?php echo $provincia?>" required="">
+                    
+                </div>
+                <?php if(!isset($_GET['edit'])){?>
+                    <button type="button" class="btn btn-link">
+                        <a href='vista_lugares.php?add'  >Volver a selección</a>    
+                    </button>
+                    <?php }else { 
+                        echo "<button type='button' class='btn btn-link'>" .
+                        "<a href='vista_lugares.php?edit=$id'  >Volver a selección</a>" .
+                        "</button>";
+                     } ?>
+                
+                
+                
+                <br>
+
+            <?php } ?>
+
+                <br>
+                <div class="col-md-3">
+                    <label for="inputZip" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $nombre?>" required="">
+                    <br>
+                </div>
+                
+                    <?php if($update == true){
+                        echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
+                        }else{
+                        echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
+                        }       
                 ?>
-            </form>
+            </form>      
         </blockquote>
     </div>
     </div>
@@ -67,7 +122,7 @@
     <table class="table table-striped">
           <thead class="table-dark">
             <tr>
-              <th scope="col">Código Postal</th>
+              <th scope="col">Provincia</th>
               <th scope="col">Nombre</th>
               <th scope="col">Acciones</th>
             </tr>
@@ -82,7 +137,7 @@
                     $idl = $value['idl'];
                     echo 
                     "<tr>".
-                        "<td>". $value['codigo_postal'] . "</td>".
+                        "<td>". $value['provincia'] . "</td>".
                         "<td>". $value['nombre'] . "</td>".
                         "<td>".                    
                             "<a href='vista_lugares.php?edit=$idl'class='btn btn btn-outline-success'>Editar</a>".
@@ -100,7 +155,7 @@
                         break;
                     case 2:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
-                            "Ya existe un lugar con el nombre y código postal ingresados.".
+                            "Ya existe un lugar con el nombre y provincia ingresados.".
                             "</div>";
                         break;
                 }
