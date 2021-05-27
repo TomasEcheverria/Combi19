@@ -74,4 +74,14 @@
         header("Location: ../vista_choferes.php");
     }
 
+    //baja de choferes
+    if(isset($_GET['delete'])){
+        $id = $_GET['delete'];
+        $sql = "UPDATE usuarios SET activo=0 WHERE activo=1 AND id='$id'";
+        mysqli_query($db,$sql);
+        header("Location: ../vista_choferes.php");
+    }
+
+
+
 

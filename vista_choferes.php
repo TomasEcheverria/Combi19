@@ -2,7 +2,7 @@
     include 'php/dbh.php';
     include 'php/choferes.php';
     include 'php/query_choferes.php';
-    include __DIR__.'/php/alta_chofer.php';
+    include __DIR__.'/php/acciones_choferes.php';
     include 'php/classLogin.php';
     $usuario= new usuario();
     $usuario -> tipoUsuario($tipo); 
@@ -33,7 +33,7 @@
     <div class="card-body">
         <blockquote class="blockquote mb-0">
       <!-- Formulario para agregar un chofer -->
-        <form action ="php/alta_chofer.php" class="row g-3" method ="POST">
+        <form action ="php/acciones_choferes.php" class="row g-3" method ="POST">
           <input type="hidden" name="id" value="<?php echo $id ?>">
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Nombre</label>
@@ -96,7 +96,7 @@
                       "<td>".$value['email'] . "</td>".
                       "<td>".                    
                         "<a href='vista_choferes.php?edit=$id'class='btn btn btn-outline-success'>Editar</a>".
-                        "<a href='php/baja_chofer.php?delete=$id'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                        "<a href='php/acciones_choferes.php?delete=$id'class='btn btn-outline-danger ml-1'>Borrar</a>".
                       "</td>".
                     "</tr>";
                 }
