@@ -36,17 +36,15 @@
     $usuario -> administrador($tipo);
     ?>
 <body>
-
+    
     <div class="card">
     <div class="card-header text-center">
         <strong>Agregar lugar</strong>
     </div>
     <div class="card-body">
 
-
-        
         <blockquote class="blockquote mb-0">
-        
+        <div class="mx-auto" style="width: 40rem;">
         <form action ="php/acciones_lugares.php" method ="POST">
         <?php if(!isset($_GET['add'])){ ?>
             <?php
@@ -54,8 +52,8 @@
             $sql2 = "SELECT DISTINCT `provincia`  FROM `lugares` WHERE activo=1 ORDER BY `provincia`ASC";
             $result2 = mysqli_query($db,$sql2);
             ?>
-            
-                <div class="col-md-3">
+    
+                <div class="mb-3">
                     <label for="inputZip" class="form-label">Provincia</label>
                     <select name="provincia" class="form-select" required>
                         <option value="">--Seleccione--</option>
@@ -80,11 +78,11 @@
 
                 
                 <input type="hidden" name="id" value="<?php echo $id ?>">
-                <div class="col-md-3">
+                <div class="mb-3">
                     <label for="inputEmail4" class="form-label">Provincia</label>
                     <input type="text" class="form-control" name="provincia" placeholder="" value="<?php echo $provincia?>" required="">
                     
-                </div>
+                
                 <?php if(!isset($_GET['edit'])){?>
                     <button type="button" class="btn btn-link">
                         <a href='vista_lugares.php'  >Volver a selección</a>    
@@ -95,15 +93,14 @@
                         "</button>";
                      } ?>
                 
+                </div>
                 
-                
-                <br>
 
             <?php } ?>
 
                 <br>
-                <div class="col-md-3">
-                    <label for="inputZip" class="form-label">Nombre</label>
+                <div class="mb-3">
+                    <label for="inputZip" class="form-label">Ciudad</label>
                     <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $nombre?>" required="">
                     <br>
                 </div>
@@ -118,12 +115,13 @@
         </blockquote>
     </div>
     </div>
+    </div>
 
     <table class="table table-striped">
           <thead class="table-dark">
             <tr>
               <th scope="col">Provincia</th>
-              <th scope="col">Nombre</th>
+              <th scope="col">Ciudad</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
