@@ -87,7 +87,7 @@
                 </div>
                 <?php if(!isset($_GET['edit'])){?>
                     <button type="button" class="btn btn-link">
-                        <a href='vista_lugares.php?add'  >Volver a selección</a>    
+                        <a href='vista_lugares.php'  >Volver a selección</a>    
                     </button>
                     <?php }else { 
                         echo "<button type='button' class='btn btn-link'>" .
