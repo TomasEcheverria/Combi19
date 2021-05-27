@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2021 a las 15:30:46
+-- Tiempo de generación: 27-05-2021 a las 00:16:10
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -67,9 +67,8 @@ INSERT INTO `combis` (`idc`, `patente`, `cantidad_asientos`, `tipo`, `modelo`, `
 --
 
 CREATE TABLE `comentarios` (
-  `idcom` int(200) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `idv` int(11) NOT NULL,
+  `nro_viaje` int(11) NOT NULL,
   `fecha_y_hora` datetime NOT NULL,
   `texto_comentario` varchar(120) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
@@ -119,6 +118,7 @@ CREATE TABLE `insumos_usuarios_viajes` (
 
 CREATE TABLE `lugares` (
   `idl` int(11) NOT NULL,
+  `codigo_postal` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `provincia` varchar(100) NOT NULL,
   `activo` tinyint(1) NOT NULL
@@ -128,11 +128,11 @@ CREATE TABLE `lugares` (
 -- Volcado de datos para la tabla `lugares`
 --
 
-INSERT INTO `lugares` (`idl`, `nombre`, `provincia`, `activo`) VALUES
-(1, 'City Bell', '', 1),
-(2, 'Buenos Aires', '', 1),
-(3, 'La Plata', '', 1),
-(4, 'La Matanza', '', 1);
+INSERT INTO `lugares` (`idl`, `codigo_postal`, `nombre`, `provincia`, `activo`) VALUES
+(1, 1896, 'City Bell', '', 1),
+(2, 6988, 'Buenos Aires', '', 1),
+(3, 6696, 'La Plata', '', 1),
+(4, 4554, 'La Matanza', '', 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +141,7 @@ INSERT INTO `lugares` (`idl`, `nombre`, `provincia`, `activo`) VALUES
 --
 
 CREATE TABLE `mensaje` (
-  `idm` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `viaje` int(11) NOT NULL,
   `texto` varchar(140) NOT NULL,
   `idu` int(11) NOT NULL,
@@ -156,15 +156,13 @@ CREATE TABLE `mensaje` (
 --
 
 CREATE TABLE `pasajes` (
-  `idp` int(11) NOT NULL,
+  `nro_pasaje` int(11) NOT NULL,
   `nro_asiento` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
   `pago` tinyint(1) NOT NULL,
   `sospechoso_covid` tinyint(1) NOT NULL,
   `idu` varchar(30) NOT NULL,
   `idv` int(11) NOT NULL,
-  `idcom` int(200) DEFAULT NULL,
-  `comentario` tinyint(1) NOT NULL DEFAULT 0,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -277,7 +275,7 @@ ALTER TABLE `combis`
 -- Indices de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  ADD PRIMARY KEY (`idcom`);
+  ADD PRIMARY KEY (`email`,`nro_viaje`);
 
 --
 -- Indices de la tabla `insumos`
@@ -301,13 +299,13 @@ ALTER TABLE `lugares`
 -- Indices de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  ADD PRIMARY KEY (`idm`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `pasajes`
 --
 ALTER TABLE `pasajes`
-  ADD PRIMARY KEY (`idp`);
+  ADD PRIMARY KEY (`nro_pasaje`);
 
 --
 -- Indices de la tabla `rutas`
@@ -338,12 +336,6 @@ ALTER TABLE `combis`
   MODIFY `idc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `comentarios`
---
-ALTER TABLE `comentarios`
-  MODIFY `idcom` int(200) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `insumos`
 --
 ALTER TABLE `insumos`
@@ -359,13 +351,13 @@ ALTER TABLE `lugares`
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pasajes`
 --
 ALTER TABLE `pasajes`
-  MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `nro_pasaje` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rutas`
