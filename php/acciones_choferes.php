@@ -1,5 +1,13 @@
 <?php
 
+    function puede_borrar($unaDB,$idChofer){
+        /* $consulta_chofer_viaje_pendiente = "SELECT * FROM usuarios u INNER JOIN combis c ON u.id = c.idu INNER JOIN viajes v ON c.idc = v.idc WHERE u.activo=1 AND v.estado <> 'finalizado'AND u.id =$idChofer ";
+        $resultado_consulta_chofer_viaje_pendiente = mysqli_query($unaDB,$consulta_chofer_viaje_pendiente);*/
+        $consulta_combis_chofer = "SELECT * FROM `usuarios` INNER JOIN combis ON usuarios.id = combis.idu WHERE usuarios.activo=1 AND id='$idChofer'";
+        $resultado_consulta_combi_chofer = mysqli_query($unaDB,$consulta_combis_chofer);
+        return (empty(mysqli_fetch_assoc($resultado_consulta_combi_chofer)));
+    }
+
     //Definicion de variables y inicializacion BD.
     $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
     $row = '';
@@ -77,11 +85,17 @@
     //baja de choferes
     if(isset($_GET['delete'])){
         $id = $_GET['delete'];
-        $sql = "UPDATE usuarios SET activo=0 WHERE activo=1 AND id='$id'";
-        mysqli_query($db,$sql);
-        header("Location: ../vista_choferes.php");
-    }
+        if(puede_borrar($db,$id)){
+            $sql = "UPDATE usuarios SET activo=0 WHERE activo=1 AND id='$id'";
+            mysqli_query($db,$sql);
+            header("Location: ../vista_choferes.php");
+        } else {
+            echo "<h1> usted no puede borrar porque el chofer esta asociado con una combi</h1>";
+        };
 
+
+    }
+;
 
 
 
