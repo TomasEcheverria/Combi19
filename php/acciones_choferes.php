@@ -8,6 +8,16 @@
         return (empty(mysqli_fetch_assoc($resultado_consulta_combi_chofer)));
     }
 
+    function get_patente($unaDB,$idChofer){
+        $consulta_combi_asociada = "SELECT combis.patente FROM `usuarios`
+        INNER JOIN combis
+        ON usuarios.id = combis.idu 
+        WHERE usuarios.activo=1 AND id='$idChofer'";
+        $resultado_consulta_combi_asociada = $unaDB->query($consulta_combi_asociada) or die ($db->error());
+        $combi = $resultado_consulta_combi_asociada->fetch_array();
+        return $combi['patente'];
+    }
+
     //Definicion de variables y inicializacion BD.
     $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
     $row = '';
@@ -18,7 +28,8 @@
     $clave = '';
     $update = false;
     $id ='';
-
+    $mensaje='';
+    $tipo='';
     //Funcionalidad de agregar un Chofer
     if(isset($_POST['submit'])){
         $firstName = $_POST["firstName"];
@@ -90,7 +101,8 @@
             mysqli_query($db,$sql);
             header("Location: ../vista_choferes.php");
         } else {
-            echo "<h1> usted no puede borrar porque el chofer esta asociado con una combi</h1>";
+            $patente = get_patente($db,$id);
+            header("Location: ../vista_choferes.php?errormsg=1&ptn=$patente");
         };
 
 

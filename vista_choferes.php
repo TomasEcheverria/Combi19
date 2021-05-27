@@ -25,7 +25,19 @@
     ?>
     
   <body>
+    <?php
+      if(isset($_GET['errormsg'])){
+        switch ($_GET['errormsg']){
+          case 1:
+            $patente = $_GET['ptn'];
+            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'> 
+            No se puede Borrar el chofer porque esta asociado con la combi de <strong>patente $patente</strong>.
+            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>";
+        }
 
+      }
+    ?>
   <div class="card">
     <div class="card-header text-center">
         <strong>Agregar Chofer</strong>
