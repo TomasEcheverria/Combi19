@@ -31,7 +31,10 @@
           case 1:
             $patente = $_GET['ptn'];
             echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'> 
-            No se puede Borrar el chofer porque esta asociado con la combi de <strong>patente $patente</strong>.
+            No se puede Borrar el chofer porque esta asociado con la combi de patente 
+            <a href='vista_combis.php' class='link-danger'>
+              <strong>$patente</strong>.
+            </a>
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>";
         }
