@@ -47,14 +47,14 @@
         
     }
 
-    //Cambia el boton de submit a update, y trae los datos del insumo correspondiente 
+    //Cambia el boton de submit a update, y trae los datos del lugar correspondiente 
     if(isset($_GET['edit'])){
         $id = $_GET['edit'];
         $update = true;
         $sql = "SELECT * from lugares WHERE activo=1 AND idl='$id'";
         $result = $db->query($sql) or die("error". mysqli_error ($db));
 
-        //Usuario buscado de la BD
+        //Lugar buscado de la BD
         if($result->num_rows == 1){
             $row = $result->fetch_array();
             $provincia = $row["provincia"];
@@ -62,12 +62,12 @@
         }
     }
     
-    //Actualiza los datos del insumo seleccionado
+    //Actualiza los datos del lugar seleccionado
     if(isset($_POST['update'])){
         $id = $_POST['id'];
         $provincia = $_POST["provincia"];
         $nombre = $_POST["nombre"];
-        $lugar_existe="SELECT * FROM lugares WHERE (((provincia='$provincia') AND (nombre='$nombre')) AND activo=1 AND idl<>'$id')";
+        $lugar_existe="SELECT * FROM lugares WHERE ((((provincia='$provincia') AND (nombre='$nombre')) AND activo=1) AND (idl<>'$id'))";
         $resultado_lugar_existe = mysqli_query($db,$lugar_existe);
         if (empty(mysqli_fetch_assoc($resultado_lugar_existe))){
 

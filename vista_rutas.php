@@ -55,18 +55,18 @@
             <form action ="php/acciones_rutas.php" class="row g-3" method ="POST">
             <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Nombre de Ruta</label>
+                <label for="inputEmail4" class="form-label">Descripción</label>
                 <input type="text" class="form-control" name="descripcion" placeholder="" value="<?php echo $descripcion?>" required="" min=0>
             </div>
 
             
             <?php $resultado = mysqli_query($db, $consulta_lugares); ?>
             <div class="col-md-6">
-                <label for="inputZip" class="form-label">Lugar de origen/Código Postal</label>
-                <select name="codigo_postal_origen" class="form-select">
-                    <option value="" required>--Seleccione--</option>
+                <label for="inputZip" class="form-label">Lugar de origen</label>
+                <select name="codigo_postal_origen" class="form-select" required="">
+                    <option value="">--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
-                        <option value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "   #" . $lugares['codigo_postal']; ?>
+                        <option <?php echo $codigo_postal_origen === $lugares['idl'] ? 'selected' : ''; ?> value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "-" . $lugares['provincia']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
@@ -74,13 +74,14 @@
 
 
 
+
             <?php $resultado = mysqli_query($db, $consulta_lugares); ?>                
             <div class="col-md-6">
-                <label for="inputZip" class="form-label">Lugar de destino/Código Postal</label>
-                <select name="codigo_postal_destino" class="form-select">
+                <label for="inputZip" class="form-label">Lugar de destino</label>
+                <select name="codigo_postal_destino" class="form-select" required="">
                     <option value="">--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
-                        <option value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "   #" . $lugares['codigo_postal']; ?>
+                        <<option <?php echo $codigo_postal_destino === $lugares['idl'] ? 'selected' : ''; ?> value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "-" . $lugares['provincia']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
@@ -107,9 +108,9 @@
     <table class="table table-striped">
           <thead class="table-dark">
             <tr>
-              <th scope="col">Nombre de Ruta</th>
-              <th scope="col">Origen/Código Postal</th>
-              <th scope="col">Destino/Código Postal</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Origen</th>
+              <th scope="col">Destino</th>
               <th scope="col">Distancia en kilómetros</th>
               <th scope="col">Acciones</th>
             </tr>
@@ -142,8 +143,8 @@
                     echo 
                     "<tr>".
                         "<td>". $value['descripcion'] . "</td>".
-                        "<td>". $origen['nombre'] . " #" . $origen['codigo_postal'] . "</td>".
-                        "<td>". $destino['nombre'] . " #" . $destino['codigo_postal'] . "</td>".
+                        "<td>". $origen['nombre'] . " -" . $origen['provincia'] . "</td>".
+                        "<td>". $destino['nombre'] . " -" . $destino['provincia'] . "</td>".
                         "<td>". $value['kilometros'] . " Km". "</td>".
                         "<td>".                    
                             "<a href='vista_rutas.php?edit=$idr'class='btn btn btn-outline-success'>Editar</a>".
@@ -162,6 +163,11 @@
                     case 2:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
                             "Ya existe una ruta con el nombre ingresado.".
+                            "</div>";
+                        break;
+                    case 3:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "El lugar de origen y destino no pueden ser el mismo.".
                             "</div>";
                         break;
                 }

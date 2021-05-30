@@ -52,10 +52,10 @@
             $sql2 = "SELECT DISTINCT `provincia`  FROM `lugares` WHERE activo=1 ORDER BY `provincia`ASC";
             $result2 = mysqli_query($db,$sql2);
             ?>
-    
+                <input type="hidden" name="id" value="<?php echo $id ?>">
                 <div class="mb-3">
                     <label for="inputZip" class="form-label">Provincia</label>
-                    <select name="provincia" class="form-select" required>
+                    <select name="provincia" class="form-select" required="">
                         <option value="">--Seleccione--</option>
                         <?php while ($provincias = mysqli_fetch_assoc($result2) ) : ?>
                                 <option <?php echo $provincia === $provincias['provincia'] ? 'selected' : ''; ?> value="<?php echo $provincias['provincia']; ?>"> <?php echo $provincias['provincia']; ?>
