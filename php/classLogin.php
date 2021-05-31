@@ -22,6 +22,7 @@
 					/*si el número de filas devuelto por la variable resultado es 1,significa que en la base de datos blog, en la tabla usuarios existe una fila que coincide con los datos ingresados.
 					luego nos envia a la pagina inicioSesion, con las variables de sesion creados y exito setado */
 					if($datosUsuario =mysqli_fetch_array($resultado58)) {
+						if($datosUsuario['activo'] == 0){
 						$_SESSION['id'] = $datosUsuario['id'];
 						$_SESSION['email'] = $datosUsuario ['email'];
 						$_SESSION['nombre'] = $datosUsuario['nombre'];
@@ -34,7 +35,9 @@
 						$_SESSION['nro_tarjeta']=$datosUsuario['nro_tarjeta'];
 						$_SESSION['cod_seguridad'] = $datosUsuario['cod_seguridad'];
 						$_SESSION['fecha_vencimiento'] = $datosUsuario['fecha_vencimiento'];
-					
+						}else{
+							throw new Exception('el usuario se encuentra desactivado');
+						}
 					} else {
 						$query58= $query58 = "SELECT * FROM usuarios WHERE email= '".$nombre."'";
 						$resultado58 = mysqli_query($link, $query58) or die ('Consulta query58 fallida ' .mysqli_error($link));;
