@@ -51,7 +51,7 @@
 						<p> Fecha de salida </p>
 						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
 						<p> Email del conductor </p>
-						<select name="email" size=50 class="selectNegro"><br><br> 
+						<!-- <select name="email" size=50 class="selectNegro"><br><br> 
 							<?php $query1= "SELECT * FROM usuarios WHERE activo='1'";
 								$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
                                 while ($chofer = mysqli_fetch_array($result1)) {
@@ -59,7 +59,22 @@
 							<option value= "<?php echo $chofer['id'] ?>" <?php echo $chofer['email']; ?> </option>
 								<?php
                                 } ?>
-						</select> <br><br>
+						</select> <br><br> -->
+
+
+						<select name="email"> <br><br> 
+							<?php $query1= "SELECT * FROM usuarios WHERE activo='1'";
+								$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
+                                while ($chofer = mysqli_fetch_array($result1)) {
+                                    ?>   
+							<option value= "<?php echo $chofer['id'] ?>"> <?php echo $chofer['email']; ?> </option>
+								<?php
+                                } ?>
+						</select> <br><br> -->
+						
+
+
+
 						<p> Descripcion de ruta </p>
 						<input type="text"  name="descripcion"  placeholder="descripcion ruta" size=50 autofocus    ></input><br><br>
 						<input type="button" value="Submit" class="btn_editar" onclick = "altaviaje()">
