@@ -38,7 +38,7 @@
 
 		<div class="div_resultados">
 		     <?php
-			    $consulta="SELECT *  FROM viajes WHERE activo='1'";
+			    $consulta="SELECT *  FROM viajes WHERE activo='1' ORDER BY fecha DESC";
 			    $resultado = mysqli_query ($link, $consulta) or die ('Consulta query fallida: ' .mysqli_error($link));
 				$result=mysqli_num_rows($resultado); ?>
 				 <h3>
@@ -110,7 +110,7 @@
 								$result59=mysqli_query ($link, $query59) or die ('Consulta query51 fallida: ' .mysqli_error($link));
 								$destino=(mysqli_fetch_array($result59));
 
-						if(($chofer['activo'] == 1) and ($rutas['activo']  == 1 ) and ($viajes['activo']== 1 )){	
+						if ($viajes['activo']== 1 ){	
 						?>
 
 						<tr>
