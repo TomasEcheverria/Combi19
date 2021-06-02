@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2021 a las 03:22:07
+-- Tiempo de generación: 27-05-2021 a las 15:30:46
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -103,9 +103,9 @@ INSERT INTO `insumos` (`idi`, `nombre`, `inventario`, `precio`, `activo`) VALUES
 --
 
 CREATE TABLE `insumos_usuarios_viajes` (
-  `id` int(11) NOT NULL,
-  `idp` varchar(30) NOT NULL,
+  `idu` varchar(30) NOT NULL,
   `idi` int(30) NOT NULL,
+  `idv` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
@@ -157,7 +157,7 @@ CREATE TABLE `mensaje` (
 
 CREATE TABLE `pasajes` (
   `idp` int(11) NOT NULL,
-  `cantidad_asientos` int(11) NOT NULL,
+  `nro_asiento` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
   `pago` tinyint(1) NOT NULL,
   `sospechoso_covid` tinyint(1) NOT NULL,
@@ -224,8 +224,8 @@ INSERT INTO `usuarios` (`id`, `email`, `nombre`, `apellido`, `DNI`, `clave`, `ti
 (4, 'juanperez@example.com', 'juan', 'perez', 9111111, '1234', 'chofer', 0, 0, NULL, NULL, NULL, 1),
 (5, 'juju@gmail.com', 'tomas', 'echeverria', 43015912, 'clave12', 'chofer', 0, 0, NULL, NULL, NULL, 1),
 (6, 'tomas@gmail.com', 'tomas', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
-(7, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
-(8, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
+(7, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, '', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
+(8, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, '', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
 (9, 'tomiecheverria00@gmail.com', 'tomas', 'echeverria', 43015912, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
@@ -289,7 +289,7 @@ ALTER TABLE `insumos`
 -- Indices de la tabla `insumos_usuarios_viajes`
 --
 ALTER TABLE `insumos_usuarios_viajes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`idu`,`idi`,`idv`);
 
 --
 -- Indices de la tabla `lugares`
@@ -348,12 +348,6 @@ ALTER TABLE `comentarios`
 --
 ALTER TABLE `insumos`
   MODIFY `idi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `insumos_usuarios_viajes`
---
-ALTER TABLE `insumos_usuarios_viajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `lugares`
