@@ -48,7 +48,7 @@
     <div class="card-body">
         <blockquote class="blockquote mb-0">
       <!-- Formulario para agregar un chofer -->
-        <form action ="php/acciones_choferes.php" class="row g-3" method ="POST">
+        <form action ="php/acciones_choferes.php" class="row g-3" method ="post">
           <input type="hidden" name="id" value="<?php echo $id ?>">
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Nombre</label>

@@ -21,7 +21,7 @@
                         <small>Ingresa los datos de tu tarjeta</small>
                     </div>
                     <div class="card-body">
-                        <form name="formulario_suscripcion" action="php/acciones_suscripcion.php"  method= "post">
+                        <form name="formulario_suscripcion" action="php/acciones_suscripcion.php"  method= "POST">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -35,7 +35,7 @@
                                     <div class="form-group">
                                         <label for="ccnumber">Numero de tarjeta</label>
                                         <div class="input-group">
-                                            <input class="form-control" type="text" name="numero_tarjeta" placeholder="0000 0000 0000 0000" autocomplete="email">
+                                            <input class="form-control" type="text" name="numero_tarjeta" placeholder="0000 0000 0000 0000">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                     <i class="mdi mdi-credit-card"></i>
@@ -48,36 +48,36 @@
                             <div class="row">
                                 <div class="form-group col-sm-4">
                                     <label for="ccmonth">Mes</label>
-                                    <select class="form-control" id="ccmonth">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
+                                    <select  name="mes" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <label for="ccyear">Año</label>
-                                    <select class="form-control" id="ccyear">
-                                        <option>2014</option>
-                                        <option>2015</option>
-                                        <option>2016</option>
-                                        <option>2017</option>
-                                        <option>2018</option>
-                                        <option>2019</option>
-                                        <option>2020</option>
-                                        <option>2021</option>
-                                        <option>2022</option>
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option>2025</option>
+                                    <select  name="año" class="form-control">
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
@@ -90,8 +90,10 @@
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-sm btn-success float-right" type="submit" onclick="validarTarjetaDeCredito()">
-                            <i class="mdi mdi-gamepad-circle" id="suscribirse"></i> Continuar</button>
+                            <div class="text-center">
+                            <button class="btn btn-sm btn-success float-right" name="suscribirse" type="submit" onclick="validarTarjetaDeCredito()">
+                                <i class="mdi mdi-gamepad-circle"></i> Suscribirse</button>
+                            </div>
                     </div>
                 </div>
             </div>
