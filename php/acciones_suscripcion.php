@@ -14,6 +14,7 @@
         $fecha = "$año-$mes-01";
         $tipo = gettype($nro_tarjeta);
         
+
         // Es obligatorio cambiar el nro_tarjeta por bigint
 
         if(isset($_POST['suscribirse'])){
@@ -34,6 +35,11 @@
                 </div>
             </a>
             ";
+
+            //actualizar los datos de la sesion
+            $_SESSION['fecha_vencimiento'] = $fecha;
+            $_SESSION['cod_seguridad'] = $cvv;
+            $_SESSION['nro_tarjeta'] = $nro_tarjeta;
             $_SESSION['suscrito'] = 1;
         }
 
@@ -56,6 +62,10 @@
                  </div>
              </a>
              ";
+            // Actualizar los datos de la sesion
+             $_SESSION['fecha_vencimiento'] = NULL;
+             $_SESSION['cod_seguridad'] = NULL;
+             $_SESSION['nro_tarjeta'] = NULL;
              $_SESSION['suscrito'] = 0;
         }
 
