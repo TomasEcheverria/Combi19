@@ -31,7 +31,7 @@
 						$_SESSION['clave']=$datosUsuario['clave'];
 						$_SESSION['tipo_usuario']=$datosUsuario['tipo_usuario'];
 						$_SESSION['suspendido']=$datosUsuario['suspendido'];
-						$_SESSION['suscripto']=$datosUsuario['suscripto'];
+					$_SESSION['suscrito']=$datosUsuario['suscrito'];
 						$_SESSION['nro_tarjeta']=$datosUsuario['nro_tarjeta'];
 						$_SESSION['cod_seguridad'] = $datosUsuario['cod_seguridad'];
 						$_SESSION['fecha_vencimiento'] = $datosUsuario['fecha_vencimiento'];
