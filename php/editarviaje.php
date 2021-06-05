@@ -9,18 +9,11 @@
 	$mensaje3='';
 	$error=true;
 	$full = true;
-	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['descripcion'])) ){
-		$nro_viaje= $_POST['nro_viaje'];
-        $imprevisto= $_POST['imprevisto'];
-		$precio= $_POST['precio'];
-		$estado= $_POST['estado'];
-		$fecha= $_POST['fecha'];
-		$hora=$_POST['hora'];
-		$idv= $_POST['viaje'];
-		$email= $_POST['email'];
-		$descripcion= $_POST['descripcion'];
-
-		$query50 ="SELECT * FROM viajes  WHERE idv='$idv'";
+	if(isset ($_POST['patente'])){
+		$patente= $_POST['patente'];
+		$viaje= $_POST['viaje'];
+		
+		$query50 ="SELECT * FROM combis  WHERE idv='$idv'";
         $result50=mysqli_query ($link, $query50) or die ('Consulta query50 fallida: ' .mysqli_error($link));
         $datos=(mysqli_fetch_array($result50)); 
 		
