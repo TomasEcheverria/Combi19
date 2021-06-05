@@ -83,10 +83,29 @@
                                         <div class="col-sm-10">
                                                 <input class="form-control"  name="numero_tarjeta" type="text" value="<?php echo $numero_de_tarjeta?>" readonly>
                                         </div>
-                                    </div> 
-                                <?php endif; ?>
+                                    </div>
+                                    <?php endif; ?>
                         </div>
                             </form>
+                            <div class="card-footer">
+                                    <div class="text-center">
+                                        <div class="row-sm">
+                                            <?php if(!$suscrito): ?>
+                                                <a href="vista_suscripcion.php">
+                                                    <button class="btn btn-sm btn-success float-right" name="suscribirse" type="submit">
+                                                        <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Suscribirse
+                                                    </button>
+                                                </a>
+                                            <?php else: ?>
+                                                <form name="formulario_suscripcion" action="php/acciones_suscripcion.php"  method= "POST">
+                                                    <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit">
+                                                        <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Desuscribirse
+                                                    </button>
+                                                </form>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
