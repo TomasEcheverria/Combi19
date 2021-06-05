@@ -21,7 +21,7 @@
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
         $chofer=(mysqli_fetch_array($result55));
 		$row=mysqli_num_rows($result55);
-		if(($row == 0) or (!$chofer['activo'])){
+		if(($row == 0) or ($chofer['activo'] == 0)){
 			$mensaje2 = 'no se encontro a un chofer con el email especificado';
 			$full = false;
 		}
@@ -35,7 +35,7 @@
         $result56=mysqli_query ($link, $query56) or die ('Consulta query56 fallida: ' .mysqli_error($link));
         $ruta=(mysqli_fetch_array($result56)); 
 		$row=mysqli_num_rows($result56);
-		if(($row == 0) or (!$ruta['activo'])){
+		if(($row == 0) or ($ruta['activo'] == 0)){
 			$mensaje2 = 'no se encontro a ninguna ruta con el descripcion especificado';
 			$full = false;
 		}
@@ -63,7 +63,7 @@
         $result59=mysqli_query ($link, $query59) or die ('Consulta query59 fallida: ' .mysqli_error($link));
         $combi=(mysqli_fetch_array($result59)); 
 		$cantidad=mysqli_num_rows($result59);
-		if(($cantidad == 0) or (!$combi['activo'])){
+		if(($cantidad == 0) or ($combi['activo'] == 0)){
 			$mensaje2 = 'el conductor especificado no posee ninguna combi a su nombre';
 			$full = false;
 		}
