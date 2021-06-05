@@ -98,7 +98,7 @@
                                                         <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Desuscribirse
                                                     </button>
                                             <?php else: ?>
-                                                <button class="btn btn-sm btn-success float-right" name="suscribirse" type="submit" onclick="validarTarjetaDeCredito()">
+                                                <button class="btn btn-sm btn-success float-right" name="suscribirse2" type="submit" onclick="validarTarjetaDeCredito()">
                                                     <i class="mdi mdi-gamepad-circle" name="<?php echo $suscrito ?>" ></i> Suscribirse
                                                 </button>
                                             <?php endif; ?>

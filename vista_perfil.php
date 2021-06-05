@@ -22,6 +22,49 @@
     $usuario ->contrasenia($contrasenia);
     $usuario ->nro_tarjeta($nro_tarjeta);
     $numero_de_tarjeta = "XXXX XXXX XX" . substr($nro_tarjeta,-2);
+
+    // Para saber en que modo esta el boton de edicion
+    function modoActual(){
+        if(isset($_GET['md'])){
+            switch ($_GET['md']){
+                case "save":
+                    return "save";
+                    break;
+                case "edit":
+                    return "edit";
+                    break;
+            }
+        } else{
+            return "edit";
+        }
+    }
+
+    // Para indicar al input si se puede editar o no
+    function modoInput(){
+        $modo = modoActual();
+        if($modo == "edit"){
+            return "readonly";
+        }
+    }
+
+    // Devolvera el boton correspondiente para cuando se deba editar o guardar.
+    function devolverBoton(){
+        $modo = modoActual();
+        switch ($modo){
+            case "save":
+                echo "<button class='btn btn-sm btn-warning float-right' name='save' type='submit'>
+                    <i class='mdi mdi-gamepad-circle' ></i> Guardar
+                    </button>";
+                break;
+            case "edit":
+                echo "<button class='btn btn-sm btn-info float-right' name='edit' type='submit'>
+                    <i class='mdi mdi-gamepad-circle' ></i> Editar
+                    </button>";
+                break;
+        }
+    }
+
+    $edicion = modoInput();
 ?>
 <body>
     <div class="container-sm">
@@ -33,13 +76,13 @@
                             <strong>Datos de mi perfil </strong>
                         </div>
                         <div class="card-body">
-                            <form name="formulario_suscripcion" action="php/acciones_perfil.php"  method= "POST">
+                            <form name="formulario_suscripcion" action="php/acciones_suscripcion.php"  method= "POST">
                                 <div class="row my-4">
                                     <div class="col-sm-2">
                                             <label for="name">Nombre:</label>
                                     </div>
                                     <div class="col-sm-10">
-                                            <input class="form-control"  name="name" type="text" value="<?php echo $nombre?>" readonly>
+                                            <input class="form-control"  name="nombre" type="text" value="<?php echo $nombre?>" <?php echo "$edicion"?>>
                                     </div>
                                 </div>
                                 <div class="row my-4">
@@ -47,7 +90,7 @@
                                             <label for="name">Apellido:</label>
                                     </div>
                                     <div class="col-sm-10">
-                                            <input class="form-control"  name="apellido" type="text" value="<?php echo $apellido?>" readonly>
+                                            <input class="form-control"  name="apellido" type="text" value="<?php echo $apellido?>" <?php echo "$edicion"?>>
                                     </div>
                                 </div>
                                 <div class="row my-4">
@@ -55,7 +98,7 @@
                                             <label for="name">Email:</label>
                                     </div>
                                     <div class="col-sm-10">
-                                            <input class="form-control"  name="email" type="text" value="<?php echo $email?>" readonly>
+                                            <input class="form-control"  name="email" type="text" value="<?php echo $email?>" <?php echo "$edicion"?>>
                                     </div>
                                 </div>
                                 <div class="row my-4">
@@ -63,7 +106,7 @@
                                             <label for="name">DNI:</label>
                                     </div>
                                     <div class="col-sm-10">
-                                            <input class="form-control"  name="dni" type="text" value="<?php echo $DNI?>" readonly>
+                                            <input class="form-control"  name="dni" type="text" value="<?php echo $DNI?>" <?php echo "$edicion"?>>
                                     </div>
                                 </div>
 
@@ -72,7 +115,7 @@
                                             <label for="name">Contraseña:</label>
                                     </div>
                                     <div class="col-sm-10">
-                                            <input class="form-control"  name="clave" type="password" value="<?php echo $contrasenia?>" readonly>
+                                            <input class="form-control"  name="clave" type="password" value="<?php echo $contrasenia?>" <?php echo "$edicion"?>>
                                     </div>
                                 </div>
                                 <?php if($suscrito): ?>
@@ -86,26 +129,23 @@
                                     </div>
                                     <?php endif; ?>
                         </div>
-                            </form>
-                            <div class="card-footer">
+                        <div class="card-footer">
                                     <div class="text-center">
                                         <div class="row-sm">
-                                            <?php if(!$suscrito): ?>
-                                                <a href="vista_suscripcion.php">
-                                                    <button class="btn btn-sm btn-success float-right" name="suscribirse" type="submit">
-                                                        <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Suscribirse
-                                                    </button>
-                                                </a>
-                                            <?php else: ?>
-                                                <form name="formulario_suscripcion" action="php/acciones_suscripcion.php"  method= "POST">
-                                                    <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit">
-                                                        <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Desuscribirse
-                                                    </button>
-                                                </form>
-                                            <?php endif; ?>
+                                                <?php if(!$suscrito): ?>
+                                                        <button class="btn btn-sm btn-success float-right" name="suscribirse1" type="submit">
+                                                            <i class="mdi mdi-gamepad-circle " ></i> Suscribirse
+                                                        </button>
+                                                <?php else: ?>
+                                                        <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit">
+                                                            <i class="mdi mdi-gamepad-circle "></i> Desuscribirse
+                                                        </button>
+                                                <?php endif; ?>
+                                                <?php devolverBoton() ?>
                                         </div>
                                     </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
