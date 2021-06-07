@@ -156,6 +156,11 @@
                             "Ya existe un lugar con el nombre y provincia ingresados.".
                             "</div>";
                         break;
+                    case 3:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "No es posible editar el lugar seleccionado porque está siendo utilizado en una ruta perteneciente a un viaje pendiente o en curso.".
+                            "</div>";
+                        break;
                 }
             }
 

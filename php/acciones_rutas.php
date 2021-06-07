@@ -31,7 +31,7 @@
                 mysqli_query($db,$sql);      
                 header("Location: ../vista_rutas.php");
             } else {
-                header("Location: ../vista_rutas.php?msg=");
+                header("Location: ../vista_rutas.php?msg=2");
 
             }
         }

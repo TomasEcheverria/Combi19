@@ -162,7 +162,7 @@
                         break;
                     case 2:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
-                            "Ya existe una ruta con el nombre ingresado.".
+                            "Ya existe una ruta con la descripción ingresada.".
                             "</div>";
                         break;
                     case 3:
