@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2021 a las 22:32:31
+-- Tiempo de generación: 02-06-2021 a las 03:22:07
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -56,11 +56,9 @@ CREATE TABLE `combis` (
 --
 
 INSERT INTO `combis` (`idc`, `patente`, `cantidad_asientos`, `tipo`, `modelo`, `idu`, `activo`) VALUES
-(1, 'kase', 48, 'Comoda', 'asda', '2', 1),
-(3, 'patente2', 24, 'Comoda', 'asda', '4', 1),
-(4, 'patent', 12, 'Comoda', 'fiat', '', 1),
-(6, 'borrame', 89, 'Comoda', 'adafasfasfasf', '', 0),
-(7, 'delet', 1, 'Comoda', 'adafasfasfasf', '5', 1);
+(1, 'j241241414', 48, 'Super Comoda', 'adafasfasfasf', '2', 1),
+(2, 'asdasd', 48, 'comoda', 'asda', '2', 1),
+(3, 'asdasd', 48, 'comoda', 'asda', '4', 1);
 
 -- --------------------------------------------------------
 
@@ -76,16 +74,6 @@ CREATE TABLE `comentarios` (
   `texto_comentario` varchar(120) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `comentarios`
---
-
-INSERT INTO `comentarios` (`idcom`, `email`, `idv`, `fecha_y_hora`, `texto_comentario`, `activo`) VALUES
-(1, 'tomas@gmail.com', 11, '2021-06-07 03:27:42', 'la pase mal', 1),
-(2, 'pasajero@gmail.com', 10, '2021-06-07 03:27:42', 'me contagie', 1),
-(3, 'tomas@gmail.com', 10, '2021-06-07 03:27:42', 'me aburri', 1),
-(4, 'pasajero@gmail.com', 11, '2021-06-07 03:27:42', 'esto no aparece', 0);
 
 -- --------------------------------------------------------
 
@@ -164,22 +152,6 @@ CREATE TABLE `mensaje` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pasajeros`
---
-
-CREATE TABLE `pasajeros` (
-  `idpasajero` int(10) NOT NULL,
-  `nombre` varchar(40) NOT NULL,
-  `apellido` varchar(40) NOT NULL,
-  `sospechoso_covid` int(11) NOT NULL,
-  `dni` int(10) NOT NULL,
-  `idp` int(100) NOT NULL,
-  `activo` int(10) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `pasajes`
 --
 
@@ -193,22 +165,8 @@ CREATE TABLE `pasajes` (
   `idv` int(11) NOT NULL,
   `idcom` int(200) DEFAULT NULL,
   `comentario` tinyint(1) NOT NULL DEFAULT 0,
-  `fantasma` int(11) NOT NULL DEFAULT 1,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `pasajes`
---
-
-INSERT INTO `pasajes` (`idp`, `cantidad_asientos`, `precio`, `pago`, `sospechoso_covid`, `idu`, `idv`, `idcom`, `comentario`, `fantasma`, `activo`) VALUES
-(1, 5, 20, 80, 0, '10', 11, NULL, 0, 0, 1),
-(2, 2, 0, 0, 0, '6', 10, NULL, 0, 0, 1),
-(3, 8, 90, 0, 0, '9', 11, NULL, 0, 0, 1),
-(4, 87, 98, 100, 0, '7', 11, NULL, 0, 0, 1),
-(6, 20, 10, 100, 0, '7', 11, NULL, 0, 0, 1),
-(7, 48, 90, 0, 0, '7', 11, NULL, 0, 0, 1),
-(8, 48, 90, 0, 0, '7', 11, NULL, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -230,8 +188,8 @@ CREATE TABLE `rutas` (
 --
 
 INSERT INTO `rutas` (`idr`, `descripcion`, `codigo_postal_origen`, `codigo_postal_destino`, `kilometros`, `activo`) VALUES
-(1, 'por aeropurto', 1, 2, 43, 1),
-(2, 'ruta 8', 1, 2, 2, 1);
+(1, '1', 1, 2, 43, 1),
+(2, '2', 2, 2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -249,7 +207,7 @@ CREATE TABLE `usuarios` (
   `tipo_usuario` varchar(20) NOT NULL,
   `suspendido` tinyint(1) NOT NULL,
   `suscrito` tinyint(1) NOT NULL,
-  `nro_tarjeta` bigint(11) DEFAULT NULL,
+  `nro_tarjeta` int(11) DEFAULT NULL,
   `cod_seguridad` int(11) DEFAULT NULL,
   `fecha_vencimiento` date DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
@@ -265,11 +223,10 @@ INSERT INTO `usuarios` (`id`, `email`, `nombre`, `apellido`, `DNI`, `clave`, `ti
 (3, 'john@gmail.com', 'john', 'doe', 111119, 'test', 'chofer', 0, 0, NULL, NULL, NULL, 0),
 (4, 'juanperez@example.com', 'juan', 'perez', 9111111, '1234', 'chofer', 0, 0, NULL, NULL, NULL, 1),
 (5, 'juju@gmail.com', 'tomas', 'echeverria', 43015912, 'clave12', 'chofer', 0, 0, NULL, NULL, NULL, 1),
-(6, 'tomas@gmail.com', 'tomas', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 1),
-(7, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 1),
+(6, 'tomas@gmail.com', 'tomas', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
+(7, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
 (8, 'tomas@gmail.com', 'toams', 'echeverria', 14256398, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 0),
-(9, 'tomiecheverria00@gmail.com', 'tomas', 'echeverria', 43015912, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 1),
-(10, 'pasajero@gmail.com', 'kasdasd', 'asdasfdaf', 43015912, 'pasajero12', 'pasajero', 0, 0, NULL, NULL, NULL, 1);
+(9, 'tomiecheverria00@gmail.com', 'tomas', 'echeverria', 43015912, 'clave12', 'pasajero', 0, 0, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -295,13 +252,10 @@ CREATE TABLE `viajes` (
 --
 
 INSERT INTO `viajes` (`idv`, `nro_viaje`, `imprevisto`, `precio`, `estado`, `fecha`, `hora`, `idc`, `idr`, `activo`) VALUES
-(6, 0, '', 100, 'en curso', '2021-05-12', '00:00:00', 2, 1, 0),
-(7, 0, '', 45, 'finalizado', '2021-05-11', '00:00:00', 2, 1, 1),
-(8, 45, 'hola', 4500, 'finalizado', '2021-05-05', '00:00:00', 4, 1, 1),
-(9, 4555, '', 4555, 'en curso', '2021-05-07', '23:57:00', 4, 1, 0),
-(10, 6, '', 4, 'en curso', '2021-06-03', '23:18:00', 4, 1, 1),
-(11, 89, '', 8, 'pendiente', '2021-07-01', '21:27:00', 4, 1, 1),
-(12, 99, '', 16, 'pendiente', '2021-06-28', '20:09:00', 2, 2, 1);
+(6, 0, '', 100, 'pendiente', '2021-05-12', '00:00:00', 2, 1, 0),
+(7, 0, '', 45, 'en curso', '2021-05-11', '00:00:00', 2, 1, 1),
+(8, 45, 'hola', 4500, 'finalizado', '2021-05-05', '00:00:00', 4, 1, 0),
+(9, 4555, '', 4555, 'pendiente', '2021-05-07', '23:57:00', 4, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -350,12 +304,6 @@ ALTER TABLE `mensaje`
   ADD PRIMARY KEY (`idm`);
 
 --
--- Indices de la tabla `pasajeros`
---
-ALTER TABLE `pasajeros`
-  ADD PRIMARY KEY (`idpasajero`);
-
---
 -- Indices de la tabla `pasajes`
 --
 ALTER TABLE `pasajes`
@@ -387,13 +335,13 @@ ALTER TABLE `viajes`
 -- AUTO_INCREMENT de la tabla `combis`
 --
 ALTER TABLE `combis`
-  MODIFY `idc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `idcom` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcom` int(200) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
@@ -420,16 +368,10 @@ ALTER TABLE `mensaje`
   MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `pasajeros`
---
-ALTER TABLE `pasajeros`
-  MODIFY `idpasajero` int(10) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `pasajes`
 --
 ALTER TABLE `pasajes`
-  MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rutas`
@@ -441,13 +383,13 @@ ALTER TABLE `rutas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `idv` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idv` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
