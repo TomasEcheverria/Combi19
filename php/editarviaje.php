@@ -9,80 +9,69 @@
 	$mensaje3='';
 	$error=true;
 	$full = true;
-	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['descripcion'])) ){
-		$nro_viaje= $_POST['nro_viaje'];
-        $imprevisto= $_POST['imprevisto'];
-		$precio= $_POST['precio'];
-		$estado= $_POST['estado'];
-		$fecha= $_POST['fecha'];
-		$hora=$_POST['hora'];
+	if(isset ($_POST['idc'])){
+		$idcnuevo= $_POST['idc'];
 		$idv= $_POST['viaje'];
-		$email= $_POST['email'];
-		$descripcion= $_POST['descripcion'];
-
-		$query50 ="SELECT * FROM viajes  WHERE idv='$idv'";
-        $result50=mysqli_query ($link, $query50) or die ('Consulta query50 fallida: ' .mysqli_error($link));
-        $datos=(mysqli_fetch_array($result50)); 
+		$viejo= $_POST['combi'];
 		
-		$choferactual= $datos['idc'];
-		$fechaactual= $datos['fecha'];
-		$numeroactual= $datos['nro_viaje'];
+		$query2 ="SELECT * FROM viajes v INNER JOIN combis c ON(v.idc=c.idu) WHERE idv='$idv'";//obtengo los datos del viaje y de la combi vieja
+        $result2=mysqli_query ($link, $query2) or die ('Consulta query2 fallida: ' .mysqli_error($link));
+        $datos=(mysqli_fetch_array($result2)); 
+		
+		$query3 ="SELECT * FROM combis  WHERE idc='$viejo'";//datos de la combi vieja 
+        $result3=mysqli_query ($link, $query3) or die ('Consulta query3 fallida: ' .mysqli_error($link));
+        $cvieja=(mysqli_fetch_array($result3)); 
+		
+		$query4 ="SELECT * FROM combis  WHERE idc='$idcnuevo'";//datos de la combi nueva
+        $result4=mysqli_query ($link, $query4) or die ('Consulta query4 fallida: ' .mysqli_error($link));
+        $cnueva=(mysqli_fetch_array($result4)); 
+		
+		$choferactual= $cnueva['idu'];
 
-        $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
+        $query55 ="SELECT * FROM usuarios WHERE id='$cnueva[idu]' AND activo='1' AND tipo_usuario='chofer'";
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
         $chofer=(mysqli_fetch_array($result55));
 		$row=mysqli_num_rows($result55);
-		if(($row == 0) or (!$chofer['activo'])){
-			$mensaje2 = 'no se encontro a un chofer con el email especificado';
+		if($row == 0){
+			$mensaje1 = 'La combi seleccionada no posee ningun chofer disponible asignado.';
 			$full = false;
 		}
-		if($chofer['tipo_usuario'] != "chofer"){
-            $full=false;
-            $mensaje2= 'el usuario especificado no es un conductor, seleccione un conductor';
-        }
-
-
-        $query56 ="SELECT * FROM rutas WHERE descripcion='$_POST[descripcion]'";
-        $result56=mysqli_query ($link, $query56) or die ('Consulta query56 fallida: ' .mysqli_error($link));
-        $ruta=(mysqli_fetch_array($result56)); 
-		$row=mysqli_num_rows($result56);
-		if(($row == 0) or (!$ruta['activo'])){
-			$mensaje2 = 'no se encontro a ninguna ruta con la descripcion especificado';
+		
+		if($datos['estado'] == "en curso"){
+			$mensaje2= 'El viaje se encuentra  en curso, ya es muy tarde para modificar la combi.';
+			$full = false;
+		}
+		if($datos['estado'] == "finalizado"){
+			$mensaje2= 'El viaje se encuentra  finalizado, ya es muy tarde para modificar la combi.';
 			$full = false;
 		}
 
-		if($numeroactual != $nro_viaje){
-		$query25= ("SELECT * FROM viajes WHERE activo='1'");//hacer consulta 
-		$result25= mysqli_query ($link, $query25) or die ('Consulta fallida ' .mysqli_error($link));
-		while ($viajetabla= mysqli_fetch_array ($result25)){
-			if ($nro_viaje == $viajetabla['nro_viaje']){
-				$full= false;
-				$mensaje2="El numero de viaje  ya existe, por favor elija otro";
-			}
+		if(($cvieja['tipo'] == "Super Comoda") and ($cnueva['tipo'] == "Comoda")){
+			$mensaje3='No se puede donwgradear el tipo de combi, seleccione una combi con el mismo o mejor tipo.';
+			$full=false;
 		}
-	}
-		if(($choferactual != $chofer['id']) or ($fechaactual != $fecha)){
-		$query57= ("SELECT * FROM viajes WHERE idc='$chofer[id]'");//hacer consulta 
-		$result57= mysqli_query ($link, $query57) or die ('Consulta fallida ' .mysqli_error($link));
-		while ($viajetabla= mysqli_fetch_array ($result57)){
-			if ($fecha == $viajetabla['fecha']){
-				$full= false;
-				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada, por favor seleccione otro";
-			}
-		}
-	}
+		
+		$query88="SELECT SUM(cantidad_asientos) FROM pasajes  WHERE idv='$idv' AND activo='1'";
+		$result88=mysqli_query ($link, $query88) or die ('Consulta query88 fallida: ' .mysqli_error($link));
+		$reservados=mysqli_fetch_array($result88);
 
-	$query59 ="SELECT * FROM combis WHERE idu='$chofer[id]'";
-	$result59=mysqli_query ($link, $query59) or die ('Consulta query59 fallida: ' .mysqli_error($link));
-	$combi=(mysqli_fetch_array($result59)); 
-	$cantidad=mysqli_num_rows($result59);
-	if(($cantidad == 0) or (!$combi['activo'])){
-		$mensaje2 = 'el conductor especificado no posee ninguna combi a su nombre';
-		$full = false;
-	}
-	
+		if(($cnueva['cantidad_asientos'] - $reservados['0']) < 0){
+			$mensaje3='La nueva combi tiene menos asientos que pasajes reservados para este viaje, la cantidad de asientos reservados es:'.$reservados['0'];
+			$full=false;
+		}
+
+		$fecha= $datos['fecha'];
+		
+		$query89="SELECT * FROM viajes WHERE idc='$cnueva[idu]'";
+		$result89=mysqli_query ($link, $query89) or die ('Consulta 89 fallida ' .mysqli_error($link));
+		while ($fechaviajes= mysqli_fetch_array ($result89)){
+			if ($fecha == $fechaviajes['fecha']){
+				$full= false;
+				$mensaje2="El conductor asignado a esta combi ya esta reservado en la fecha indicada,seleccione una fecha distinta a:".$fecha.".";
+			}
+		}
 			if($full){
-			$query72= ("UPDATE viajes SET nro_viaje='$nro_viaje', imprevisto='$imprevisto', precio='$precio', estado='$estado', fecha='$fecha', idc='$chofer[id]', idr='$ruta[idr]' WHERE idv='$_POST[viaje]'");
+			$query72= ("UPDATE viajes SET idc='$cnueva[idu]' WHERE idv='$idv'");
 			$result72= (mysqli_query ($link, $query72) or die ('Consuluta query72 fallida: ' .mysqli_error($link)));
 			$mensaje1= "El viaje  se ha editado correctamente";
 			$error=false;
@@ -92,9 +81,9 @@
 			}
 		     
 	}else{
-	$mensaje1="Por favor, no deje ningun campo en blanco (el imprevisto es opcional).";
+	$mensaje1="Por favor, no deje ningun campo en blanco";
 	$mensajeEditar = $mensaje1 . $mensaje2 . $mensaje3;
 	header ("Location: ../modificarviaje.php?idv=$idv&mensajeEditar=$mensajeEditar&error=$error");}
 	
-	$mensajeEditar = $mensaje1 . $mensaje2 . $mensaje3 ;
+	$mensajeEditar = $mensaje1 . $mensaje2 . $mensaje3 ;//este solo se ejecuta si todo es correcto y se actualiza
 	header ("Location: ../modificarviaje.php?idv=$idv&mensajeEditar=$mensajeEditar&error=$error");

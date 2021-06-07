@@ -20,7 +20,7 @@
         $kilometros = $_POST["kilometros"];
         if ($codigo_postal_origen == $codigo_postal_destino)
         {
-            header("Location: ../vista_rutas.php?errormsg=3");
+            header("Location: ../vista_rutas.php?msg=3");
         } else {
 
             $ruta_existe="SELECT * FROM rutas WHERE ((descripcion='$descripcion') AND activo=1)";
@@ -31,7 +31,7 @@
                 mysqli_query($db,$sql);      
                 header("Location: ../vista_rutas.php");
             } else {
-                header("Location: ../vista_rutas.php?errormsg=");
+                header("Location: ../vista_rutas.php?msg=2");
 
             }
         }
@@ -47,7 +47,7 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1 AND estado='pendiente')";
+        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1 AND (estado='pendiente' OR estado='en curso'))";
         $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
         if (empty(mysqli_fetch_assoc($resultado_viaje_existe))){
             
@@ -55,7 +55,7 @@
             mysqli_query($db,$sql);        
             header("Location: ../vista_rutas.php");    
         }else {
-            header("Location: ../vista_rutas.php?errormsg=1");
+            header("Location: ../vista_rutas.php?msg=1");
         }           
 
 
@@ -67,11 +67,16 @@
     //Cambia el boton de submit a update, y trae los datos de la rutas correspondiente 
     if(isset($_GET['edit'])){
         $id = $_GET['edit'];
-        $update = true;
-
-        $sql = "SELECT * from rutas WHERE activo=1 AND idr='$id'";
-        $result = $db->query($sql) or die("error". mysqli_error ($db));
-
+        
+        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1 AND (estado='pendiente' OR estado='en curso'))";
+        $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
+        if (empty(mysqli_fetch_assoc($resultado_viaje_existe))){
+            $update = true;
+            $sql = "SELECT * from rutas WHERE activo=1 AND idr='$id'";
+            $result = $db->query($sql) or die("error". mysqli_error ($db));
+        } else {
+            header("Location: ../vista_rutas.php?msg=4");
+        }
 
 
         //Ruta buscada en la BD
@@ -97,7 +102,7 @@
         
         if ($codigo_postal_origen == $codigo_postal_destino)
         {
-            header("Location: ../vista_rutas.php?errormsg=3");
+            header("Location: ../vista_rutas.php?msg=3");
         } else {
             //Se comprueba si la ruta existe antes de updatear
             $ruta_existe="SELECT * FROM rutas WHERE ((descripcion='$descripcion') AND activo=1 AND idr<>'$id')";
@@ -107,7 +112,7 @@
                 $db->query($sql) or die($db->error);
                 header("Location: ../vista_rutas.php");            
             } else {
-                header("Location: ../vista_rutas.php?errormsg=2");
+                header("Location: ../vista_rutas.php?msg=2");
             }
         }
 

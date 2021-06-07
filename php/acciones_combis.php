@@ -40,9 +40,15 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $sql = "UPDATE combis SET activo=0, idu='' WHERE activo=1 AND idc='$id'";
-        mysqli_query($db,$sql);
-        header("Location: ../vista_combis.php");
+        $combi_existe = "SELECT c.* FROM combis c INNER JOIN usuarios u ON (c.idc='$id') AND (c.idu=u.id) AND (c.activo=1) AND (u.activo=1) INNER JOIN viajes v ON (u.id=v.idc) AND (v.activo=1) AND ((v.estado='pendiente') OR (v.estado='en curso'))";
+        $resultado_combi_existe = mysqli_query($db,$combi_existe);
+        if (empty(mysqli_fetch_assoc($resultado_combi_existe))){
+            $sql = "UPDATE combis SET activo=0, idu='' WHERE activo=1 AND idc='$id'";
+            mysqli_query($db,$sql);
+            header("Location: ../vista_combis.php"); 
+        }else {
+            header("Location: ../vista_combis.php?msg=1");
+        }           
 
     }
 
@@ -51,12 +57,17 @@
 
     //Cambia el boton de submit a update, y trae los datos de la combi correspondiente 
     if(isset($_GET['edit'])){
+
         $id = $_GET['edit'];
-        $update = true;
-
-        $sql = "SELECT * from combis WHERE activo=1 AND idc='$id'";
-        $result = $db->query($sql) or die("error". mysqli_error ($db));
-
+        $combi_existe = "SELECT c.* FROM combis c INNER JOIN usuarios u ON (c.idc='$id') AND (c.idu=u.id) AND (c.activo=1) AND (u.activo=1) INNER JOIN viajes v ON (u.id=v.idc) AND (v.activo=1) AND ((v.estado='pendiente') OR (v.estado='en curso'))";
+        $resultado_combi_existe = mysqli_query($db,$combi_existe);
+        if (empty(mysqli_fetch_assoc($resultado_combi_existe))){ 
+            $update = true;
+            $sql = "SELECT * from combis WHERE activo=1 AND idc='$id'";
+            $result = $db->query($sql) or die("error". mysqli_error ($db));
+        }else{
+            header("Location: ../vista_combis.php?msg=2");
+        }
 
 
         //Combi buscada en la BD
@@ -85,11 +96,13 @@
         $patente_existe_edit="SELECT * FROM combis WHERE (((patente='$patente') AND (idc<>'$id')) AND activo=1)";
         $resultado_patente_existe_edit = mysqli_query($db,$patente_existe_edit);
         if (empty(mysqli_fetch_assoc($resultado_patente_existe_edit))){
-
-            $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE idc='$id'";
-            $db->query($sql) or die($db->error);
+                $sql = "UPDATE combis SET patente='$patente', cantidad_asientos='$cantidad_asientos', tipo='$tipo', modelo='$modelo', idu='$idu' WHERE idc='$id'";
+                $db->query($sql) or die($db->error);
+                header("Location: ../vista_combis.php");
+        }else{
+            header("Location: ../vista_combis.php?msg=3");
         }
-
-        header("Location: ../vista_combis.php");
+        
+        
     }
     

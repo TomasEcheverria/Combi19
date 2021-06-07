@@ -63,7 +63,7 @@
             <input type="email" class="form-control" name="email" placeholder="" value="<?php echo $correo?>" required="">
           </div>
           <div class="col-md-2">
-            <label for="inputZip" class="form-label">DNI</label>
+            <label for="inputZip" class="form-label">Telefono</label>
             <input type="text" class="form-control" name="dni" placeholder="" value="<?php echo $dni?>" required="">
           </div>
           <div class="col-12">
@@ -88,7 +88,7 @@
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Apellido</th>
-              <th scope="col">Dni</th>
+              <th scope="col">Telefono</th>
               <th scope="col">Correo</th>
               <th scope="col">Acciones</th>
             </tr>

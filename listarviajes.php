@@ -56,7 +56,9 @@
               				<th scope="col">Origen:</th>
 							<th scope="col">Destino:</th>
 							<th scope="col">Fecha:</th>
-							<th scope="col">Hora:</th>	
+							<th scope="col">Hora:</th>
+							<th scope="col">Precio:</th>
+							<th scope="col">Estado:</th>	
 							<th scope="col">Acciones:</th>	  
            		 		</tr>
         			</thead>
@@ -79,7 +81,8 @@
 				        $idc=$viajes['idc']; 
 				        $idr=$viajes['idr'];
 						$activo=$viajes['activo'];
-							
+						$precio=$viajes['precio'];
+						$estado=$viajes['estado'];
         					$query51 ="SELECT * FROM usuarios WHERE id='$idc'";
         					$result51=mysqli_query ($link, $query51) or die ('Consulta query51 fallida: ' .mysqli_error($link));
        						 $chofer=(mysqli_fetch_array($result51)); 
@@ -95,11 +98,15 @@
       						  	$combi=(mysqli_fetch_array($result53));
 								$asientos= $combi['cantidad_asientos'];
 
-								$query54="SELECT * FROM pasajes WHERE idv='$idv'";
-								$result54=mysqli_query ($link, $query54) or die ('Consulta query51 fallida: ' .mysqli_error($link));
-      						  	$pasajes=(mysqli_num_rows($result54));
-
-								$cantidad = $asientos - $pasajes;
+								//$query54="SELECT * FROM pasajes WHERE idv='$idv'";
+								//$result54=mysqli_query ($link, $query54) or die ('Consulta query51 fallida: ' .mysqli_error($link));
+      						  	//$pasajes=(mysqli_num_rows($result54));
+									$query88="SELECT SUM(cantidad_asientos) FROM pasajes  WHERE idv='$idv' AND activo='1'";
+									$result88=mysqli_query ($link, $query88) or die ('Consulta query88 fallida: ' .mysqli_error($link));
+									$reservados=mysqli_fetch_array($result88);							
+								
+								$cantidad = $asientos - $reservados['0'];
+								
 								$rutas['codigo_postal_destino'];
 
 								$query58="SELECT * FROM lugares WHERE idl='$rutas[codigo_postal_origen]'";
@@ -122,6 +129,8 @@
 							<td><?php echo $destino['nombre']; ?></td>
 							<td><?php echo $fecha; ?></td>
 							<td><?php echo $hora; ?></td>
+							<td><?php echo $precio; ?></td>
+							<td><?php echo $estado; ?></td>
 							<td><a class="btn btn btn-outline-success" href="modificarviaje.php?idv=<?php echo $idv?>">Editar</a>
 							<form  action="php/bajaviaje.php" method="post">    
 				                  <button name="borrar" class="btn btn-outline-danger ml-1" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar</button>

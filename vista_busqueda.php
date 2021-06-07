@@ -4,7 +4,7 @@
 
 
     include 'BD.php';
-    include 'php/acciones_rutas.php';
+    include 'php/acciones_busqueda.php';
     $db = conectar();
     include 'php/classLogin.php';
     $usuario= new usuario();
@@ -12,12 +12,12 @@
 
 
     //Consulta para obtener lugares
-    $consulta_lugares = "SELECT * FROM lugares WHERE activo = 1";
+    $consulta_lugares = "SELECT * FROM lugares WHERE activo = 1 ORDER BY provincia";
     
 
-    function getRutas(){
+    function getViajes(){
         $db = conectar();        
-        $sql = "SELECT * FROM `rutas` WHERE activo=1 EXCEPT (SELECT r1.* FROM `rutas` r1 INNER JOIN `lugares` l1 ON (r1.codigo_postal_origen=l1.idl) AND (l1.activo=0) UNION (SELECT r2.* FROM `rutas` r2 INNER JOIN `lugares` l2 ON (r2.codigo_postal_destino=l2.idl) AND (l2.activo=0)))";
+        $sql = "SELECT v.*, r.codigo_postal_origen, r.codigo_postal_destino FROM viajes v INNER JOIN rutas r ON (v.idr=r.idr) WHERE v.activo=1 AND r.activo=1 AND v.estado='pendiente'ORDER BY v.fecha";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
         if ($numRows > 0) {
@@ -48,30 +48,24 @@
 
     <div class="card">
     <div class="card-header text-center">
-        <strong>Agregar Ruta</strong>
+        <strong>Buscar Viaje</strong>
     </div>
     <div class="card-body">
         <blockquote class="blockquote mb-0">
-            <form action ="php/acciones_rutas.php" class="row g-3" method ="POST">
+            <form action ="php/acciones_busqueda.php" class="row g-3" method ="POST">
             <input type="hidden" name="id" value="<?php echo $id ?>">
-            <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Descripción</label>
-                <input type="text" class="form-control" name="descripcion" placeholder="" value="<?php echo $descripcion?>" required="" min=0>
-            </div>
-
             
-            <?php $resultado = mysqli_query($db, $consulta_lugares); ?>
+            <?php $resultado = mysqli_query($db, $consulta_lugares); ?>                
             <div class="col-md-6">
                 <label for="inputZip" class="form-label">Lugar de origen</label>
                 <select name="codigo_postal_origen" class="form-select" required="">
                     <option value="">--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
-                        <option <?php echo $codigo_postal_origen === $lugares['idl'] ? 'selected' : ''; ?> value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "-" . $lugares['provincia']; ?>
+                        <<option <?php echo $codigo_postal_origen === $lugares['idl'] ? 'selected' : ''; ?> value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['provincia'] . "-" . $lugares['nombre']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
             </div>
-
 
 
 
@@ -81,7 +75,7 @@
                 <select name="codigo_postal_destino" class="form-select" required="">
                     <option value="">--Seleccione--</option>
                     <?php while ($lugares = mysqli_fetch_assoc($resultado) ) : ?>
-                        <<option <?php echo $codigo_postal_destino === $lugares['idl'] ? 'selected' : ''; ?> value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['nombre'] . "-" . $lugares['provincia']; ?>
+                        <<option <?php echo $codigo_postal_destino === $lugares['idl'] ? 'selected' : ''; ?> value="<?php echo $lugares['idl']; ?>"> <?php echo $lugares['provincia'] . "-" . $lugares['nombre']; ?>
                         </option>
                     <?php endwhile; ?>
                 </select>
@@ -90,13 +84,13 @@
 
 
             <div class="col-md-6">
-                <label for="inputZip" class="form-label">Distancia en kilómetros</label>
-                <input type="number" class="form-control" name="kilometros" placeholder="" value="<?php echo $kilometros?>" required="" min=0>
+                <label for="inputZip" class="form-label">Fecha</label>
+                <input type="date" class="form-control" name="fecha" placeholder="" value="<?php echo $fecha?>" required="">
             </div>
                 <?php if($update == true){
                     echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
                     }else{
-                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Submit</button> </div>";
+                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Buscar</button> </div>";
                     }          
                 ?>
             </form>
@@ -108,11 +102,11 @@
     <table class="table table-striped">
           <thead class="table-dark">
             <tr>
-              <th scope="col">Descripción</th>
               <th scope="col">Origen</th>
               <th scope="col">Destino</th>
-              <th scope="col">Distancia en kilómetros</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Hora</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -120,14 +114,25 @@
             <?php
 
               
+            if (isset($_GET['cpo']))
+            {
+                $cpo = $_GET['cpo'];
+                $cpd = $_GET['cpd'];
+                $fecha = $_GET['fecha'];
+                $viajeget="SELECT v.*, r.codigo_postal_origen, r.codigo_postal_destino FROM viajes v INNER JOIN rutas r ON (v.idr=r.idr) WHERE v.activo=1 AND r.activo=1 AND v.estado='pendiente' AND ((codigo_postal_origen='$cpo' AND codigo_postal_destino='$cpd' AND fecha='$fecha'))";
+                $resultadoget = mysqli_query($db,$viajeget); 
+                while ($row = $resultadoget->fetch_assoc()) {
+                    $viajes[] = $row;
+                }
+            } else {
+                $viajes = getViajes(); 
+            }
 
-
-
-              // Tabla de rutas
-            $rutas = getRutas();
-            if(!empty($rutas)){
-                foreach ($rutas as $value) {
-                    $idr = $value['idr'];
+               // Tabla de viajes
+            
+            if(!empty($viajes)){
+                foreach ($viajes as $value) {
+                    $idv = $value['idv'];
                   
                     $idorigen= $value['codigo_postal_origen'];
                     $consulta_lugareso = "SELECT * FROM lugares WHERE idl = '$idorigen' ";
@@ -142,27 +147,28 @@
                     $destino= mysqli_fetch_assoc($resultado_destino);
                     echo 
                     "<tr>".
-                        "<td>". $value['descripcion'] . "</td>".
-                        "<td>". $origen['nombre'] . " -" . $origen['provincia'] . "</td>".
-                        "<td>". $destino['nombre'] . " -" . $destino['provincia'] . "</td>".
-                        "<td>". $value['kilometros'] . " Km". "</td>".
+                        
+                        "<td>". $origen['nombre'] . " - " . $origen['provincia'] . "</td>".
+                        "<td>". $destino['nombre'] . " - " . $destino['provincia'] . "</td>".
+                        "<td>". $value['fecha'] . "</td>".
+                        "<td>". $value['hora'] . " hs". "</td>".
                         "<td>".                    
-                            "<a href='vista_rutas.php?edit=$idr'class='btn btn btn-outline-success'>Editar</a>".
-                            "<a href='php/acciones_rutas.php?delete=$idr'class='btn btn-outline-danger ml-1'>Borrar</a>".
+                            "<a href='$idv'class='btn btn btn-outline-success'>Ver Viaje</a>".
                         "</td>".
                     "</tr>";
               }
+              
 
-            if(isset($_GET['msg'])){
-                switch ($_GET['msg']){
+            if(isset($_GET['errormsg'])){
+                switch ($_GET['errormsg']){
                     case 1:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
-                            "No es posible eliminar la ruta porque está siendo utilizada en un viaje pendiente o en curso.".
+                            "No es posible eliminar la ruta porque está siendo utilizada en un viaje pendiente.".
                             "</div>";
                         break;
                     case 2:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
-                            "Ya existe una ruta con la descripción ingresada.".
+                            "Ya existe una ruta con el nombre ingresado.".
                             "</div>";
                         break;
                     case 3:
@@ -172,9 +178,9 @@
                         break;
                     case 4:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
-                            "No es posible editar la ruta porque está siendo utilizada en un viaje pendiente o en curso".
+                            "Lo sentimos. No existen lugares con las características ingresadas.".
                             "</div>";
-                        break;
+                        break;    
                 }
             }
 

@@ -22,18 +22,16 @@
  <?php 
     try {
     	$usuario -> administrador($tipo);
-         $query50 ="SELECT * FROM viajes  WHERE idv='$idviaje'";
+         $query50 ="SELECT * FROM viajes v INNER JOIN combis c ON(v.idc=c.idu)  WHERE idv='$idviaje'";
         $result50=mysqli_query ($link, $query50) or die ('Consulta query50 fallida: ' .mysqli_error($link));
         $datos=(mysqli_fetch_array($result50)); 
-       
-        $idc =$datos['idc'];
-        $query51 ="SELECT email FROM usuarios WHERE id='$datos[idc]'";
-        $result51=mysqli_query ($link, $query51) or die ('Consulta query51 fallida: ' .mysqli_error($link));
-        $chofer=(mysqli_fetch_array($result51)); 
+        $idcactual =$datos['idc'];
+		//echo "combi actual".$datos['idc'];//datos de la combi
 		
-        $query52 ="SELECT descripcion FROM rutas WHERE idr='$datos[idr]'";
-        $result52=mysqli_query ($link, $query52) or die ('Consulta query51 fallida: ' .mysqli_error($link));
-        $ruta=(mysqli_fetch_array($result52)); 
+    
+		
+		
+      
         if (isset ($_GET['error'])){
 			$error=$_GET['error'];
 		}
@@ -44,7 +42,7 @@
 			<a class="btn btn-outline-primary" href="listarviajes.php">Volver</a>
 
              <?php echo menu($tipo);?>
-             <p > Modificacion del viaje <?php echo $idviaje?>
+             <p > Modificacion del viaje: <?php echo $idviaje?> </p>
 		<div class=div_registro>
 			<p class="table"> Escriba solo los campos que desea modificar</p>
 
@@ -65,22 +63,20 @@
 					</div>
 
 					<div class="card-body">
-						<p > Numero de viaje </p>
-						<input type="hidden" class="form-control" aria-describedby="emailHelp"  name="viaje"   value=<?php  echo $idviaje ?> ></input>
-						<input type="number"  name="nro_viaje"  placeholder="Numero de viaje" size=50 autofocus   value=<?php echo $datos['nro_viaje']; ?> ></input><br><br>           
-						<p> Imprevisto </p>
-						<input type="text"  name="imprevisto"  placeholder="imprevisto" size=50 autofocus   value=<?php echo $datos['imprevisto']; ?> ></input><br><br>    
-						<p> Precio del viaje </p>
-						<input type="number"  name="precio"  placeholder="Precio viaje" size=50 autofocus    value=<?php echo $datos['precio']; ?> ></input><br><br>    
-						<p> Fecha de salida </p>
-						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus   value=<?php echo $datos['fecha']; ?>  ></input><br><br>    
 						
-						<p> Estado del viaje </p>
-						<input type="text"  name="estado"  placeholder="Estado del viaje" size=50 autofocus   value=<?php echo $datos['estado']; ?>  ></input><br><br>    
-						<p> Email del conductor </p>
-						<input type="text"  name="email"  placeholder="Chofer email" size=50 autofocus   value=<?php echo $chofer['email']; ?> ></input><br><br>    
-						<p> Descripcion de ruta </p>
-						<input type="text"  name="descripcion"  placeholder="Descripcion ruta" size=50 autofocus   value=<?php echo $ruta['descripcion']; ?> ></input><br><br>
+						<input type="hidden" class="form-control"  name="viaje"   value=<?php  echo $idviaje ?> ></input>   
+						<input type="hidden" class="form-control"   name="combi"   value=<?php  echo $idcactual ?> ></input>
+						<p> Patente de  combi </p>
+						<select name="idc"> <br><br> 
+							<?php $query12="SELECT * FROM combis c INNER JOIN usuarios u ON (c.idu=u.id) WHERE c.activo='1' AND u.activo='1'";
+								$result12= mysqli_query ($link, $query12) or die ('Consuluta query12 fallida: ' .mysqli_error($link));
+                                while ($combi = mysqli_fetch_array($result12)) {
+                                    ?>   
+							<option value= "<?php echo $combi['idc'] ?>">  <?php if($idcactual == $combi['idc']){ echo "selected";}?> <?php echo $combi['patente']; ?> </option>
+								<?php
+                                } ?>
+						</select> <br><br> 						
+						
 						<input type="button" value="Editar" class="btn_editar" onclick = "validacionesviaje()">
 					</div>
 				</form>
