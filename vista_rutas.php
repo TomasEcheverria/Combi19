@@ -153,11 +153,11 @@
                     "</tr>";
               }
 
-            if(isset($_GET['errormsg'])){
-                switch ($_GET['errormsg']){
+            if(isset($_GET['msg'])){
+                switch ($_GET['msg']){
                     case 1:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
-                            "No es posible eliminar la ruta porque está siendo utilizada en un viaje pendiente.".
+                            "No es posible eliminar la ruta porque está siendo utilizada en un viaje pendiente o en curso.".
                             "</div>";
                         break;
                     case 2:
@@ -168,6 +168,11 @@
                     case 3:
                         echo "<div class='alert alert-dismissible alert-warning'>". 
                             "El lugar de origen y destino no pueden ser el mismo.".
+                            "</div>";
+                        break;
+                    case 4:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "No es posible editar la ruta porque está siendo utilizada en un viaje pendiente o en curso".
                             "</div>";
                         break;
                 }
