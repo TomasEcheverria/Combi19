@@ -151,17 +151,21 @@ function validacion1(){
 }
 function altaviaje(){
 	var n1 = document.publicarviaje.nro_viaje.value;
-	var n3 = document.publicarviaje.email.value;
-	var n4 = document.publicarviaje.descripcion.value;
+	var n6 =document.publicarviaje.precio.value;
+	var hora=document.publicarviaje.hora.value;
 	var n5 = document.publicarviaje.fecha.value;
-	var n6 =document.publicarviaje.precio.value
+	var n3 = document.publicarviaje.idc.value;
+	var n4 = document.publicarviaje.idr.value;
+	
+	
 	if (n3){
-	if(n1){
-			if(emailIsValid(n3)){
-				if(n4){
-					if(n5){
-						if(n6){
-							document.publicarviaje.submit();
+		if(n1){
+			if(n6){	
+				if(hora){
+					if(n4){
+						if(n5){
+							if(n6){
+								document.publicarviaje.submit();
 						}else{
 							alert('precio esta vacio')
 						}
@@ -170,12 +174,15 @@ function altaviaje(){
 					}
 					
 				}else{
-					alert('descripcion esta vacio');
+						alert('no se indico la ruta');
+					}
+				}else{
+					alert(' no se especifico la hora');
 				}
+			
 			}else{
-				alert('email es invalido');
+				alert('el precio del viaje esta vacio');
 			}
-		
 	}else{
 		alert('numero de viaje esta vacio');
 	}
@@ -184,37 +191,13 @@ function altaviaje(){
 }
 }
 function validacionesviaje(){
-	var n1 = document.editarviaje.nro_viaje.value;
-	var n3 = document.editarviaje.email.value;
-	var n4 = document.editarviaje.descripcion.value;
-	var n5 = document.editarviaje.fecha.value;
-	var n6 =document.editarviaje.precio.value;
-	if (n3){
-	if(n1){
-			if(emailIsValid(n3)){
-				if(n4){
-					if(n5){
-						if(n6){
-							document.editarviaje.submit();
-						}else{
-							alert('precio esta vacio')
-						}
-					}else{
-						alert('fecha esta vacia');
-					}
-				}else{
-					alert('descripcion esta vacio');
-				}
-			}else{
-				alert('email es invalido');
-			}
-		
+	var viaje = document.editarviaje.viaje.value;
+	var patente =document.editarviaje.idc.value;
+	if(patente){
+		document.editarviaje.submit();
 	}else{
-		alert('numero de viaje esta vacio');
+		alert("la patente esta vacia");
 	}
-}else{
-	alert('el mail esta vacio');        
-}
 }
 function validarclave(){
 var valorclave = document.editarclave.clave_vieja.value;// no esta funcionando el obtener el valor.
