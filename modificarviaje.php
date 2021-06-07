@@ -22,10 +22,11 @@
  <?php 
     try {
     	$usuario -> administrador($tipo);
-         $query50 ="SELECT * FROM viajes v INNER JOIN combis c ON(v.idc=c.idc)  WHERE idv='$idviaje'";
+         $query50 ="SELECT * FROM viajes v INNER JOIN combis c ON(v.idc=c.idu)  WHERE idv='$idviaje'";
         $result50=mysqli_query ($link, $query50) or die ('Consulta query50 fallida: ' .mysqli_error($link));
         $datos=(mysqli_fetch_array($result50)); 
-        $idc =$datos['idc'];
+        $idcactual =$datos['idc'];
+		//echo "combi actual".$datos['idc'];//datos de la combi
 		
     
 		
@@ -41,7 +42,7 @@
 			<a class="btn btn-outline-primary" href="listarviajes.php">Volver</a>
 
              <?php echo menu($tipo);?>
-             <p > Modificacion del vieja: <?php echo $idviaje?> </p>
+             <p > Modificacion del viaje: <?php echo $idviaje?> </p>
 		<div class=div_registro>
 			<p class="table"> Escriba solo los campos que desea modificar</p>
 
@@ -63,9 +64,19 @@
 
 					<div class="card-body">
 						
-						<input type="hidden" class="form-control" aria-describedby="emailHelp"  name="viaje"   value=<?php  echo $idviaje ?> ></input>   
+						<input type="hidden" class="form-control"  name="viaje"   value=<?php  echo $idviaje ?> ></input>   
+						<input type="hidden" class="form-control"   name="combi"   value=<?php  echo $idcactual ?> ></input>
 						<p> Patente de  combi </p>
-						<input type="text"  name="patente"  placeholder="Patente combi" size=50 autofocus   value=<?php echo $datos['patente']; ?> ></input><br><br>    
+						<select name="idc"> <br><br> 
+							<?php $query12="SELECT * FROM combis c INNER JOIN usuarios u ON (c.idu=u.id) WHERE c.activo='1' AND u.activo='1'";
+								$result12= mysqli_query ($link, $query12) or die ('Consuluta query12 fallida: ' .mysqli_error($link));
+                                while ($combi = mysqli_fetch_array($result12)) {
+                                    ?>   
+							<option value= "<?php echo $combi['idc'] ?>">  <?php if($idcactual == $combi['idc']){ echo "selected";}?> <?php echo $combi['patente']; ?> </option>
+								<?php
+                                } ?>
+						</select> <br><br> 						
+						
 						<input type="button" value="Editar" class="btn_editar" onclick = "validacionesviaje()">
 					</div>
 				</form>

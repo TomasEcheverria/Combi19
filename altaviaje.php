@@ -51,7 +51,7 @@
 						<p> Fecha de salida </p>
 						<input type="date"  name="fecha"  placeholder="Fecha de salida" size=50 autofocus    ></input><br><br>    
 						<p> Email del conductor </p>
-						<select name="email"> <br><br> 
+						<select name="idc"> <br><br> 
 							<?php $query1= "SELECT * FROM usuarios WHERE activo='1' AND tipo_usuario='chofer'";
 								$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
                                 while ($chofer = mysqli_fetch_array($result1)) {
@@ -59,13 +59,30 @@
 							<option value= "<?php echo $chofer['id'] ?>"> <?php echo $chofer['email']; ?> </option>
 								<?php
                                 } ?>
-						</select> <br><br> -->
+						</select> <br><br> 
 						
 
 
 
-						<p> Descripcion de ruta </p>
-						<input type="text"  name="descripcion"  placeholder="descripcion ruta" size=50 autofocus    ></input><br><br>
+						<p> Datos de la ruta: </p>
+						<p> descripcion|origen|destino </p>
+						<select name="idr"> <br><br> 
+							<?php $query2= "SELECT * FROM rutas  WHERE activo='1'";
+								$result2= mysqli_query ($link, $query2) or die ('Consuluta query2 fallida: ' .mysqli_error($link));
+                                while ($ruta = mysqli_fetch_array($result2)){
+									$query3= "SELECT * FROM lugares WHERE activo='1' AND idl='$ruta[codigo_postal_origen]'";
+									$result3= mysqli_query ($link, $query3) or die ('Consuluta query3 fallida: ' .mysqli_error($link));
+									$origen= mysqli_fetch_array($result3);//origen
+
+									$query4= "SELECT * FROM lugares WHERE activo='1' AND idl='$ruta[codigo_postal_destino]'";
+									$result4= mysqli_query ($link, $query4) or die ('Consuluta query4 fallida: ' .mysqli_error($link));
+									$destino= mysqli_fetch_array($result4);//destino
+								   ?>   
+							<option value= "<?php echo $ruta['idr'] ?>"> <?php echo $ruta['descripcion'].'|'.$origen['nombre'].'|'.$destino['nombre'];?> </option>
+								<?php
+                                } ?>
+						</select> <br><br> -->
+						
 						<input type="button" value="Submit" class="btn_editar" onclick = "altaviaje()">
 					</form>
 				</div>

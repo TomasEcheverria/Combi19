@@ -9,34 +9,30 @@
 	$mensaje3='';
 	$error=true;
 	$full = true;
-	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['email'])) and (isset ($_POST['descripcion'])) ){
+	if((isset ($_POST['nro_viaje'])) and (isset ($_POST['precio']))  and (isset ($_POST['hora'])) and  (isset ($_POST['fecha'])) and (isset ($_POST['idc'])) and (isset ($_POST['idr'])) ){
 		$nro_viaje= $_POST['nro_viaje'];
 		$fecha= $_POST['fecha'];
 		$precio= $_POST['precio'];
-		$email= $_POST['email'];
-		$descripcion = $_POST['descripcion'];	
+		$idc= $_POST['idc'];
+		$idr = $_POST['idr'];	
 		$hora=$_POST['hora'];
 
-        $query55 ="SELECT * FROM usuarios WHERE email='$_POST[email]'";
+        $query55 ="SELECT * FROM usuarios WHERE id='$idc' AND activo='1' AND tipo_usuario='chofer'";
         $result55=mysqli_query ($link, $query55) or die ('Consulta query55 fallida: ' .mysqli_error($link));
         $chofer=(mysqli_fetch_array($result55));
 		$row=mysqli_num_rows($result55);
-		if(($row == 0) or ($chofer['activo'] == 0)){
+		if($row == 0) {
 			$mensaje2 = 'no se encontro a un chofer con el email especificado';
 			$full = false;
 		}
-        if($chofer['tipo_usuario'] != "chofer"){
-            $full=false;
-            $mensaje2= 'el usuario especificado no es un conductor, seleccione un conductor';
-        }
+        
 
-
-        $query56 ="SELECT * FROM rutas WHERE descripcion='$_POST[descripcion]'";
+        $query56 ="SELECT * FROM rutas WHERE idr='$_POST[idr]' AND activo='1'";
         $result56=mysqli_query ($link, $query56) or die ('Consulta query56 fallida: ' .mysqli_error($link));
         $ruta=(mysqli_fetch_array($result56)); 
 		$row=mysqli_num_rows($result56);
-		if(($row == 0) or ($ruta['activo'] == 0)){
-			$mensaje2 = 'no se encontro a ninguna ruta con el descripcion especificado';
+		if($row == 0){
+			$mensaje2 = 'no se encontro a ninguna ruta con los datos especificados';
 			$full = false;
 		}
 		
@@ -55,21 +51,21 @@
 		while ($viajetabla= mysqli_fetch_array ($result57)){
 			if ($fecha == $viajetabla['fecha']){
 				$full= false;
-				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada";
+				$mensaje2="El conductor especificado ya posee un viaje en la fecha indicada, seleccione otra fecha que no sea:".$fecha;
 			}
 		}
 		
-		$query59 ="SELECT * FROM combis WHERE idu='$chofer[id]'";
+		$query59 ="SELECT * FROM combis WHERE idu='$idc' AND activo='1'";
         $result59=mysqli_query ($link, $query59) or die ('Consulta query59 fallida: ' .mysqli_error($link));
         $combi=(mysqli_fetch_array($result59)); 
 		$cantidad=mysqli_num_rows($result59);
-		if(($cantidad == 0) or ($combi['activo'] == 0)){
-			$mensaje2 = 'el conductor especificado no posee ninguna combi a su nombre';
+		if ($cantidad == 0) {
+			$mensaje2 = $_POST['idc'].'el conductor especificado no posee ninguna combi a su nombre';
 			$full = false;
 		}
 
 			if($full){
-            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, hora, idc, idr) values ('$_POST[nro_viaje]', '$precio', 'pendiente', '$fecha', '$_POST[hora]','$chofer[id]', '$ruta[idr]')";//falta subir la imagen y su tipo
+            $query31= "INSERT INTO viajes (nro_viaje, precio, estado, fecha, hora, idc, idr) values ('$_POST[nro_viaje]', '$precio', 'pendiente', '$fecha', '$_POST[hora]','$idc', '$idr')";//falta subir la imagen y su tipo
             $result31= mysqli_query ($link, $query31) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			$mensaje1= "El viaje se publico correctamente";
 			$error=false;
