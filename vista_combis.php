@@ -149,6 +149,25 @@
                     "</tr>";
                 }
             }
+            if(isset($_GET['msg'])){
+                switch ($_GET['msg']){
+                    case 1:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "No es posible eliminar la combi porque esta siendo utilizada en un viaje pendiente o en curso".
+                            "</div>";
+                        break;
+                    case 2:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "No es posible editar la combi porque esta siendo utilizada en un viaje pendiente o en curso".
+                            "</div>";
+                        break;
+                    case 3:
+                        echo "<div class='alert alert-dismissible alert-warning'>". 
+                            "La patente ingresada ya esta siendo usada por una combi.".
+                            "</div>";
+                        break;
+                }
+            }
               ?>
           </tbody>
         </table>

@@ -47,7 +47,7 @@
     if(isset($_GET['delete'])){
 
         $id = $_GET['delete'];
-        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1 AND estado='pendiente')";
+        $viaje_existe = "SELECT * FROM viajes WHERE ((idr=$id) AND activo=1 AND (estado='pendiente' OR estado='en curso'))";
         $resultado_viaje_existe = mysqli_query($db,$viaje_existe);
         if (empty(mysqli_fetch_assoc($resultado_viaje_existe))){
             
