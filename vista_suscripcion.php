@@ -15,6 +15,9 @@
     include 'php/classLogin.php';
     $usuario= new usuario();
     $usuario ->suscrito($suscrito);
+    $usuario -> session ($usuarioID);
+    try{
+        $usuario-> iniciada($usuarioID);
 ?>
 
 <body>
@@ -118,4 +121,20 @@
         </div> 
     </div>   
 </body>
+<?php
+	} catch (Exception $e){
+			echo $e->getMessage();
+	?>
+		 <div class="mensajes">
+		 <br><br>		
+			<a href="pagprincipal.php"  class=""> click aqui para volver a la pagina principal </a><br><br>	
+			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
+	</div>	 
+		 <div class= "div_foot">
+		<p> Made by : Grupo 40 </p>
+	</div>
+		<?php	
+	}
+	?> 
+
 </html>
