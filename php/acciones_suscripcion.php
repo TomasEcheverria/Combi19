@@ -6,11 +6,47 @@
         $usuario -> nombre($nombre); 
 
         $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
-        
 
-        // Es obligatorio cambiar el nro_tarjeta por bigint
 
-        if(isset($_POST['suscribirse'])){
+
+        // Se utiliza solo para habilitar la edicion
+        if(isset($_POST['edit'])){
+            header("Location: ../vista_perfil.php?md=save");
+        }
+
+        // se utiliza para guardar los cambios
+        if(isset($_POST['save'])){
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
+            $email = $_POST['email'];
+            $dni = $_POST['dni'];
+            $contraseña =  $_POST['clave'];
+
+            $sql= "UPDATE usuarios
+            SET 
+                usuarios.nombre = '$nombre',
+                usuarios.apellido = '$apellido',
+                usuarios.email = '$email',
+                usuarios.DNI = '$dni',
+                usuarios.clave = '$contraseña'
+            WHERE usuarios.id = '$id'";
+            mysqli_query($db,$sql);
+
+            // Actualizacion de los datos de la sesion
+            $_SESSION['nombre'] = $nombre;
+            $_SESSION['apellido'] = $apellido;
+            $_SESSION['email'] = $email;
+            $_SESSION['DNI'] = $dni;
+            $_SESSION['clave'] = $contraseña;
+            
+            header("Location: ../vista_perfil.php?md=edit&nombre=$nombre");
+        }
+
+        if(isset($_POST['suscribirse1'])){
+            header("Location: ../vista_suscripcion.php");
+        }
+
+        if(isset($_POST['suscribirse2'])){
             $nombre_tarjeta = $_POST['name'];
             $nro_tarjeta = (int) $_POST['numero_tarjeta'];
             $cvv = $_POST['numero_cvv'];

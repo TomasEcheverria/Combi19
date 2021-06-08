@@ -9,7 +9,7 @@
 			<a href="vista_busqueda.php">Buscar viaje </a>
             <?php if($tipo == "pasajero") {
             ?>
-            <a href="vista_suscripcion.php">Suscribirse </a>
+            <a href="vista_perfil.php">Mi Perfil.</a>
             <?php }
 			?>
             <?php if($tipo == "administrador") {
