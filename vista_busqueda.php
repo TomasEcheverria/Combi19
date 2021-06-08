@@ -153,7 +153,7 @@
                         "<td>". $value['fecha'] . "</td>".
                         "<td>". $value['hora'] . " hs". "</td>".
                         "<td>".                    
-                            "<a href='$idv'class='btn btn btn-outline-success'>Ver Viaje</a>".
+                            "<a href='vista_ver_viaje.php?ver=$idv'class='btn btn btn-outline-success'>Ver Viaje</a>".
                         "</td>".
                     "</tr>";
               }
