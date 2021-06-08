@@ -15,6 +15,9 @@
     include 'php/classLogin.php';
     $usuario= new usuario();
     $usuario ->suscrito($suscrito);
+    $usuario -> session ($usuarioID);
+    try{
+        $usuario-> iniciada($usuarioID);
 ?>
 
 <body>
@@ -98,7 +101,7 @@
                                                         <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Desuscribirse
                                                     </button>
                                             <?php else: ?>
-                                                <button class="btn btn-sm btn-success float-right" name="suscribirse" type="submit" onclick="validarTarjetaDeCredito()">
+                                                <button class="btn btn-sm btn-success float-right" name="suscribirse2" type="submit" onclick="validarTarjetaDeCredito()">
                                                     <i class="mdi mdi-gamepad-circle" name="<?php echo $suscrito ?>" ></i> Suscribirse
                                                 </button>
                                             <?php endif; ?>
@@ -118,4 +121,20 @@
         </div> 
     </div>   
 </body>
+<?php
+	} catch (Exception $e){
+			echo $e->getMessage();
+	?>
+		 <div class="mensajes">
+		 <br><br>		
+			<a href="pagprincipal.php"  class=""> click aqui para volver a la pagina principal </a><br><br>	
+			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
+	</div>	 
+		 <div class= "div_foot">
+		<p> Made by : Grupo 40 </p>
+	</div>
+		<?php	
+	}
+	?> 
+
 </html>

@@ -7,11 +7,10 @@
 			<a href="pagprincipal.php">Pagina principal (home)</a>
 		    <a href= "usuario.php?idu=4">Editar Perfil </a>
 			<a href="vista_busqueda.php">Buscar viaje </a>
-            <?php if($tipo == "pasajero") {
-            ?>
-            <a href="vista_suscripcion.php">Suscribirse </a>
-            <?php }
-			?>
+            <a href="pasajes.php"> Mis Pasajes </a>
+            
+            <a href="vista_perfil.php">Mi Perfil.</a>
+            
             <?php if($tipo == "administrador") {
             ?>
             <a href="administracion.php">Funciones administrativas </a>

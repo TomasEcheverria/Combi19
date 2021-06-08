@@ -6,11 +6,50 @@
         $usuario -> nombre($nombre); 
 
         $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
-        
 
-        // Es obligatorio cambiar el nro_tarjeta por bigint
 
-        if(isset($_POST['suscribirse'])){
+
+        // Se utiliza solo para habilitar la edicion
+        if(isset($_POST['edit'])){
+            header("Location: ../vista_perfil.php?md=save");
+        }
+
+        // se utiliza para guardar los cambios
+        if(isset($_POST['save'])){
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
+            $email = $_POST['email'];
+            $dni = $_POST['dni'];
+            $contraseña =  $_POST['clave'];
+            $num_tarjeta =  $_POST['numero_tarjeta'];
+
+            $sql= "UPDATE usuarios
+            SET 
+                usuarios.nombre = '$nombre',
+                usuarios.apellido = '$apellido',
+                usuarios.email = '$email',
+                usuarios.DNI = '$dni',
+                usuarios.clave = '$contraseña',
+                usuarios.nro_tarjeta = $num_tarjeta
+            WHERE usuarios.id = '$id'";
+            mysqli_query($db,$sql);
+
+            // Actualizacion de los datos de la sesion
+            $_SESSION['nombre'] = $nombre;
+            $_SESSION['apellido'] = $apellido;
+            $_SESSION['email'] = $email;
+            $_SESSION['DNI'] = $dni;
+            $_SESSION['clave'] = $contraseña;
+            $_SESSION['nro_tarjeta'] = $num_tarjeta;
+
+            header("Location: ../vista_perfil.php?md=edit&result=3");
+        }
+
+        if(isset($_POST['suscribirse1'])){
+            header("Location: ../vista_suscripcion.php");
+        }
+
+        if(isset($_POST['suscribirse2'])){
             $nombre_tarjeta = $_POST['name'];
             $nro_tarjeta = (int) $_POST['numero_tarjeta'];
             $cvv = $_POST['numero_cvv'];
@@ -40,7 +79,7 @@
             $_SESSION['cod_seguridad'] = $cvv;
             $_SESSION['nro_tarjeta'] = $nro_tarjeta;
             $_SESSION['suscrito'] = 1;
-            header("Location: ../vista_perfil.php");
+            header("Location: ../vista_perfil.php?result=1");
         }
 
 
@@ -54,19 +93,13 @@
                 usuarios.fecha_vencimiento = NULL
             WHERE usuarios.id = '$id'";
             mysqli_query($db,$sql);
-            echo "<h1>Te acabas de desuscribir de Combi19 :(</h1>".
-             "
-             <a href='../vista_perfil.php'>
-                 <button class='btn btn-sm btn-success float-right' type='submit' >
-                     <i class='mdi mdi-gamepad-circle' id='volver_menu'></i> Volver</button>
-                 </div>
-             </a>
-             ";
+
             // Actualizar los datos de la sesion
              $_SESSION['fecha_vencimiento'] = NULL;
              $_SESSION['cod_seguridad'] = NULL;
              $_SESSION['nro_tarjeta'] = NULL;
              $_SESSION['suscrito'] = 0;
+             header("Location: ../vista_perfil.php?result=2");
         }
         //Boton de volver en formulario de tarjeta
         if(isset($_POST['volver'])){

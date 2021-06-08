@@ -59,20 +59,24 @@
 			$mensaje3='La nueva combi tiene menos asientos que pasajes reservados para este viaje, la cantidad de asientos reservados es:'.$reservados['0'];
 			$full=false;
 		}
-
-		$fecha= $datos['fecha'];
-		
-		$query89="SELECT * FROM viajes WHERE idc='$cnueva[idu]'";
-		$result89=mysqli_query ($link, $query89) or die ('Consulta 89 fallida ' .mysqli_error($link));
-		while ($fechaviajes= mysqli_fetch_array ($result89)){
-			if ($fecha == $fechaviajes['fecha']){
-				$full= false;
-				$mensaje2="El conductor asignado a esta combi ya esta reservado en la fecha indicada,seleccione una fecha distinta a:".$fecha.".";
-			}
-		}
+		if($cvieja['idc'] == $cnueva['idc']){
+			$mensaje1='Se esta seleccionanado la combi ya asignada, selected indica la combi actual';
+			$full=false;
+		}else{
+            $fecha= $datos['fecha'];
+        
+            $query89="SELECT * FROM viajes WHERE idc='$cnueva[idu]'";
+            $result89=mysqli_query($link, $query89) or die('Consulta 89 fallida ' .mysqli_error($link));
+            while ($fechaviajes= mysqli_fetch_array($result89)) {
+                if ($fecha == $fechaviajes['fecha']) {
+                    $full= false;
+                    $mensaje2="El conductor asignado a esta combi ya esta reservado en la fecha indicada,seleccione una fecha distinta a:".$fecha.".";
+                }
+            }
+        }
 			if($full){
 			$query72= ("UPDATE viajes SET idc='$cnueva[idu]' WHERE idv='$idv'");
-			$result72= (mysqli_query ($link, $query72) or die ('Consuluta query72 fallida: ' .mysqli_error($link)));
+			$result72= mysqli_query ($link, $query72) or die ('Consuluta query72 fallida: ' .mysqli_error($link));
 			$mensaje1= "El viaje  se ha editado correctamente";
 			$error=false;
 			}else{

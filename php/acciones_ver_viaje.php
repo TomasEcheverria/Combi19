@@ -11,18 +11,78 @@
     $idc = "";
 
 
-    // Alta de lugares
+
     if(isset($_POST['submit'])){
-        $idaux = $_POST["id"];
-        $cantidad_asientos = $_POST["cantidad_asientos"];
-        $cantidad_asientos = $cantidad_asientos +1;
-        var_dump($idaux);
-        var_dump($cantidad_asientos);
-        if (false){
-            $sql = "INSERT INTO lugares (`provincia`, `nombre`, `activo`) VALUES
-            ('$provincia', '$nombre', 1);";
-            mysqli_query($db,$sql);
-        }  
+        $idp="";
+        $id_viaje = $_POST["id"];
+        $id_usuario = $_POST["id_usuario"];
+        $cantidad_asientos = $_POST["cantidad_asientos"]+1;
+        //Definición de variables
+
+        $pasaje_existe="SELECT * FROM pasajes WHERE (idu='$id_usuario') AND (idv='$id_viaje') AND (activo=1)";
+        $resultado_pasaje_existe = mysqli_query($db,$pasaje_existe);
+        $row = mysqli_fetch_assoc($resultado_pasaje_existe);
+        //Consulta db si existe/fantasma
+        
+        if (isset($row)){
+            if ($row['fantasma']==1){
+            //confirma que el viaje existe y es fantasma, entonces para no agregar uno nuevo
+            //toma el que ya existe
+                echo "entro en row fantasma";
+                $idp = $row['idp'];
+                $sql = "UPDATE pasajes SET cantidad_asientos='$cantidad_asientos' WHERE idp='$idp'";
+                $db->query($sql) or die("error". mysqli_error ($db));
+            } else{
+                //si no es fantasma entonces ya tiene el pasaje comprado y activo
+                echo "esta comprado y activo, no se realiza modificacion";
+            }
+        }else{
+            //el pasaje no existe y hay que armar uno nuevo
+            echo "no existe y se crea uno nuevo";
+             $agregar_pasaje = "INSERT INTO pasajes (`cantidad_asientos`, `idu`, `idv`, `fantasma`, `activo`) VALUES
+                ('$cantidad_asientos', '$id_usuario', '$id_viaje', 1, 1);";           
+            mysqli_query($db,$agregar_pasaje);
+            //ahora debo obtener la id de pasaje
+            $pasaje_creado="SELECT * FROM pasajes WHERE (idu='$id_usuario') AND (idv='$id_viaje') AND (activo=1)";
+            $resultado_pasaje_creado = mysqli_query($db,$pasaje_creado);
+            $row = mysqli_fetch_assoc($resultado_pasaje_creado);
+        }
+        $cantidad_asientos = $cantidad_asientos-1;
+        if ($idp != ""){
+            $usuario_consulta = "SELECT nombre, apellido, dni FROM usuarios WHERE (id=$id_usuario) AND (activo=1)";
+            $resultado_usuario = mysqli_query($db,$usuario_consulta);
+            $usuario_informacion = mysqli_fetch_assoc($resultado_usuario);
+            $usuario_nombre = $usuario_informacion['nombre'];
+            $usuario_apellido = $usuario_informacion['apellido'];
+            $usuario_dni = $usuario_informacion['dni'];
+
+            //consulta para saber si el pasajero existe
+            $pasajero_consulta= "SELECT * FROM pasajeros WHERE (dni='$usuario_dni') AND (idp='$idp') AND (activo=0)";
+            $resultado_pasajero = mysqli_query($db,$pasajero_consulta);
+            $pasajero_informacion = mysqli_fetch_assoc($resultado_pasajero);
+
+            if (isset($pasajero_informacion)){
+                //si el pasajero existe y no esta activo, es decir, cancelaron la creacion despues de esta etapa
+                //se updatea el existente
+                $updatear_pasajero = "UPDATE pasajeros SET nombre='$usuario_nombre', apellido='$usuario_apellido' WHERE (idp='$idp') AND (dni='$usuario_dni')";
+                $db->query($updatear_pasajero) or die("error". mysqli_error ($db));  
+                echo "pasajero existente updateado";
+            } else{
+                //si no existe el pasajero se crea
+                $agregar_pasajero = "INSERT INTO pasajeros (`nombre`, `apellido`, `dni`, `idp`, `activo`) VALUES
+                    ('$usuario_nombre', '$usuario_apellido', '$usuario_dni', '$idp', 0);"; 
+                mysqli_query($db,$agregar_pasajero);
+                echo "pasajero nuevo creado";
+            }
+            
+            if ($cantidad_asientos== 0){
+                }
+        } else {
+            echo "No se que hiciste";
+        }
+
+        //header("Location: ../vista_ver_viaje.php?ver=$idv");
+
     }
 
 
