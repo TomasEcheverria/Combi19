@@ -21,6 +21,7 @@
             $email = $_POST['email'];
             $dni = $_POST['dni'];
             $contraseña =  $_POST['clave'];
+            $num_tarjeta =  $_POST['numero_tarjeta'];
 
             $sql= "UPDATE usuarios
             SET 
@@ -28,7 +29,8 @@
                 usuarios.apellido = '$apellido',
                 usuarios.email = '$email',
                 usuarios.DNI = '$dni',
-                usuarios.clave = '$contraseña'
+                usuarios.clave = '$contraseña',
+                usuarios.nro_tarjeta = $num_tarjeta
             WHERE usuarios.id = '$id'";
             mysqli_query($db,$sql);
 
@@ -38,8 +40,9 @@
             $_SESSION['email'] = $email;
             $_SESSION['DNI'] = $dni;
             $_SESSION['clave'] = $contraseña;
-            
-            header("Location: ../vista_perfil.php?md=edit&nombre=$nombre");
+            $_SESSION['nro_tarjeta'] = $num_tarjeta;
+
+            header("Location: ../vista_perfil.php?md=edit&result=3");
         }
 
         if(isset($_POST['suscribirse1'])){
@@ -76,7 +79,7 @@
             $_SESSION['cod_seguridad'] = $cvv;
             $_SESSION['nro_tarjeta'] = $nro_tarjeta;
             $_SESSION['suscrito'] = 1;
-            header("Location: ../vista_perfil.php");
+            header("Location: ../vista_perfil.php?result=1");
         }
 
 
@@ -90,19 +93,13 @@
                 usuarios.fecha_vencimiento = NULL
             WHERE usuarios.id = '$id'";
             mysqli_query($db,$sql);
-            echo "<h1>Te acabas de desuscribir de Combi19 :(</h1>".
-             "
-             <a href='../vista_perfil.php'>
-                 <button class='btn btn-sm btn-success float-right' type='submit' >
-                     <i class='mdi mdi-gamepad-circle' id='volver_menu'></i> Volver</button>
-                 </div>
-             </a>
-             ";
+
             // Actualizar los datos de la sesion
              $_SESSION['fecha_vencimiento'] = NULL;
              $_SESSION['cod_seguridad'] = NULL;
              $_SESSION['nro_tarjeta'] = NULL;
              $_SESSION['suscrito'] = 0;
+             header("Location: ../vista_perfil.php?result=2");
         }
         //Boton de volver en formulario de tarjeta
         if(isset($_POST['volver'])){

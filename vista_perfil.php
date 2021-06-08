@@ -65,11 +65,58 @@
         }
     }
 
+    // En caso de que este en modo edicion se muestra el valor de la tarjeta, caso contrario solo se muestran los ultimos 2 digitos
+    function valorTarjeta($n_tarjeta,$tarjeta_mask){
+        if(isset($_GET['md'])){
+            switch ($_GET['md']){
+                case "save":
+                    echo $n_tarjeta;
+                    break;
+                case "edit":
+                    echo $tarjeta_mask;
+                    break;
+            }
+        } else{
+            echo $tarjeta_mask;
+        }
+    }
+
     $edicion = modoInput();
     try{
         $usuario-> iniciada($usuarioID);
 ?>
 <body>
+<?php
+            if(isset($_GET['md'])){
+                switch ($_GET['md']){
+                    case "save":
+                        echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'> 
+                        Usted se encuentra en modo edicion. 
+                        </div>";
+                        break;
+                    }
+            }
+
+            if(isset($_GET['result'])){
+                switch ($_GET['result']){
+                    case 1:
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'> 
+                        ¡Gracias por suscribirte a combi 19!
+                        </div>";
+                        break;
+                    case 2:
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'> 
+                        ¡Te acabas de desuscribir!
+                        </div>";
+                        break;
+                        case 3:
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'> 
+                            Tus datos han sido guardados
+                            </div>";
+                            break;                    
+                    }
+            }
+    ?>
     <div class="container-sm">
         <div class="padding">
             <div class="d-flex justify-content-center">
@@ -127,7 +174,7 @@
                                                 <label for="name">Numero Tarjeta:</label>
                                         </div>
                                         <div class="col-sm-10">
-                                                <input class="form-control"  name="numero_tarjeta" type="text" value="<?php echo $numero_de_tarjeta?>" readonly>
+                                                <input class="form-control"  name="numero_tarjeta" type="text" value="<?php valorTarjeta($nro_tarjeta,$numero_de_tarjeta)?>" <?php echo "$edicion"?>>
                                         </div>
                                     </div>
                                     <?php endif; ?>
