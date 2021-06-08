@@ -34,14 +34,27 @@
 		</div>
         <?php $query1="SELECT * FROM pasajes WHERE idu='$id'";
 			$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
-			while($pasaje= mysqli_fetch_array($result1)){ ?>
+			$cantidad= mysqli_num_rows($result1);?>
+			<h2>Cantidad de pasajes personales:<?php echo $cantidad; ?> </h2>
+			
+		<?php	while($pasaje= mysqli_fetch_array($result1)){ 
+				$query2="SELECT * FROM viajes WHERE idv='$pasaje[idv]'";
+			$result2= mysqli_query ($link, $query2) or die ('Consuluta query2 fallida: ' .mysqli_error($link));
+			$viaje=	mysqli_fetch_array($result2);
+			?>
 
             <div class ="container-fluid">
 			<div class="card text-white bg-primary mb-3">Numero de pasaje:<?php echo $pasaje['idp']; ?>
-				<div class="card-header"><?php echo 'Fecha: '.$comentario['fecha_y_hora'].' Usuario:'.$comentario['email'];?></div>
-				<div class="card-body">
-					<h4 class="card-title"> <?php echo $comentario['texto_comentario'];?></h4>
-					<p class="card-text"> 
+				<div class="card-header"><?php if($pasaje['activo'] == 1){
+				echo 'Pasaje activo';}else{ echo "Pasaje cancelado";}?><br>
+				<?php if($pasaje['comentario'] == 1){
+				echo 'Se realizo un comentario';}else{ echo "No se realizo un comentraio";}?></div>
+				<div class="card-body"> 
+					<h4 class="card-title"> <?php echo "numero de viaje".$viaje['nro_viaje'];?><br>
+					<?php if($viaje['activo'] == 1){
+					 echo 'Estado del viaje: '.$viaje['estado'];}else{ echo "El viaje fue cancelado";}?><br>
+					<?php echo"Fecha de salida: ".$viaje['fecha']; ?></h4><br>
+					<a class="card-text" href="pasaje.php?idp=<?php echo $pasaje['idp']; ?>" > Mas informacion </a>
 				</div>
 			</div>				
 		</div>
