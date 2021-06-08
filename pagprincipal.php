@@ -27,7 +27,13 @@
 			</a>
 		</div>
 		<!--Boton menu   -->
-			<?php echo menu($tipo); ?>
+			<?php echo menu($tipo); ?><br>
+			<?php if(!isset($_SESSION['id'])){?>
+				No se ha iniciado sesion , solo podra ver comentarios y buscar viajes.<br><br>
+			<a href="index.php"> Click aqui para iniciar sesion</a>
+				<?php }else{?>
+					Usted a iniciado sesion como <?php echo $usuarioID?>	
+				<?php }?>
 		<!--Comentarios   -->
 		<div class="text-center" >
 			<h1> Comentarios</h1>
