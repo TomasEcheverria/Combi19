@@ -132,10 +132,8 @@
 							<td><?php echo $precio; ?></td>
 							<td><?php echo $estado; ?></td>
 							<td><a class="btn btn btn-outline-success" href="modificarviaje.php?idv=<?php echo $idv?>">Editar</a>
-							<form  action="php/bajaviaje.php" method="post">    
-				                  <button name="borrar" class="btn btn-outline-danger ml-1" onclick="return SubmitForm(this.form)" value="Eliminar">Borrar</button>
-				                  <input type="hidden" name="idv" value="<?php echo $idv; ?>" />
-				    		</form></td>
+								<a class="btn btn-outline-danger ml-1" href="cancelarviaje.php?idv=<?php echo $idv?>">Borrar</a>
+							</td>
 						</tr>
 							
 			</div>	

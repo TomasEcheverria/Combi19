@@ -158,8 +158,8 @@ div.reset {/*deja un lina en blaco entre las personas*/
 }
 
 .div_usuario{
-	background-color: FireBrick;	
-	height: 15%;
+	background-color: rgb(255, 60, 0);	
+	height: 35%;
 	margin-left: 5%;
 	margin-right: 5%;
 	margin-bottom: 2%;
@@ -182,7 +182,7 @@ div.reset {/*deja un lina en blaco entre las personas*/
 	width: 75%;
 	text-decoration:none;
 	padding-top: 1%;
-	color: white;
+	color: black;
 	height:40%;
 }
 

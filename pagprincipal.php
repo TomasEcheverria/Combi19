@@ -32,38 +32,23 @@
 		<div class="text-center" >
 			<h1> Comentarios</h1>
 		</div>
-		<!--Primer Comentario   -->
+		<?php $query1="SELECT * FROM comentarios WHERE activo='1'";
+			$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
+			while($comentario= mysqli_fetch_array($result1)){ ?>
+			
+		
 		<div class ="container-fluid">
 			<div class="card text-white bg-primary mb-3">
-				<div class="card-header">30/01/1969 16:00</div>
+				<div class="card-header"><?php echo 'Fecha: '.$comentario['fecha_y_hora'].' Usuario:'.$comentario['email'];?></div>
 				<div class="card-body">
-					<h4 class="card-title">Usuario 1</h4>
-					<p class="card-text">Don't let me down, don't let me down ...</p>
+					<h4 class="card-title"> <?php echo $comentario['texto_comentario'];?></h4>
+					<p class="card-text"> 
 				</div>
 			</div>				
 		</div>
-		<!--Segundo comentario   -->
-		<div class ="container-fluid">
-			<div class="card text-white bg-primary mb-3">
-				<div class="card-header">30/01/1969 16:00</div>
-				<div class="card-body">
-					<h4 class="card-title">Usuario 2</h4>
-					<p class="card-text">Don't let me down, don't let me down ...</p>
-					</div>
-			</div>				
-		</div>
-		<!--Tercer Comentario  -->
-		<div class ="container-fluid">
-			<div class="card text-white bg-primary mb-3">
-				<div class="card-header">30/01/1969 16:00</div>
-				<div class="card-body">
-					<h4 class="card-title">Usuario 3</h4>
-					<p class="card-text">Don't let me down, don't let me down ...</p>
-					</div>
-			</div>
-		</div>
-		<!--Footer   -->				
-		</div>
+		<?php } ?>
+
+			<!-- Footer -->
 			<figcaption class="blockquote-footer">
 				<cite title="Source Title">Made by : Grupo 40 </cite>
 			</figcaption>

@@ -224,3 +224,23 @@ var valorclave = document.editarclave.clave_vieja.value;// no esta funcionando e
 							alert('no deje ningun campo en blanco');
 						}
 }
+function toggle() {
+	var documento=document.getElementById('cancelarviaje');
+	var checkboxes = document.getElementsByClassName('ces');
+	var enviar = true;
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (!checkboxes[i].checked) {
+		
+		enviar=false;
+    }
+  }
+ if(enviar){
+  	document.cancelarviaje.submit();
+ }else{
+	 alert('se deben de rembolsar todas los pasajes para borrar el viaje');
+ }
+
+}
+function enviar(){
+	document.cancelarviaje.submit();
+}
