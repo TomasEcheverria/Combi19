@@ -14,15 +14,22 @@
 <?php
     include 'php/classLogin.php';
     $usuario= new usuario();
-    $usuario ->suscrito($suscrito);
+    $usuario -> tipoUsuario ($tipo);
     $usuario ->nombre($nombre);
     $usuario ->apellido($apellido);
     $usuario ->email($email);
     $usuario ->DNI($DNI);
     $usuario ->contrasenia($contrasenia);
-    $usuario ->nro_tarjeta($nro_tarjeta);
+    if($tipo == "pasajero"){
+        $usuario ->suscrito($suscrito);
+        $usuario ->nro_tarjeta($nro_tarjeta);
+        $usuario ->cod_seguridad($cod_Seguridad);
+        $usuario ->fecha_vencimiento($fecha_vencimiento);
+        $numero_de_tarjeta = "XXXX XXXX XX" . substr($nro_tarjeta,-2);
+    };
     $usuario -> session ($usuarioID);
-    $numero_de_tarjeta = "XXXX XXXX XX" . substr($nro_tarjeta,-2);
+
+
 
     // Para saber en que modo esta el boton de edicion
     function modoActual(){
@@ -40,6 +47,11 @@
         }
     }
 
+    //Se utiliza para mostrar los datos protegidos para el usuario, cuando se esta en modo edicion
+    function mostrarDatosProtegidos(){
+        if(modoActual() == "save"){echo "text";} else{echo "password";}
+    }
+
     // Para indicar al input si se puede editar o no
     function modoInput(){
         $modo = modoActual();
@@ -55,7 +67,10 @@
             case "save":
                 echo "<button class='btn btn-sm btn-warning float-right' name='save' type='submit'>
                     <i class='mdi mdi-gamepad-circle' ></i> Guardar
-                    </button>";
+                    </button>".
+                    "<button class='btn btn-sm btn-secondary float-right' name='volver1' type='submit'>
+                    <i class='mdi mdi-gamepad-circle'></i> Volver</button>"
+                    ;
                 break;
             case "edit":
                 echo "<button class='btn btn-sm btn-info float-right' name='edit' type='submit'>
@@ -168,7 +183,7 @@
                                             <input class="form-control"  name="clave" type="password" value="<?php echo $contrasenia?>" <?php echo "$edicion"?>>
                                     </div>
                                 </div>
-                                <?php if($suscrito): ?>
+                                <?php if($tipo == "pasajero" and $suscrito): ?>
                                     <div class="row my-4">
                                         <div class="col-sm-2">
                                                 <label for="name">Numero Tarjeta:</label>
@@ -177,20 +192,43 @@
                                                 <input class="form-control"  name="numero_tarjeta" type="text" value="<?php valorTarjeta($nro_tarjeta,$numero_de_tarjeta)?>" <?php echo "$edicion"?>>
                                         </div>
                                     </div>
-                                    <?php endif; ?>
+                                    <div class="row my-4">
+                                        <div class="col-sm-2">
+                                                <label for="name">Codigo de seguridad:</label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                                <input class="form-control"  name="cod_seguridad" type="<?php mostrarDatosProtegidos()?>" value="<?php echo $cod_Seguridad?>" <?php echo "$edicion"?>>
+                                        </div>
+                                    </div>
+                                    <div class="row my-4">
+                                        <div class="col-sm-2">
+                                                <label for="name">Fecha vencimiento tarjeta:</label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                                <input class="form-control"  name="fecha_vto_tarjeta" type="<?php mostrarDatosProtegidos()?>" value="<?php echo $fecha_vencimiento?>" <?php echo "$edicion"?>>
+                                                <?php if($tipo =="pasajero" and modoActual() == "save"):?>
+                                                 <p class="text-muted"> Formato: YYYY-MM-DD </p>
+                                                <?php endif; ?>
+                                                  
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                         </div>
                         <div class="card-footer">
                                     <div class="text-center">
                                         <div class="row-sm">
+                                        <?php if($tipo =="pasajero"): ?>
                                                 <?php if(!$suscrito): ?>
                                                         <button class="btn btn-sm btn-success float-right" name="suscribirse1" type="submit">
                                                             <i class="mdi mdi-gamepad-circle " ></i> Suscribirse
                                                         </button>
+
                                                 <?php else: ?>
                                                         <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit">
                                                             <i class="mdi mdi-gamepad-circle "></i> Desuscribirse
                                                         </button>
                                                 <?php endif; ?>
+                                        <?php endif; ?>
                                                 <?php devolverBoton() ?>
                                         </div>
                                     </div>
@@ -219,3 +257,4 @@
 	}
 	?> 
 </html>
+

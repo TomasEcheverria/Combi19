@@ -106,7 +106,7 @@
                                                 </button>
                                             <?php endif; ?>
                                             <!-- Boton de desuscribirse en caso de ya estar suscrito-->
-                                                <button class="btn btn-sm btn-secondary float-right" name="volver" type="submit">
+                                                <button class="btn btn-sm btn-secondary float-right" name="volver2" type="submit">
                                                 <i class="mdi mdi-gamepad-circle"></i> Volver</button>
                                         </div>
                                 </div>
