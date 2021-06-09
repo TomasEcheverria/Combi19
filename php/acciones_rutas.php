@@ -105,7 +105,7 @@
             header("Location: ../vista_rutas.php?msg=3");
         } else {
             //Se comprueba si la ruta existe antes de updatear
-            $ruta_existe="SELECT * FROM rutas WHERE ((descripcion='$descripcion') AND activo=1 AND idr<>'$id')";
+            $ruta_existe="SELECT * FROM rutas WHERE (((descripcion='$descripcion') AND (codigo_postal_origen='$codigo_postal_origen') AND (codigo_postal_destino='$codigo_postal_destino')) AND activo=1 AND idr<>'$id')";
             $resultado_ruta_existe = mysqli_query($db,$ruta_existe);
             if (empty(mysqli_fetch_assoc($resultado_ruta_existe))){
                 $sql = "UPDATE rutas SET descripcion='$descripcion', codigo_postal_origen='$codigo_postal_origen', codigo_postal_destino='$codigo_postal_destino', kilometros='$kilometros' WHERE idr='$id'";
