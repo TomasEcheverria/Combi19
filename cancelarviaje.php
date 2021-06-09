@@ -38,7 +38,7 @@
 		<div class="div_resultados">
 		     <?php
 		    
-			    $consulta="SELECT *  FROM pasajes WHERE idv='$idv'";
+			    $consulta="SELECT *  FROM pasajes WHERE idv='$idv' AND fantasma='0' AND activo='1'";
 			    $resultado = mysqli_query ($link, $consulta) or die ('Consulta query fallida: ' .mysqli_error($link));
 				$result=mysqli_num_rows($resultado); ?>
 				<h3> <p> Cancelacion del viaje:<?php echo $idv?> </p></h3>

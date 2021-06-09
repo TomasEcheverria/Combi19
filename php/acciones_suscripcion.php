@@ -4,6 +4,7 @@
         // Se obtiene el mail de usuari y queda guardado en $email
         $usuario -> id($id);
         $usuario -> nombre($nombre); 
+        $usuario -> tipoUsuario($tipo);
 
         $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
 
@@ -19,30 +20,62 @@
             $nombre = $_POST['nombre'];
             $apellido = $_POST['apellido'];
             $email = $_POST['email'];
-            $dni = $_POST['dni'];
             $contraseña =  $_POST['clave'];
-            $num_tarjeta =  $_POST['numero_tarjeta'];
+            $dni = $_POST['dni'];
+            switch($tipo){
+                case "pasajero":
+                    $num_tarjeta =  $_POST['numero_tarjeta'];
+                    $cod_seguridad = $_POST['cod_seguridad'];
+                    $fecha_vencimiento = $_POST['fecha_vto_tarjeta'];
 
-            $sql= "UPDATE usuarios
-            SET 
-                usuarios.nombre = '$nombre',
-                usuarios.apellido = '$apellido',
-                usuarios.email = '$email',
-                usuarios.DNI = '$dni',
-                usuarios.clave = '$contraseña',
-                usuarios.nro_tarjeta = $num_tarjeta
-            WHERE usuarios.id = '$id'";
-            mysqli_query($db,$sql);
+                    $sql= "UPDATE usuarios
+                    SET 
+                        usuarios.nombre = '$nombre',
+                        usuarios.apellido = '$apellido',
+                        usuarios.email = '$email',
+                        usuarios.clave = '$contraseña',
+                        usuarios.DNI = '$dni',
+                        usuarios.nro_tarjeta = $num_tarjeta,
+                        usuarios.cod_seguridad = $cod_seguridad,
+                        usuarios.fecha_vencimiento = '$fecha_vencimiento'
+                    WHERE usuarios.id = '$id'";
 
-            // Actualizacion de los datos de la sesion
-            $_SESSION['nombre'] = $nombre;
-            $_SESSION['apellido'] = $apellido;
-            $_SESSION['email'] = $email;
-            $_SESSION['DNI'] = $dni;
-            $_SESSION['clave'] = $contraseña;
-            $_SESSION['nro_tarjeta'] = $num_tarjeta;
+                    mysqli_query($db,$sql);
+                    
+                    //Actualizacion de datos de session
+                    $_SESSION['nombre'] = $nombre;
+                    $_SESSION['apellido'] = $apellido;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['DNI'] = $dni;
+                    $_SESSION['clave'] = $contraseña;
+                    $_SESSION['nro_tarjeta'] = $num_tarjeta;
+                    $_SESSION['cod_seguridad'] = $cod_seguridad;
+                    $_SESSION['fecha_vencimiento'] = $fecha_vencimiento;
 
-            header("Location: ../vista_perfil.php?md=edit&result=3");
+                    break;
+                case "administrador":
+                    $sql= "UPDATE usuarios
+                    SET 
+                        usuarios.nombre = '$nombre',
+                        usuarios.apellido = '$apellido',
+                        usuarios.email = '$email',
+                        usuarios.clave = '$contraseña',
+                        usuarios.DNI = '$dni'
+                    WHERE usuarios.id = '$id'";
+
+                    mysqli_query($db,$sql);
+                    
+                    //Actualizacion de datos de session
+                    $_SESSION['nombre'] = $nombre;
+                    $_SESSION['apellido'] = $apellido;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['DNI'] = $dni;
+                    $_SESSION['clave'] = $contraseña;
+                    break;
+                case "chofer":
+                    break;
+            }
+             header("Location: ../vista_perfil.php?md=edit&result=3");
         }
 
         if(isset($_POST['suscribirse1'])){
@@ -102,7 +135,10 @@
              header("Location: ../vista_perfil.php?result=2");
         }
         //Boton de volver en formulario de tarjeta
-        if(isset($_POST['volver'])){
+        if(isset($_POST['volver1'])){
+            header("Location: ../vista_perfil.php");
+        }
+        if(isset($_POST['volver2'])){
             header("Location: ../vista_perfil.php");
         }
 ;
