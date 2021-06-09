@@ -85,9 +85,9 @@
                 <input type="date" class="form-control" name="fecha" placeholder="" value="<?php echo $fecha?>" required="">
             </div>
                 <?php if($update == true){
-                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
+                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> <button type='submit'name='update' class='btn btn-info'>Update</button> </div>";
                     }else{
-                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='administracion.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Buscar</button> </div>";
+                    echo "<div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> <button type='submit' name='submit' class='btn btn-primary'>Buscar</button> </div>";
                     }          
                 ?>
             </form>
