@@ -51,7 +51,7 @@
 			$full=false;
 		}
 		
-		$query88="SELECT SUM(cantidad_asientos) FROM pasajes  WHERE idv='$idv' AND activo='1'";
+		$query88="SELECT SUM(cantidad_asientos) FROM pasajes  WHERE idv='$idv' AND activo='1' AND fantasma='0'";
 		$result88=mysqli_query ($link, $query88) or die ('Consulta query88 fallida: ' .mysqli_error($link));
 		$reservados=mysqli_fetch_array($result88);
 
@@ -65,7 +65,7 @@
 		}else{
             $fecha= $datos['fecha'];
         
-            $query89="SELECT * FROM viajes WHERE idc='$cnueva[idu]'";
+            $query89="SELECT * FROM viajes WHERE idc='$cnueva[idu]' AND activo='1'";
             $result89=mysqli_query($link, $query89) or die('Consulta 89 fallida ' .mysqli_error($link));
             while ($fechaviajes= mysqli_fetch_array($result89)) {
                 if ($fecha == $fechaviajes['fecha']) {

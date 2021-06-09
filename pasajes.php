@@ -32,7 +32,7 @@
 		<div class="text-center" >
 			<h1> Listado de pasajes personales </h1>
 		</div>
-        <?php $query1="SELECT * FROM pasajes WHERE idu='$id'";
+        <?php $query1="SELECT * FROM pasajes WHERE idu='$id' AND fantasma='0'";
 			$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			$cantidad= mysqli_num_rows($result1);?>
 			<h2>Cantidad de pasajes personales:<?php echo $cantidad; ?> </h2>
@@ -51,8 +51,8 @@
 				echo 'Se realizo un comentario';}else{ echo "No se realizo un comentraio";}?></div>
 				<div class="card-body"> 
 					<h4 class="card-title"> <?php echo "numero de viaje".$viaje['nro_viaje'];?><br>
-					<?php if($viaje['activo'] == 1){
-					 echo 'Estado del viaje: '.$viaje['estado'];}else{ echo "El viaje fue cancelado";}?><br>
+					<?php 
+					 echo 'Estado del viaje: '.$viaje['estado'];?><br>
 					<?php echo"Fecha de salida: ".$viaje['fecha']; ?></h4><br>
 					<a class="card-text" href="pasaje.php?idp=<?php echo $pasaje['idp']; ?>" > Mas informacion </a>
 				</div>

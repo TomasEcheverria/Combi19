@@ -101,7 +101,7 @@
 								//$query54="SELECT * FROM pasajes WHERE idv='$idv'";
 								//$result54=mysqli_query ($link, $query54) or die ('Consulta query51 fallida: ' .mysqli_error($link));
       						  	//$pasajes=(mysqli_num_rows($result54));
-									$query88="SELECT SUM(cantidad_asientos) FROM pasajes  WHERE idv='$idv' AND activo='1'";
+									$query88="SELECT SUM(cantidad_asientos) FROM pasajes  WHERE idv='$idv' AND activo='1' AND fantasma='0'";
 									$result88=mysqli_query ($link, $query88) or die ('Consulta query88 fallida: ' .mysqli_error($link));
 									$reservados=mysqli_fetch_array($result88);							
 								
@@ -132,7 +132,7 @@
 							<td><?php echo $precio; ?></td>
 							<td><?php echo $estado; ?></td>
 							<td><a class="btn btn btn-outline-success" href="modificarviaje.php?idv=<?php echo $idv?>">Editar</a>
-								<a class="btn btn-outline-danger ml-1" href="cancelarviaje.php?idv=<?php echo $idv?>">Borrar</a>
+								<a class="btn btn-outline-danger ml-1" href="cancelarviaje.php?idv=<?php echo $idv?>">Cancelar</a>
 							</td>
 						</tr>
 							

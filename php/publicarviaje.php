@@ -46,7 +46,7 @@
 			}
 		}
 
-		$query57= ("SELECT * FROM viajes WHERE idc='$chofer[id]'");//hacer consulta 
+		$query57= ("SELECT * FROM viajes WHERE idc='$chofer[id]' AND activo='1'");//hacer consulta 
 		$result57= mysqli_query ($link, $query57) or die ('Consulta fallida ' .mysqli_error($link));
 		while ($viajetabla= mysqli_fetch_array ($result57)){
 			if ($fecha == $viajetabla['fecha']){
