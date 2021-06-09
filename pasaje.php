@@ -21,7 +21,7 @@
  <?php 
     try {
     	$usuario -> iniciada($usuarioID);
-        $query1="SELECT * FROM pasajes p  WHERE idp='$idp'";
+        $query1="SELECT * FROM pasajes p  WHERE idp='$idp' AND fantasama='0'";
         $result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
         $pasaje= mysqli_fetch_array($result1);
 
@@ -29,7 +29,7 @@
         $resultado = mysqli_query ($link, $consulta) or die ('Consulta consulta fallida: ' .mysqli_error($link));
         $viaje= mysqli_fetch_array($resultado);
 
-        if(($viaje['estado'] == "finalizado") and ($viaje['activo'] == 0)){
+        if(($viaje['estado'] == "finalizado") and ($viaje['activo'] == 0)){//revisar
             $informacion="Este viaje finalizo se finalizo exitosamente y fue borrado";
             $cancelado=false;
         }else{
@@ -53,7 +53,7 @@
                 ?>
                     Cantidad de asientos reservados :<?php echo $pasaje['cantidad_asientos']?> <br>
                     Precio total del pasaje :<?php echo $pasaje['precio']?> <br>
-                    <?php if($viaje['activo'] == 1){?>
+                    <?php if(($viaje['estado'] != "cancelado") and ($viaje['activo'] == 1)){?>
                         <h1> Datos relacionados con el viaje </h1>
                         Numero del viaje:<?php echo $viaje['nro_viaje']; ?><br>
                         Imprevisto: <?php if($viaje['imprevisto'] == "" ){ echo "No hay ningun imprevisto";}else{ echo $viaje['imprevisto']; }?></br>
@@ -67,11 +67,11 @@
                             Realizo Comentario: <?php if($pasaje['comentario'] == 1){ echo "si";}else { echo "no";}?><br>
                         <?php $comentcondition; } ?>
                 <?php } else { // el viaje no esta activo
-                        if($cancelado){?>
+                        if(($viaje['estado'] == "cancelado") and ($viaje['activo'] == 1)){?>
                     Este viaje fue cancelado</br>
                     Cantida de plata rembolsada: <?php echo $pasaje['precio']; ?><br>
                             <?php }else{
-                                echo "Este viaje se finalizo correctamente, pero los datos fueron eliminados.";
+                                echo "Los datos de este viaje fueron borrados ";
                             }?>
                 <?php }
             }else{//estos datos son si el pasaje esta desactivado ?>
@@ -81,7 +81,7 @@
 				</div>
 			</div>
         <?php if(($pasaje['activo'] ==1 ) and ($viaje['activo'] == 1 ) and ($viaje['estado'] == "pendiente")){?>
-           
+           <?php ?>
             <a class="btn btn-outline-danger ml-1" href="cancelarviaje.php?idv=<?php echo $idv?>">Cancelar pasaje</a>
       <?php  }
         ?>

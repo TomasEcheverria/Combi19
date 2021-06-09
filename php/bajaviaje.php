@@ -10,7 +10,7 @@
 </head>
 </body> 
 <?php
-	//if(isset($_POST['borrar'])){
+	//if(isset($_POST['borrar'])){ 
 		$idv=$_POST['idv'];
 		$total=$_POST['total'];
 		$exito=false;
@@ -24,8 +24,8 @@
 			}
 		}
 		if($marcadas){
-		if($datos['estado'] != 'en curso'){
-		$query10="UPDATE viajes SET activo='0' WHERE idv='$idv'";
+		if($datos['estado'] == 'pendiente'){
+		$query10="UPDATE viajes SET estado='cancelado' WHERE idv='$idv'";//EL ESTADO QUEDA EN CANCELADO
 		$result10= mysqli_query ($link, $query10) or die ('Consulta 10 fallida ' .mysqli_error($link));
 		 if($result10){
 		 	 $exito=true;
@@ -51,6 +51,7 @@
 		 El viaje esta marcado como en curso <br><br>
 		 <?php if (!$marcadas) {?> 
 		No se marcaron todas las checkbox <?php echo $total; }?></br>
+		<?php if($datos['estado'] !=  "pendiente"){ echo "Solo se podran cancelar aquellos viajes que estan en pendientes";}?>
 		 <a href="../listarviajes.php"> Click aqui para volver  &nbsp;&nbsp;&nbsp; </a>
 		<?php
 		}
