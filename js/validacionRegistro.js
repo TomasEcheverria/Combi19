@@ -1,4 +1,30 @@
 
+function calculate_age(dob) { 
+    var diff_ms = Date.now() - dob.getTime();
+    var age_dt = new Date(diff_ms); 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+function underAgeValidate(birthday){
+	// it will accept two types of format yyyy-mm-dd and yyyy/mm/dd
+	var optimizedBirthday = birthday.replace(/-/g, "/");
+
+	//set date based on birthday at 01:00:00 hours GMT+0100 (CET)
+	var myBirthday = new Date(optimizedBirthday);
+
+	// set current day on 01:00:00 hours GMT+0100 (CET)
+	var currentDate = new Date().toJSON().slice(0,10)+' 01:00:00';
+
+	// calculate age comparing current date and borthday
+	var myAge = ~~((Date.now(currentDate) - myBirthday) / (31557600000));
+
+	if(myAge < 18) {
+     	    return false;
+        }else{
+	    return true;
+	}
+
+} 
 function underAgeValidate(birthday){
 	// it will accept two types of format yyyy-mm-dd and yyyy/mm/dd
 	var optimizedBirthday = birthday.replace(/-/g, "/");
@@ -88,14 +114,19 @@ function validacion(){
 	var valorclave = document.registro.clave.value;
 	var valorclave1 = document.registro.clave1.value;
 	var valordni = document.registro.dni.value;
+	var birthday = document.registro.nacimiento.value;
 	if(valornombre){
 		if(valorapellido){
 		if(esAlfanumerico(valornombre) && esAlfanumerico(valorapellido)){
 			if(emailIsValid(valormail)){
 						if(valorclave.length >=6){
 							if(valorclave == valorclave1){
-								if(valordni >= 8){// consultar si se debe de verificar que las 2 contraseñas coincidan
-										document.registro.submit();
+								if(valordni >= 8){//
+										if(underAgeValidate(birthday)){
+											document.registro.submit();
+										}else{
+											alert('no se pueden registrar los menores de edad')
+										}
 								}
 								else{
 									alert('el dni es invalido');
