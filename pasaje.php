@@ -78,7 +78,7 @@
                             <?php }?>
                         Informacion de los insumos :<br>
                         <?php while($insumo= mysqli_fetch_array($result3)){
-                            echo $insumo['nombre'].": ".$pasajero['cantidad']; ?><br>
+                            echo $insumo['nombre'].": ".$insumo['cantidad']; ?><br>
                             <?php }?>
                         <?php if($viaje['estado'] == "finalizado") {?>
                             Pago viaje:<?php if($pasaje['pago'] == 1){ echo "si";}else { echo "no";}?><br>
