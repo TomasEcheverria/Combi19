@@ -26,6 +26,8 @@
         $usuario ->cod_seguridad($cod_Seguridad);
         $usuario ->fecha_vencimiento($fecha_vencimiento);
         $numero_de_tarjeta = "XXXX XXXX XX" . substr($nro_tarjeta,-2);
+        $mes_tarjeta = substr($fecha_vencimiento,5,2);
+        $anio_tarjeta = substr($fecha_vencimiento,0,4);
     };
     $usuario -> session ($usuarioID);
 
@@ -79,6 +81,7 @@
                 break;
         }
     }
+    
 
     // En caso de que este en modo edicion se muestra el valor de la tarjeta, caso contrario solo se muestran los ultimos 2 digitos
     function valorTarjeta($n_tarjeta,$tarjeta_mask){
@@ -205,9 +208,50 @@
                                                 <label for="name">Fecha vencimiento tarjeta:</label>
                                         </div>
                                         <div class="col-sm-10">
-                                                <input class="form-control"  name="fecha_vto_tarjeta" type="<?php mostrarDatosProtegidos()?>" value="<?php echo $fecha_vencimiento?>" <?php echo "$edicion"?>>
-                                                <?php if($tipo =="pasajero" and modoActual() == "save"):?>
-                                                 <p class="text-muted"> Formato: YYYY-MM-DD </p>
+
+                                                <?php if( modoActual() != "save"):?>
+                                                    <input class="form-control" id="fecha"  name="fecha_vto_tarjeta"
+                                                 type="<?php mostrarDatosProtegidos()?>" value="<?php echo $fecha_vencimiento?>" <?php echo "$edicion"?> maxlength="10">
+                                                <?php else: ?>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-sm-4">
+                                                            <label for="ccmonth">Mes</label>
+                                                            <select  name="mes_tarjeta" class="form-control" id="<?php echo $mes_tarjeta ?>">
+                                                                <option value="1" <?php if($mes_tarjeta == 1){echo "selected";} ?>>1</option>
+                                                                <option value="2" <?php if($mes_tarjeta == 2){echo "selected";} ?>>2</option>
+                                                                <option value="3" <?php if($mes_tarjeta == 3){echo "selected";} ?>>3</option>
+                                                                <option value="4" <?php if($mes_tarjeta == 4){echo "selected";} ?>>4</option>
+                                                                <option value="5" <?php if($mes_tarjeta == 5){echo "selected";} ?>>5</option>
+                                                                <option value="6" <?php if($mes_tarjeta == 6){echo "selected";} ?>>6</option>
+                                                                <option value="7" <?php if($mes_tarjeta == 7){echo "selected";} ?>>7</option>
+                                                                <option value="8" <?php if($mes_tarjeta == 8){echo "selected";} ?>>8</option>
+                                                                <option value="9" <?php if($mes_tarjeta == 9){echo "selected";} ?>>9</option >
+                                                                <option value="10" <?php if($mes_tarjeta == 10){echo "selected";} ?>>10</option >
+                                                                <option value="11" <?php if($mes_tarjeta == 11){echo "selected";} ?>>11</option>
+                                                                <option value="12" <?php if($mes_tarjeta == 12){echo "selected";} ?>>12</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-sm-4">
+                                                            <label for="ccyear">Año</label>
+                                                            <select  name="año_tarjeta" class="form-control">
+                                                                <option value="2021" <?php if($anio_tarjeta == 2021){echo "selected";} ?>>2021</option>
+                                                                <option value="2022" <?php if($anio_tarjeta == 2022){echo "selected";} ?>>2022</option>
+                                                                <option value="2023" <?php if($anio_tarjeta == 2023){echo "selected";} ?>>2023</option>
+                                                                <option value="2024" <?php if($anio_tarjeta == 2024){echo "selected";} ?>>2024</option>
+                                                                <option value="2025" <?php if($anio_tarjeta == 2025){echo "selected";} ?>>2025</option>
+                                                                <option value="2026" <?php if($anio_tarjeta == 2026){echo "selected";} ?>>2026</option>
+                                                                <option value="2027" <?php if($anio_tarjeta == 2027){echo "selected";} ?>>2027</option>
+                                                                <option value="2028" <?php if($anio_tarjeta == 2028){echo "selected";} ?>>2028</option>
+                                                                <option value="2029" <?php if($anio_tarjeta == 2029){echo "selected";} ?>>2029</option>
+                                                                <option value="2030" <?php if($anio_tarjeta == 2030){echo "selected";} ?>>2030</option>
+                                                                <option value="2031" <?php if($anio_tarjeta == 2031){echo "selected";} ?>>2031</option>
+                                                                <option value="2032" <?php if($anio_tarjeta == 2032){echo "selected";} ?>>2032</option>
+                                                                <option value="2033" <?php if($anio_tarjeta == 2033){echo "selected";} ?>>2033</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
                                                 <?php endif; ?>
                                                   
                                         </div>
@@ -224,7 +268,7 @@
                                                         </button>
 
                                                 <?php else: ?>
-                                                        <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit">
+                                                        <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit" onclick="return confirmarDesuscripcion()">
                                                             <i class="mdi mdi-gamepad-circle "></i> Desuscribirse
                                                         </button>
                                                 <?php endif; ?>

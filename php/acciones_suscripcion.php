@@ -26,7 +26,9 @@
                 case "pasajero":
                     $num_tarjeta =  $_POST['numero_tarjeta'];
                     $cod_seguridad = $_POST['cod_seguridad'];
-                    $fecha_vencimiento = $_POST['fecha_vto_tarjeta'];
+                    $mes_tarjeta = $_POST['mes_tarjeta'];
+                    $año_tarjeta = $_POST['año_tarjeta'];
+                    $fecha_vencimiento = "$año_tarjeta-$mes_tarjeta-01";
 
                     $sql= "UPDATE usuarios
                     SET 
@@ -97,15 +99,6 @@
                 usuarios.fecha_vencimiento = '$fecha'
             WHERE usuarios.id = '$id'";
             mysqli_query($db,$sql);
-
-            echo "<h1>Gracias $nombre por suscribirte a Combi19!!</h1>".
-            "
-            <a href='../pagprincipal.php'>
-                <button class='btn btn-sm btn-success float-right' type='submit' >
-                    <i class='mdi mdi-gamepad-circle' id='volver_menu'></i> Volver</button>
-                </div>
-            </a>
-            ";
 
             //actualizar los datos de la sesion
             $_SESSION['fecha_vencimiento'] = $fecha;
