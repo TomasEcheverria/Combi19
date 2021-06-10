@@ -36,7 +36,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="name">Nombre</label>
-                                            <input class="form-control" name="name" type="text" placeholder="Enter your name">
+                                            <input class="form-control" name="name" type="text" placeholder="Nombre Apellido">
                                         </div>
                                     </div>
                                 </div>
@@ -71,18 +71,19 @@
                                     <div class="form-group col-sm-4">
                                         <label for="ccyear">Año</label>
                                         <select  name="año" class="form-control">
-                                            <option value="2014">2014</option>
-                                            <option value="2015">2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
                                             <option value="2021">2021</option>
                                             <option value="2022">2022</option>
                                             <option value="2023">2023</option>
                                             <option value="2024">2024</option>
                                             <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                            <option value="2027">2027</option>
+                                            <option value="2028">2028</option>
+                                            <option value="2029">2029</option>
+                                            <option value="2030">2030</option>
+                                            <option value="2031">2031</option>
+                                            <option value="2032">2032</option>
+                                            <option value="2033">2033</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
@@ -97,12 +98,12 @@
                                         <div class="row-sm">
                                             <!-- Boton de desuscribirse en caso de ya estar suscrito-->
                                             <?php if($suscrito): ?>
-                                                    <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit">
+                                                    <button class="btn btn-sm btn-danger float-right" name="desuscribirse" type="submit" onclick="return confirmarDesuscripcion()">
                                                         <i class="mdi mdi-gamepad-circle " name="<?php echo $suscrito ?>"></i> Desuscribirse
                                                     </button>
                                             <?php else: ?>
-                                                <button class="btn btn-sm btn-success float-right" name="suscribirse2" type="submit" onclick="validarTarjetaDeCredito()">
-                                                    <i class="mdi mdi-gamepad-circle" name="<?php echo $suscrito ?>" ></i> Suscribirse
+                                                <button class="btn btn-sm btn-success float-right" name="suscribirse2" type="submit" onclick="return validarTarjetaDeCredito()">
+                                                    <i class="mdi mdi-gamepad-circle"></i> Suscribirse
                                                 </button>
                                             <?php endif; ?>
                                             <!-- Boton de desuscribirse en caso de ya estar suscrito-->
