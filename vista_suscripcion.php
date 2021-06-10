@@ -45,7 +45,7 @@
                                         <div class="form-group">
                                             <label for="ccnumber">Numero de tarjeta</label>
                                             <div class="input-group">
-                                                <input class="form-control" type="text" name="numero_tarjeta" placeholder="0000 0000 0000 0000">
+                                                <input class="form-control" type="text" name="numero_tarjeta" placeholder="0000 0000 0000 0000" maxlength="16">
                                             </div>
                                         </div>
                                     </div>
