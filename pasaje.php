@@ -7,6 +7,7 @@
 	$usuario -> session ($usuarioID);
 	$usuario ->id($id);
     $usuario -> tipoUsuario($tipo);
+    $usuario ->email($email);
     $idp=$_GET['idp'];
 ?>
 <html>
@@ -17,6 +18,7 @@
 <script language="JavaScript" type="text/javascript" src ="js/validacionEditar.js"> </script>
 <script  src= "js/menu.js"></script>
 <script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
+<script type="text/javascript" src="js/validacionMensaje.js"></script>
 </head>
  <?php 
     try {
@@ -28,6 +30,14 @@
         $consulta="SELECT *  FROM viajes WHERE idv=$pasaje[idv]";
         $resultado = mysqli_query ($link, $consulta) or die ('Consulta consulta fallida: ' .mysqli_error($link));
         $viaje= mysqli_fetch_array($resultado);
+
+        $query2="SELECT * FROM pasajeros p  WHERE idp='$idp'";
+        $result2= mysqli_query ($link, $query2) or die ('Consuluta query2 fallida: ' .mysqli_error($link));
+        $cantidadpasajeros= mysqli_num_rows($result2);
+        
+        $query3="SELECT * FROM insumos_usuarios_viajes v INNER JOIN insumos i ON (v.idi=i.idi) WHERE idp='$idp'";
+        $result3= mysqli_query ($link, $query3) or die ('Consuluta query3 fallida: ' .mysqli_error($link));
+        $cantidadinsumos= mysqli_num_rows($result3);
 
         if(($viaje['estado'] == "finalizado") and ($viaje['activo'] == 0)){//revisar
             $informacion="Este viaje finalizo se finalizo exitosamente y fue borrado";
@@ -61,6 +71,15 @@
                         Estado del viaje <?php echo $viaje['estado'] ?><br>
                         Fecha  de salida <?php echo $viaje['fecha'] ?><br>
                         Hora de salida <?php echo $viaje['hora'] ?><br>
+                        Cantidad de pasajeros asociados a este viaje:<?php echo$cantidadpasajeros; ?><br>
+                        Informacion de los pasajeros:<br>
+                        <?php while($pasajero= mysqli_fetch_array($result2)){
+                            echo "Nombre:".$pasajero['nombre']."Apellido:".$pasajero['apellido']."DNI:".$pasajero['dni']. "|" ;?><br>
+                            <?php }?>
+                        Informacion de los insumos :<br>
+                        <?php while($insumo= mysqli_fetch_array($result3)){
+                            echo $insumo['nombre'].": ".$pasajero['cantidad']; ?><br>
+                            <?php }?>
                         <?php if($viaje['estado'] == "finalizado") {?>
                             Pago viaje: <?php echo $pasaje['pago']; ?> <br>
                             Marcado como sospechoso de covid : <?php if($pasaje['sospechoso_covid'] == 1){ echo "si";}else { echo "no";}?><br>
@@ -79,7 +98,49 @@
             Cantidad de plata rembolsada :<?php echo $pasaje['precio']; ?> 
            <?php }?>
 				</div>
+            <?php if(($pasaje['activo'] == 1 )  and ($viaje['estado'] == "finalizado") and ($viaje['activo'] == 1) and ($pasaje['sospechoso_covid'] == 0) ){?>
+                <?php if($pasaje['comentario'] == 0 ){?>
+                        Usted no ha realizado un comentario.
+                        <div class="escribir">		
+		            <form   name="mensaje" action="php/publicarmensaje.php" method="post" enctype="multipart/form-data">	
+			             <textarea  name="publicacion" placeholder="Escribir Mensaje" cols="50" rows="10" maxlength="140"></textarea>
+                         <input type="hidden" name="idv" value="<?php echo $viaje['idv'] ?>">
+                         <input type="button"  value="publicar" class="btn_buscar" onclick="validacion()"></button>
+		         </div>
+		             </form> 
+              <?php  }else{
+                $query4="SELECT * FROM comentarios WHERE activo='1' AND email='$email' AND idv='$viaje[idv]'";
+                $result4= $result3= mysqli_query ($link, $query4) or die ('Consuluta query4 fallida: ' .mysqli_error($link));
+                $comentario= mysqli_fetch_array($result4);
+                ?>
+                <div class ="container-fluid">
+			<div class="card text-white bg-primary mb-3">
+				<div class="card-header"><?php echo 'Fecha: '.$comentario['fecha_y_hora'].' Usuario:'.$comentario['email'];?></div>
+				<div class="card-body">
+					<h4 class="card-title"> <?php echo $comentario['texto_comentario'];?></h4>
+					<p class="card-text"> 
+				</div>
+			</div>				
+		</div>
 			</div>
+            <form name="borrarcomentario" method="post" action="php/borrarcomentario.php" enctype="multipart/form-data">
+                 <input type="hidden" class="form-control"  name="idp"   value=<?php  echo $idp ?> ></input>
+                 <input type="hidden" class="form-control"  name="idcom"   value=<?php  echo $comentario['idcom'] ?> ></input>
+                <input type="submit" value="Borrar comentario" class="btn btn-outline-danger ml-1" >
+                    
+            </form>
+
+
+            <div class="escribir">
+                    Complete y envie este formulario solo si desea de modificar el contenido del comentario existente
+		            <form   name="mensaje" action="php/editarcomentario.php" method="post" enctype="multipart/form-data">	
+                    <input type="hidden" class="form-control"  name="idcom"   value=<?php  echo $comentario['idcom'] ?> ></input>
+                         <textarea  name="publicacion" placeholder="Escribir Mensaje" cols="50" rows="10" maxlength="140"></textarea>
+                         <input type="button"  value="publicar" class="btn_buscar" onclick="validacion()"></button>
+		         </div>
+		             </form>
+            <?php }?>
+            <?php }?>
         <?php if(($pasaje['activo'] ==1 ) and ($viaje['activo'] == 1 ) and ($viaje['estado'] == "pendiente")){?>
            <?php
             echo"Puede cancelar el pasaje,pero si lo cancela ahora solo recibira: ";
@@ -90,11 +151,21 @@
              $date2_ts = strtotime($date2);
              $diff = $date2_ts - $date1_ts;
             $dias= round($diff / 86400);
+            $mitad= $pasaje['precio']/2;
             if($dias >= 2){
-                echo "El total del precio del pasaje".$pasaje['precio'];
-      }
+                echo "El total del precio del pasaje:$".$pasaje['precio'];
+            }else{
+                if(($dias >= 1 ) and ($dias < 2)){
+                    echo "La mitad del precio del pasaje:$".$mitad;
+                }else{
+                    echo "No se le rembolsara nada del dinero porque falta menos de 1 dia";
+                }
+            }
              ?><br>
-            <a class="btn btn-outline-danger ml-1" href="cancelarviaje.php?idv=<?php echo $idv?>">Cancelar pasaje</a>
+             <form name="cancelarpasaje" method="post" action="php/cancelarpasaje.php" enctype="multipart/form-data">
+                 <input type="hidden" class="form-control"  name="idp"   value=<?php  echo $idp ?> ></input>
+                <input type="submit" value="Cancelar Pasaje" class="btn btn-outline-danger ml-1" >
+             </form>
       <?php  }
         ?>
     </div>

@@ -32,11 +32,7 @@ function validarfoto(){
 }
 function validacion (){
 	var texto= document.mensaje.publicacion.value;
-	var imagenvalue= document.mensaje.imagen.value;
-	if((texto) || (imagenvalue)){
-			if(imagenvalue){
-				validarfoto();
-			}
+	if(texto){
 			if(texto.length <= 140){
 				document.mensaje.submit();
 			}else{
