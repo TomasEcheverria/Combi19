@@ -5,6 +5,7 @@
         $usuario -> id($id);
         $usuario -> nombre($nombre); 
         $usuario -> tipoUsuario($tipo);
+        $usuario -> suscrito($suscrito);
 
         $db = mysqli_connect('localhost', 'root', '','combi19') or die($db->error());
 
@@ -29,18 +30,29 @@
                     $mes_tarjeta = $_POST['mes_tarjeta'];
                     $año_tarjeta = $_POST['año_tarjeta'];
                     $fecha_vencimiento = "$año_tarjeta-$mes_tarjeta-01";
-
-                    $sql= "UPDATE usuarios
-                    SET 
-                        usuarios.nombre = '$nombre',
-                        usuarios.apellido = '$apellido',
-                        usuarios.email = '$email',
-                        usuarios.clave = '$contraseña',
-                        usuarios.DNI = '$dni',
-                        usuarios.nro_tarjeta = $num_tarjeta,
-                        usuarios.cod_seguridad = $cod_seguridad,
-                        usuarios.fecha_vencimiento = '$fecha_vencimiento'
-                    WHERE usuarios.id = '$id'";
+                    
+                    if($suscrito == 1){
+                        $sql= "UPDATE usuarios
+                        SET 
+                            usuarios.nombre = '$nombre',
+                            usuarios.apellido = '$apellido',
+                            usuarios.email = '$email',
+                            usuarios.clave = '$contraseña',
+                            usuarios.DNI = '$dni',
+                            usuarios.nro_tarjeta = $num_tarjeta,
+                            usuarios.cod_seguridad = $cod_seguridad,
+                            usuarios.fecha_vencimiento = '$fecha_vencimiento'
+                        WHERE usuarios.id = '$id'";
+                    } elseif ($suscrito == 0) {
+                        $sql= "UPDATE usuarios
+                        SET 
+                            usuarios.nombre = '$nombre',
+                            usuarios.apellido = '$apellido',
+                            usuarios.email = '$email',
+                            usuarios.clave = '$contraseña',
+                            usuarios.DNI = '$dni'
+                        WHERE usuarios.id = '$id'";
+                    }
 
                     mysqli_query($db,$sql);
                     
@@ -75,6 +87,23 @@
                     $_SESSION['clave'] = $contraseña;
                     break;
                 case "chofer":
+                    $sql= "UPDATE usuarios
+                    SET 
+                        usuarios.nombre = '$nombre',
+                        usuarios.apellido = '$apellido',
+                        usuarios.email = '$email',
+                        usuarios.clave = '$contraseña',
+                        usuarios.DNI = '$dni'
+                    WHERE usuarios.id = '$id'";
+
+                    mysqli_query($db,$sql);
+                    
+                    //Actualizacion de datos de session
+                    $_SESSION['nombre'] = $nombre;
+                    $_SESSION['apellido'] = $apellido;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['DNI'] = $dni;
+                    $_SESSION['clave'] = $contraseña;
                     break;
             }
              header("Location: ../vista_perfil.php?md=edit&result=3");
@@ -131,7 +160,12 @@
         if(isset($_POST['volver1'])){
             header("Location: ../vista_perfil.php");
         }
+
         if(isset($_POST['volver2'])){
             header("Location: ../vista_perfil.php");
+        }
+
+        if(isset($_POST['volver_menu'])){
+            header("Location: ../pagprincipal.php");
         }
 ;

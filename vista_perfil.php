@@ -77,7 +77,9 @@
             case "edit":
                 echo "<button class='btn btn-sm btn-info float-right' name='edit' type='submit'>
                     <i class='mdi mdi-gamepad-circle' ></i> Editar
-                    </button>";
+                    </button>".
+                    "<button class='btn btn-sm btn-secondary float-right' name='volver_menu' type='submit'>
+                    <i class='mdi mdi-gamepad-circle'></i> Volver</button>";
                 break;
         }
     }
@@ -171,7 +173,7 @@
                                 </div>
                                 <div class="row my-4">
                                     <div class="col-sm-2">
-                                            <label for="name">DNI:</label>
+                                            <label for="name"><?php if ($tipo == "chofer"){echo "Telefono:";} else {echo "DNI:";} ?></label>
                                     </div>
                                     <div class="col-sm-10">
                                             <input class="form-control"  name="dni" type="text" value="<?php echo $DNI?>" <?php echo "$edicion"?>>
