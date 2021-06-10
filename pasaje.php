@@ -125,7 +125,7 @@
 		</div>
 			</div>
             <form name="borrarcomentario" method="post" action="php/borrarcomentario.php" enctype="multipart/form-data">
-                 <input type="hidden" class="form-control"  name="idp"   value=<?php  echo $idp ?> ></input>
+                 <input type="hidden" class="form-control"  name="idp"   value=<?php  echo $pasaje['idp'] ?> ></input>
                  <input type="hidden" class="form-control"  name="idcom"   value=<?php  echo $comentario['idcom'] ?> ></input>
                 <input type="submit" value="Borrar comentario" class="btn btn-outline-danger ml-1" >
                     

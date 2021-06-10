@@ -5,7 +5,7 @@ include "../BD.php";// conectar y seleccionar la base de datos
 	$usuario= new usuario();
 	$usuario ->id($id);
     $usuario ->email($email);
-    $ipd=$_POST['idp'];
+    $idp=$_POST['idp'];
     $idcom=$_POST['idcom'];
     $query="UPDATE comentarios SET activo='0' WHERE idcom='$idcom'";
     $result10= mysqli_query ($link, $query) or die ('Consulta  fallida ' .mysqli_error($link));
