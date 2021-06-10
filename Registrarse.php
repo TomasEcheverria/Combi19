@@ -30,6 +30,7 @@
 						<input type="text" class="form-control" name="apellido" size=50 placeholder=" Apellido" required> <br>
 						<input type="email" class="form-control" id="mail" name="user_mail"  placeholder=" Email de usuario" size=50 autofocus required> <br>
 						<input type="text" class="form-control" name="dni" size=50 placeholder=" DNI" required> <br>          
+						<input type="date" class="form-control" name="nacimiento" size=50 placeholder="Fecha de nacimiento" required> <br>          
 						<input type ="password" class="form-control" name="clave" size=50  minlength="6" placeholder=" Clave" required><br>
 						<input type="password" name="clave1" class="form-control" size=50   minlength= "6 " placeholder=" Confirmar Clave" requierd> <br>			
       				

@@ -3,6 +3,8 @@
     include 'php/acciones_ver_viaje.php';
     include 'php/classLogin.php';
     $usuario= new usuario();
+	$usuario ->$usuario ->id($id);
+	$usuario ->$usuario ->supendido($suspended);
     
 
 
@@ -53,11 +55,10 @@
 </head>
 <?php try{ 
 	$tipo_usuario = "";
-	$usuario -> tipoUsuario($tipo_usuario);
-	if ($tipo_usuario == ""){
-		throw new Exception('Debe iniciar sesión antes de realizar esa acción.');
+	$usuario -> iniciada($id);
+    if ($suspended != 0) {
+		throw new Exception ('Usted esta actualmente restringido de comprar viajes');//verificar si realmente esta suspendido, y si lo esta indicarle cuando es que expira
 	}
-	
     ?>
 <body>
 
