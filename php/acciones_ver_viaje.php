@@ -51,7 +51,7 @@
             } else{
                 //si no es fantasma entonces ya tiene el pasaje comprado y activo
                 //programar comportamiento
-                echo "esta comprado y activo, no se realiza modificacion";
+                header("Location: ../vista_ver_viaje.php?msg=1");
             }
 
 

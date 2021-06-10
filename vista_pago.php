@@ -1,9 +1,9 @@
 <?php
     include 'BD.php';
-    include 'php/acciones_ver_viaje.php';
+    include 'php/acciones_pago.php';
     include 'php/classLogin.php';
     $usuario= new usuario();
-	$usuario ->id($id);
+	$usuario ->id($id_user);
 	$usuario->suspendido($suspended);
     
 
@@ -67,7 +67,7 @@
 </head>
 <?php try{ 
 	$tipo_usuario = "";
-	$usuario -> iniciada($id);
+	$usuario -> iniciada($id_user);
     if ($suspended != 0) {
 		throw new Exception ('Usted esta actualmente restringido de comprar viajes');//verificar si realmente esta suspendido, y si lo esta indicarle cuando es que expira
 	}
@@ -79,6 +79,8 @@
         $pasaje_viaje = consulta("SELECT p.*, v.* FROM `pasajes` p INNER JOIN `viajes` v ON (v.idv=p.idv) AND (idp='$idp') AND (fantasma=1) ");
         $id_chofer= $pasaje_viaje['idc'];
         $info_combi= consulta("SELECT * FROM `combis` WHERE (idu='$id_chofer') AND (activo=1)");
+        $fecha = $pasaje_viaje ['fecha'];
+        $hora = $pasaje_viaje ['hora'];
         $origen = getOrigen($pasaje_viaje['idr']);
         $destino = getDestino($pasaje_viaje['idr']);
 		$id_usuario="";
@@ -125,25 +127,114 @@
                     <?php
                         $precio_viaje = $pasaje_viaje['precio'];
                         $info_pasajero = getArrayConsulta("SELECT * FROM `pasajeros` WHERE (idp='$idp') AND (activo=0)");
+                        $total = 0;
                         if(!empty($info_pasajero)){
                             foreach ($info_pasajero as $value) {
                                 $nombre_p = $value['nombre'];
                                 $apellido_p = $value['apellido'];
                                 $dni = $value['dni'];
                                 if (($dni == $info_usuario['DNI']) && ($info_usuario['suscrito'] == 1)){
-                                    echo "Pasaje para".$nombre_p." ".$apellido_p." ".$precio_viaje*0.90." 10% de Descuento!";
+                                    echo "Pasaje para ".$nombre_p." ".$apellido_p." $".$precio_viaje*0.90." (10% de Descuento!)";
                                     echo "<br>";
+                                    $total = $total + ($precio_viaje*0.90);
                                 } else {
-                                    echo "Pasaje para".$nombre_p." ".$apellido_p." ".$precio_viaje;
+                                    echo "Pasaje para ".$nombre_p." ".$apellido_p." $".$precio_viaje;
+                                    echo "<br>";
+                                    $total = $total + $precio_viaje;
                                 }
                             }
+                            echo "<br>";
                         }
+                        $info_insumos = getArrayConsulta("SELECT * FROM `insumos_usuarios_viajes` WHERE (idp='$idp') AND (activo=0)");
+                        if(!empty($info_insumos)){
+                            foreach ($info_insumos as $value) {
+                                $idi = $value['idi'];
+                                $insumo_actual = consulta("SELECT * FROM `insumos` WHERE (idi='$idi')");
+                                $nombre_i = $insumo_actual['nombre'];
+                                $precio_i = $insumo_actual['precio'];
+                                $cantidad_i = $value['cantidad'];
+                                echo $nombre_i." $".$precio_i." (x".$cantidad_i.")";
+                                echo "<br>";
+                                $total = $total + ($precio_i*$cantidad_i);
+                            }
+                            echo "<br>";
+                            echo "TOTAL: $".$total;
+                            echo "<br>";
+                        }                    
                     ?>
-                    
-
 				</div>
             </blockquote>
+        </div>    
+        <div class="card-header text-center">
+			<h5>Pago con tarjeta.</h5>
+		</div>
+        <form action ="php/acciones_pago.php" method ="POST">
+        <?php 
+
+            if(($info_usuario['suscrito']==0) || (isset($_GET['gold']))){
+        ?>
+        <div class="card-body">
+			<blockquote class="blockquote mb-0">
+                <div class="mx-auto" style="width: 40rem;">
+                    
+                        <p>Número de tarjeta.<p>
+                        <div class="input-group" style="width: 20rem;">
+                            <input type="text" name="nro1" value="" class="form-control" maxlength="4">
+                            <input type="text" name="nro2" value="" class="form-control" maxlength="4">
+                            <input type="text" name="nro3" value="" class="form-control" maxlength="4">
+                            <input type="text" name="nro4" value="" class="form-control" maxlength="4"> 
+                        </div>
+                        <br>
+                        <p>Código de seguridad.<p>
+                        <input type="text" name="nro5" value="" class="form-control" maxlength="3" style="width: 4rem;"> 
+                        <input type="hidden" name="total" value="<?php echo $total ?>">
+                        <input type="hidden" name="idp" value="<?php echo $idp ?>">
+                        <input type="hidden" name="suscrito" value="0">
+                        <br>
+                            <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Cancelar</a> <button type='submit'name='submit' class='btn btn-info'>Realizar transacción</button> </div>
+                        <br>
+                        
+                </div>
+            </blockquote>
         </div>
+        <?php } else {
+        ?>
+        <div class="card-body">
+			<blockquote class="blockquote mb-0">
+                <div class="mx-auto" style="width: 40rem;">
+                    
+                        <p>Número de tarjeta.<p>
+                        <div class="input-group" style="width: 20rem;">
+                            <input type="text" class="form-control" value="XXXX" maxlength="4" disabled="">
+                            <input type="text" class="form-control" value="XXXX" maxlength="4" disabled="">
+                            <input type="text" class="form-control" value="XXXX" maxlength="4" disabled="">
+                            <input type="text" class="form-control" value="<?php echo "X".substr($info_usuario['nro_tarjeta'], -3); ?>" maxlength="4" disabled=""> 
+                        </div>
+                        <br>
+                        <p>Código de seguridad.<p>
+                        <input type="text" class="form-control" maxlength="3" value="XXX" style="width: 4rem;" disabled=""> 
+
+                        <?php   echo "<a href='vista_pago.php?idp=".$idp."&gold' >Pagar con otra tarjeta</a>" ?>
+                        <br><br>
+                        <input type="hidden" name="nro_tarjeta" value="<?php echo $info_usuario['nro_tarjeta'] ?>">
+                        <input type="hidden" name="cod_seguridad" value="<?php echo $info_usuario['cod_seguridad'] ?>">
+                        <input type="hidden" name="total" value="<?php echo $total ?>">
+                        <input type="hidden" name="idp" value="<?php echo $idp ?>">
+                        <input type="hidden" name="suscrito" value="1">
+                        <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Cancelar</a> <button type='submit'name='submit' class='btn btn-info'>Realizar transacción</button> </div>
+                        <br>
+                </div>
+            </blockquote>
+        </div>
+        <?php } 
+        if (isset($_GET['msg'])){
+            echo "<div class='alert alert-dismissible alert-warning'>". 
+                        "El número de tarjeta es inválido.".
+                "</div>";
+        }
+        ?>
+        
+        </form>
     </div>
 
 

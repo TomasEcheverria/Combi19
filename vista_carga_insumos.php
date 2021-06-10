@@ -66,9 +66,11 @@
     ?>
 	
     <div class="card">
+    
 		<div class="card-header text-center">
 			<h4>Selección de Insumos
 		</div>
+        <div class="mx-auto" style="width: 40rem;">
         <form action ="php/acciones_carga_insumos.php" method ="POST">	
 
             <?php 
@@ -94,6 +96,8 @@
                     </div>
             <?php 
                     }
+                } else {
+                    echo "<h2 class='text-center'>Lo sentimos. No hay insumos disponibles para mostrar.";
                 }
             ?>
 
@@ -102,6 +106,7 @@
             
 
         </form> 	
+    </div>
     </div>
 
 

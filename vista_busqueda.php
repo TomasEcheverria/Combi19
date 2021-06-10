@@ -47,6 +47,14 @@
     <div class="card-header text-center">
         <strong>Buscar Viaje</strong>
     </div>
+
+    <?php if (isset($_GET['msg'])){
+    ?>
+        <div class="alert alert-dismissible alert-success">
+            <strong>¡Gracias por su compra!</strong> La compra del pasaje se ha realizado satisfactoriamente.
+        </div>
+    <?php }?>
+
     <div class="card-body">
         <blockquote class="blockquote mb-0">
             <form action ="php/acciones_busqueda.php" class="row g-3" method ="POST">
