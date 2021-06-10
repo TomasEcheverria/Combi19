@@ -28,14 +28,33 @@
             if ($row['fantasma']==1){
             //confirma que el viaje existe y es fantasma, entonces para no agregar uno nuevo
             //toma el que ya existe
+            //la idea es generar un nuevo pasaje para tener una id que no tenga pasajeros "fantasma"
                 echo "entro en row fantasma";
                 $idp = $row['idp'];
-                $sql = "UPDATE pasajes SET cantidad_asientos='$cantidad_asientos' WHERE idp='$idp'";
+
+                $sql = "DELETE FROM pasajes WHERE idp='$idp';";
                 $db->query($sql) or die("error". mysqli_error ($db));
+                $sql = "DELETE FROM pasajeros WHERE (idp='$idp') AND (activo=0);";
+                $db->query($sql) or die("error". mysqli_error ($db));
+                $sql = "DELETE FROM insumos_usuarios_viajes WHERE (idp='$idp') AND (activo=0);";
+                $db->query($sql) or die("error". mysqli_error ($db));
+                
+                $agregar_pasaje = "INSERT INTO pasajes (`cantidad_asientos`, `idu`, `idv`, `fantasma`, `activo`) VALUES
+                ('$cantidad_asientos', '$id_usuario', '$id_viaje', 1, 1);";           
+                mysqli_query($db,$agregar_pasaje);
+                
+                $pasaje_creado="SELECT * FROM pasajes WHERE (idu='$id_usuario') AND (idv='$id_viaje') AND (activo=1)";
+                $resultado_pasaje_creado = mysqli_query($db,$pasaje_creado);
+                $row = mysqli_fetch_assoc($resultado_pasaje_creado);
+                $idp = $row['idp'];
+
             } else{
                 //si no es fantasma entonces ya tiene el pasaje comprado y activo
+                //programar comportamiento
                 echo "esta comprado y activo, no se realiza modificacion";
             }
+
+
         }else{
             //el pasaje no existe y hay que armar uno nuevo
             echo "no existe y se crea uno nuevo";
@@ -46,8 +65,10 @@
             $pasaje_creado="SELECT * FROM pasajes WHERE (idu='$id_usuario') AND (idv='$id_viaje') AND (activo=1)";
             $resultado_pasaje_creado = mysqli_query($db,$pasaje_creado);
             $row = mysqli_fetch_assoc($resultado_pasaje_creado);
+            $idp = $row['idp'];
         }
         $cantidad_asientos = $cantidad_asientos-1;
+        
         if ($idp != ""){
             $usuario_consulta = "SELECT nombre, apellido, dni FROM usuarios WHERE (id=$id_usuario) AND (activo=1)";
             $resultado_usuario = mysqli_query($db,$usuario_consulta);
@@ -76,12 +97,20 @@
             }
             
             if ($cantidad_asientos== 0){
-                }
+                //reidirigir a la seleccion de insumos
+                header("Location: ../vista_carga_insumos.php?idp=".$idp);
+            } else {
+                //reidirigir a la especificiacion de nombre apellido y dni de los pasajeros "invitados"
+                    var_dump($idp);
+                    var_dump($cantidad_asientos);
+                    header("Location: ../vista_pasajeros.php?idp=".$idp."&ca=".$cantidad_asientos); 
+            }
         } else {
             echo "No se que hiciste";
+            //al final de todo debe tener una idp si o si, no debe haber manera de que llegue a este punto, lo dejo como debug por el momento
         }
 
-        //header("Location: ../vista_ver_viaje.php?ver=$idv");
+        
 
     }
 

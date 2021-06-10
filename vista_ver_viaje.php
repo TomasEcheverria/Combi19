@@ -3,6 +3,8 @@
     include 'php/acciones_ver_viaje.php';
     include 'php/classLogin.php';
     $usuario= new usuario();
+	$usuario ->$usuario ->id($id);
+	$usuario ->$usuario ->supendido($suspended);
     
 
 
@@ -53,11 +55,10 @@
 </head>
 <?php try{ 
 	$tipo_usuario = "";
-	$usuario -> tipoUsuario($tipo_usuario);
-	if ($tipo_usuario == ""){
-		throw new Exception('Debe iniciar sesión antes de realizar esa acción.');
+	$usuario -> iniciada($id);
+    if ($suspended != 0) {
+		throw new Exception ('Usted esta actualmente restringido de comprar viajes');//verificar si realmente esta suspendido, y si lo esta indicarle cuando es que expira
 	}
-	
     ?>
 <body>
 
@@ -66,8 +67,6 @@
 		$destino = getDestino($idr);
 		$info_combi = consulta("SELECT c.cantidad_asientos, c.tipo FROM combis c INNER JOIN usuarios u ON (c.idu=u.id) AND (c.activo=1) AND (u.activo=1) AND (u.id='$idc')");
 		$asientos_comprados = cantidadTablas("SELECT pos.* FROM pasajeros pos INNER JOIN pasajes pes ON (pos.idp=pes.idp) AND (pos.activo=1) AND (pes.fantasma=0) AND (pes.activo=1) AND (pes.idv='$id')");
-		var_dump($info_combi);
-		var_dump($asientos_comprados);
 		$asientos_disponibles = $info_combi['cantidad_asientos'] - $asientos_comprados;
 		$id_usuario="";
 		$usuario -> id($id_usuario);

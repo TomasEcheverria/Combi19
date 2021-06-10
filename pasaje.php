@@ -21,7 +21,7 @@
  <?php 
     try {
     	$usuario -> iniciada($usuarioID);
-        $query1="SELECT * FROM pasajes p  WHERE idp='$idp' AND fantasama='0'";
+        $query1="SELECT * FROM pasajes p  WHERE idp='$idp' AND fantasma='0'";
         $result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
         $pasaje= mysqli_fetch_array($result1);
 
@@ -47,7 +47,7 @@
             <?php echo menu($tipo);?>
 		<div class=div_registro>Datos del Pasaje <?php echo $pasaje['idp']; ?>
 			<div class="mx-auto" style="max-width: 40rem;">
-				<div class="card text-white bg-primary mb-3">
+				<div class="card text-white bg-primary mb-3">  
                 Estado del pasaje   :<?php  if($pasaje['activo']){ echo "activo"; }else{  echo "El pasaje fue cancelado";}?> <br>
                 <?php if($pasaje['activo'] == 1){
                 ?>
@@ -81,11 +81,25 @@
 				</div>
 			</div>
         <?php if(($pasaje['activo'] ==1 ) and ($viaje['activo'] == 1 ) and ($viaje['estado'] == "pendiente")){?>
-           <?php ?>
+           <?php
+            echo"Puede cancelar el pasaje,pero si lo cancela ahora solo recibira: ";
+             date_default_timezone_set("America/Argentina/Buenos_Aires");
+             $today = date("Y-m-d");
+             $date2 = $viaje['fecha'];
+             $date1_ts = strtotime($today);
+             $date2_ts = strtotime($date2);
+             $diff = $date2_ts - $date1_ts;
+            $dias= round($diff / 86400);
+            if($dias >= 2){
+                echo "El total del precio del pasaje".$pasaje['precio'];
+      }
+             ?><br>
             <a class="btn btn-outline-danger ml-1" href="cancelarviaje.php?idv=<?php echo $idv?>">Cancelar pasaje</a>
       <?php  }
         ?>
     </div>
+    <?php
+      ?>  
 </body>
 
 	<div class="div-foot">
@@ -104,7 +118,8 @@
 			<a href="php/cerrarSesion.php" onclick="return SubmitForm(this.form)" value="Eliminar"> Click aqui para cerrar Sesion </a>
 	</div>
 		<div class= "div_foot">
-		<p> Made by : Grupo 40 </p>
+		<p> Made by : Grupo 40 
+        </p>
 	</div>
 		<?php	
 	}
