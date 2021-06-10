@@ -36,6 +36,8 @@
                 $db->query($sql) or die("error". mysqli_error ($db));
                 $sql = "DELETE FROM pasajeros WHERE (idp='$idp') AND (activo=0);";
                 $db->query($sql) or die("error". mysqli_error ($db));
+                $sql = "DELETE FROM insumos_usuarios_viajes WHERE (idp='$idp') AND (activo=0);";
+                $db->query($sql) or die("error". mysqli_error ($db));
                 
                 $agregar_pasaje = "INSERT INTO pasajes (`cantidad_asientos`, `idu`, `idv`, `fantasma`, `activo`) VALUES
                 ('$cantidad_asientos', '$id_usuario', '$id_viaje', 1, 1);";           
@@ -96,7 +98,7 @@
             
             if ($cantidad_asientos== 0){
                 //reidirigir a la seleccion de insumos
-                header("Location: ../vista_carga_insumos.php?idp='$idp'");
+                header("Location: ../vista_carga_insumos.php?idp=".$idp);
             } else {
                 //reidirigir a la especificiacion de nombre apellido y dni de los pasajeros "invitados"
                     var_dump($idp);

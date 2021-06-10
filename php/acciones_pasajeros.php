@@ -34,7 +34,7 @@
         }
         echo "Por el momento confio, 1% probabilidades, 99% de fe (?";
 
-        header("Location: ../vista_carga_insumos.php?idp='$idp'");
+        header("Location: ../vista_carga_insumos.php?idp=".$idp);
 
     }
 

@@ -60,8 +60,6 @@
             <?php
             $idp = $_GET['idp'];
             $cantidad_asientos = $_GET['ca'];
-            var_dump($cantidad_asientos);
-            echo $cantidad_asientos;
             for ($i=1; $i<=$cantidad_asientos; $i++){ ?>
             
                 <div class="card-body">
