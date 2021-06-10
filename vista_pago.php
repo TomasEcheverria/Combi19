@@ -221,6 +221,7 @@
                         <input type="hidden" name="total" value="<?php echo $total ?>">
                         <input type="hidden" name="idp" value="<?php echo $idp ?>">
                         <input type="hidden" name="suscrito" value="1">
+                        <input type="hidden" name="vencimiento" value="<?php echo $info_usuario['fecha_vencimiento'] ?>">
                         <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Cancelar</a> <button type='submit'name='submit' class='btn btn-info'>Realizar transacción</button> </div>
                         <br>
                 </div>
@@ -228,9 +229,15 @@
         </div>
         <?php } 
         if (isset($_GET['msg'])){
+            if ($_GET['msg']==1){
             echo "<div class='alert alert-dismissible alert-warning'>". 
                         "El número de tarjeta es inválido.".
                 "</div>";
+            } else{
+                echo "<div class='alert alert-dismissible alert-warning'>". 
+                        "Su tarjeta expiró. Por favor, ingrese otra.".
+                "</div>";
+            }
         }
         ?>
         
