@@ -14,6 +14,7 @@
 <?php
 		$idp=$_POST['idp'];
 		$exito=false;
+		$price=$_POST['precio'];
 		
         
         $query1="SELECT * FROM pasajes p  WHERE idp='$idp'";
@@ -27,7 +28,7 @@
         if(($pasaje['activo'] == 0 ) or ($viaje['estado'] != "pendiente")){
             $exito=false;
         }else{
-            $query10="UPDATE pasajes SET activo='0' WHERE idp='$idp'";//Desactivo pasaje
+            $query10="UPDATE pasajes SET activo='0', precio='$price' WHERE idp='$idp'";//Desactivo pasaje
             $result10= mysqli_query($link, $query10) or die('Consulta 10 fallida ' .mysqli_error($link));
            
             $query11="UPDATE pasajeros SET activo='0' WHERE idp='$idp'";//Desactivo pasajeros

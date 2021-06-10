@@ -62,12 +62,12 @@
                 <?php if($pasaje['activo'] == 1){
                 ?>
                     Cantidad de asientos reservados :<?php echo $pasaje['cantidad_asientos']?> <br>
-                    Precio total del pasaje :<?php echo $pasaje['precio']?> <br>
+                    Precio total del pasaje :<?php echo "$".$pasaje['precio'];?> <br>
                     <?php if(($viaje['estado'] != "cancelado") and ($viaje['activo'] == 1)){?>
                         <h1> Datos relacionados con el viaje </h1>
                         Numero del viaje:<?php echo $viaje['nro_viaje']; ?><br>
                         Imprevisto: <?php if($viaje['imprevisto'] == "" ){ echo "No hay ningun imprevisto";}else{ echo $viaje['imprevisto']; }?></br>
-                        Precio individual por asiento <?php echo $viaje['precio'] ?><br>
+                        Precio individual por asiento <?php echo "$".$viaje['precio']; ?><br>
                         Estado del viaje <?php echo $viaje['estado'] ?><br>
                         Fecha  de salida <?php echo $viaje['fecha'] ?><br>
                         Hora de salida <?php echo $viaje['hora'] ?><br>
@@ -81,21 +81,21 @@
                             echo $insumo['nombre'].": ".$pasajero['cantidad']; ?><br>
                             <?php }?>
                         <?php if($viaje['estado'] == "finalizado") {?>
-                            Pago viaje: <?php echo $pasaje['pago']; ?> <br>
-                            Marcado como sospechoso de covid : <?php if($pasaje['sospechoso_covid'] == 1){ echo "si";}else { echo "no";}?><br>
+                            Pago viaje:<?php if($pasaje['pago'] == 1){ echo "si";}else { echo "no";}?><br>
+                            Marcado como sospechoso de covid : <?php if($pasaje['sospechoso_covid'] == 1){ echo "si, a causa de esto se rembolso la totalidad del precio del pasaje";}else { echo "no";}?><br>
                             Realizo Comentario: <?php if($pasaje['comentario'] == 1){ echo "si";}else { echo "no";}?><br>
                         <?php $comentcondition; } ?>
                 <?php } else { // el viaje no esta activo
                         if(($viaje['estado'] == "cancelado") and ($viaje['activo'] == 1)){?>
                     Este viaje fue cancelado</br>
-                    Cantida de plata rembolsada: <?php echo $pasaje['precio']; ?><br>
+                    Cantida de plata rembolsada: <?php echo "$".$pasaje['precio']; ?><br>
                             <?php }else{
                                 echo "Los datos de este viaje fueron borrados ";
                             }?>
                 <?php }
             }else{//estos datos son si el pasaje esta desactivado ?>
             Este pasaje fue cancelado</br>
-            Cantidad de plata rembolsada :<?php echo $pasaje['precio']; ?> 
+            Cantidad de plata rembolsada :<?php echo "$".$pasaje['precio']; ?> 
            <?php }?>
 				</div>
             <?php if(($pasaje['activo'] == 1 )  and ($viaje['estado'] == "finalizado") and ($viaje['activo'] == 1) and ($pasaje['sospechoso_covid'] == 0) ){?>
@@ -103,9 +103,10 @@
                         Usted no ha realizado un comentario.
                         <div class="escribir">		
 		            <form   name="mensaje" action="php/publicarmensaje.php" method="post" enctype="multipart/form-data">	
-			             <textarea  name="publicacion" placeholder="Escribir Mensaje" cols="50" rows="10" maxlength="140"></textarea>
+			             <textarea  name="publicacion" placeholder="Texto del mensaje" cols="50" rows="10" maxlength="140"></textarea>
                          <input type="hidden" name="idv" value="<?php echo $viaje['idv'] ?>">
-                         <input type="button"  value="publicar" class="btn_buscar" onclick="validacion()"></button>
+                         <input type="hidden" name="idp" value="<?php echo $pasaje['idp'] ?>">
+                         <input type="button"  value="publicar" class="btn_buscar" onclick="validacion()"></button><br>
 		         </div>
 		             </form> 
               <?php  }else{
@@ -152,17 +153,22 @@
              $diff = $date2_ts - $date1_ts;
             $dias= round($diff / 86400);
             $mitad= $pasaje['precio']/2;
+            $price;
             if($dias >= 2){
                 echo "El total del precio del pasaje:$".$pasaje['precio'];
+                $price=$pasaje['precio'];
             }else{
                 if(($dias >= 1 ) and ($dias < 2)){
                     echo "La mitad del precio del pasaje:$".$mitad;
+                    $price=$mitad;
                 }else{
                     echo "No se le rembolsara nada del dinero porque falta menos de 1 dia";
+                    $price=0;
                 }
             }
              ?><br>
              <form name="cancelarpasaje" method="post" action="php/cancelarpasaje.php" enctype="multipart/form-data">
+             <input type="hidden" class="form-control"  name="precio"   value=<?php  echo $price ?> ></input>
                  <input type="hidden" class="form-control"  name="idp"   value=<?php  echo $idp ?> ></input>
                 <input type="submit" value="Cancelar Pasaje" class="btn btn-outline-danger ml-1" >
              </form>

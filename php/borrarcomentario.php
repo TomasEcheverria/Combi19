@@ -10,7 +10,7 @@ include "../BD.php";// conectar y seleccionar la base de datos
     $query="UPDATE comentarios SET activo='0' WHERE idcom='$idcom'";
     $result10= mysqli_query ($link, $query) or die ('Consulta  fallida ' .mysqli_error($link));
 
-    $query1="UPDATE pasajes SET comentario='0' WHERE idp='$idp'";
+    $query1="UPDATE pasajes SET comentario='0',idcom='' WHERE idp='$idp'";
     $result1= mysqli_query ($link, $query1) or die ('Consulta query1 fallida ' .mysqli_error($link));
     header("Location: ../pasajes.php");
 ?>
