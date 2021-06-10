@@ -48,7 +48,7 @@
 		<a href="../listarviajes.php"> Click aqui para volver  &nbsp;&nbsp;&nbsp; </a>
 		<?php
 		} else { ?>
-		 El viaje esta marcado como en curso <br><br>
+		 El viaje esta marcado como en <?php echo $datos['estado']?> <br><br>
 		 <?php if (!$marcadas) {?> 
 		No se marcaron todas las checkbox <?php echo $total; }?></br>
 		<?php if($datos['estado'] !=  "pendiente"){ echo "Solo se podran cancelar aquellos viajes que estan en pendientes";}?>
