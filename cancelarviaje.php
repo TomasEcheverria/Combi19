@@ -48,7 +48,7 @@
 				
 				<?php
 				
-			    if($result>0){ 
+			     
 					$cantidad=0?>
 				<form name="cancelarviaje"  id="cancelarviaje" method="post" action="php/bajaviaje.php" enctype="multipart/form-data">
 					<input type="hidden" class="form-control"  name="idv"   value=<?php  echo $idv ?> ></input>
@@ -82,7 +82,7 @@
                     }?>
 			<input type="button" value="Cancelar viaje" name="borrar" class="btn_editar" onclick="toggle()">
 			   </form>
-		<?php } ?>
+		
 		</div>
         <figcaption class="blockquote-footer">
 				<cite title="Source Title">Made by : Grupo 40 </cite>
