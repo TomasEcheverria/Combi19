@@ -54,8 +54,9 @@
 	
     <div class="card">
 		<div class="card-header text-center">
-			<h4>Nombre, Apellido y DNI de invitados.
+			<h4>Ingrese la siguiente información de los pasajes extras:
 		</div>
+        <div class="mx-auto" style="width: 40rem;">
         <form action ="php/acciones_pasajeros.php" method ="POST">	
             <?php
             $idp = $_GET['idp'];
@@ -67,16 +68,16 @@
                         <div class="mx-auto" style="width: 40rem;">	
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault">Nombre</label>
-                                <input type="text" name="<?php echo "nombre".$i; ?>" value="" class="form-control" placeholder="" >
+                                <input type="text" name="<?php echo "nombre".$i; ?>" value="" class="form-control" placeholder="" required="">
                             </div>
 
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault">Apellido</label>
-                                <input type="text" name="<?php echo "apellido".$i; ?>" value="" class="form-control" placeholder="" >
+                                <input type="text" name="<?php echo "apellido".$i; ?>" value="" class="form-control" placeholder="" required="">
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label mt-4" for="inputDefault">DNI</label>
-                                <input type="text" name="<?php echo "dni".$i; ?>" value="" class="form-control" placeholder="" >
+                                <input type="text" name="<?php echo "dni".$i; ?>" value="" class="form-control" placeholder="" required="">
                             </div>
                         </div>	  
                     </blockquote>
@@ -90,6 +91,7 @@
             
 
         </form> 	
+        </div>
     </div>
 
 

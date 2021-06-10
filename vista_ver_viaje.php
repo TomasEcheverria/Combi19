@@ -3,8 +3,8 @@
     include 'php/acciones_ver_viaje.php';
     include 'php/classLogin.php';
     $usuario= new usuario();
-	$usuario ->$usuario ->id($id);
-	$usuario ->$usuario ->supendido($suspended);
+	$usuario ->id($id_user);
+	$usuario ->suspendido($suspended);
     
 
 
@@ -55,7 +55,7 @@
 </head>
 <?php try{ 
 	$tipo_usuario = "";
-	$usuario -> iniciada($id);
+	$usuario -> iniciada($id_user);
     if ($suspended != 0) {
 		throw new Exception ('Usted esta actualmente restringido de comprar viajes');//verificar si realmente esta suspendido, y si lo esta indicarle cuando es que expira
 	}
@@ -136,6 +136,15 @@
 						 		} ?>      
 							
 					</form>    
+					<?php 
+						if(isset($_GET['msg'])){
+							?>
+								<div class="alert alert-dismissible alert-success">
+									Ya tiene comprado un pasaje para este viaje.
+								</div>
+							<?php
+						}
+					?>
 				</div>	  
 			</blockquote>	
     </div>
