@@ -5,7 +5,6 @@
     <div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<a href="pagprincipal.php">Pagina principal (home)</a>
-		    <a href= "usuario.php?idu=4">Editar Perfil </a>
 			<a href="vista_busqueda.php">Buscar viaje </a>
             <a href="pasajes.php"> Mis Pasajes </a>
             
