@@ -11,6 +11,7 @@
 
     function getViajes($idChofer){
         $db = conectar();
+        // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto.
         $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino, r.descripcion,v.fecha, v.hora, v.imprevisto FROM `viajes` v
         INNER JOIN usuarios u ON u.id = v.idc
         INNER  JOIN rutas r ON r.idr = v.idr
@@ -51,15 +52,9 @@
             Imprevistos de mis viajes
         </h1>
     </div>
-    
-
-
             <?php
-              // Tabla de insumos
               $viajes = getViajes($idChofer);
-              if(!empty($viajes)){ // Esto seguramente deberia ser una excepcion
-                  // Se chequea que existan datos para mostrar
-                  $tabla = "
+              if(!empty($viajes)): ?>
                   <table class='table table-striped table-sm'>
                   <thead class='table-primary'>
                     <tr>
@@ -72,40 +67,37 @@
                     </tr>
                   </thead>
                   <tbody>                         
-                  ";
-                  $datos_tabla = "";
-                foreach ($viajes as $value) {
-                    $id_viaje = $value['idv'];
-                    $imprevisto = $value['imprevisto'];
-                    $datos_tabla = $datos_tabla . 
-                    "<tr id='tr_$id'>".
-                      "<td>". $value['origen'] . "</td>".
-                      "<td>". $value['destino'] . "</td>".
-                      "<td>". $value['descripcion'] . "</td>".
-                      "<td>". $value['fecha'] . "</td>".
-                      "<td>". $value['hora'] . "</td>".
-                      "<td>".                    
-                        " <button class='btn btn-primary' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample$id_viaje' aria-expanded='false' aria-controls='collapseExample'>
+                <?php foreach ($viajes as $value): ?>
+                    <?php
+                        $id_viaje = $value['idv'];
+                        $imprevisto = $value['imprevisto'];
+                    ?> 
+                    <tr id='tr_$id'>
+                      <td> <?php echo $value['origen']; ?> </td>
+                      <td> <?php echo $value['destino']; ?> </td>
+                      <td> <?php echo $value['descripcion']; ?> </td>
+                      <td> <?php echo $value['fecha']; ?> </td>
+                      <td> <?php echo $value['hora']; ?> </td>
+                      <td>                   
+                         <button class='btn btn-primary' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
                             Ver Imprevisto
-                        </button>".
-                      "</td>".
-                    "</tr>".
-                    "<tr>".
-                        "<td colspan='6' class='hiddenRow'>".
-                            "<div class='collapse' id='collapseExample$id_viaje'>".
-                                "<h5>
-                                $imprevisto
-                                </h5>".
-                            "</div>".
-                        "</td>".
-                    "</tr>"
-                    ;
-                }
-                echo $tabla . $datos_tabla;
-              } else echo "<p class='text-center fs-1 text-muted'> <strong> No hay datos para mostrar </strong> </p>";
-
-              ?>
-          </tbody>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td colspan='6' class='hiddenRow'> 
+                            <div class='collapse' id='collapseExample<?php echo $id_viaje?>'>
+                                <h5>
+                                    <?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>
+                                </h5>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+                <?php else: ?> 
+                    <p class='text-center fs-1 text-muted'> <strong> No hay datos para mostrar </strong> </p>
+                <?php endif; ?>
+                    </tbody>
         </table>
 
 
