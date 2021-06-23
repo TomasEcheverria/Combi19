@@ -344,3 +344,7 @@ padding:0;
 .hiddenRow {
   padding: 0 !important;
 }
+
+.seleccionada {
+  background-color:#b7d7e8;
+}

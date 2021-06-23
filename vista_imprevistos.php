@@ -55,7 +55,7 @@
             <?php
               $viajes = getViajes($idChofer);
               if(!empty($viajes)): ?>
-                  <table class='table table-striped table-sm'>
+                  <table class='table table-striped table-sm p-2'>
                   <thead class='table-primary'>
                     <tr>
                       <th scope='col'>Origen</th>
@@ -79,7 +79,7 @@
                       <td> <?php echo $value['fecha']; ?> </td>
                       <td> <?php echo $value['hora']; ?> </td>
                       <td>                   
-                         <button class='btn btn-primary' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
+                         <button class='btn btn-success' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
                             Ver Imprevisto
                         </button>
                       </td>
@@ -87,9 +87,25 @@
                     <tr>
                         <td colspan='6' class='hiddenRow'> 
                             <div class='collapse' id='collapseExample<?php echo $id_viaje?>'>
-                                <h5>
-                                    <?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>
-                                </h5>
+
+                                <form action ="php/acciones_imprevistos.php" class="row p-2 seleccionada" method ="POST">
+                                    <input type="hidden" name="id" value="<?php echo $id ?>">
+                                    <div class="row-sm">
+                                            <h5 class="form-label"> <strong> Detalle </strong> </h5>
+                                        </div>
+                                    <div class="row">
+
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>" required="">
+                                        </div>
+                                        <div class="col-2">
+                                            <button type='submit'name='update' class='btn btn-primary'>Update</button> </div>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
                             </div>
                         </td>
                     </tr>
