@@ -18,7 +18,7 @@
 <script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
 </head>
 <?php try{ 
-    $usuario-> iniciada($usuarioID);?>
+    $usuario-> chofer($tipo);?>
     <body style="margin: 1%">
 		<!--Imagen   -->
         <div>
@@ -30,12 +30,12 @@
 			<?php echo menu($tipo); ?><br>
 		<!--Pasjes   -->
 		<div class="text-center" >
-			<h1> Listado de pasajes personales </h1>
+			<h1> Listado de viajes asignados</h1>
 		</div>
-        <?php $query1="SELECT * FROM pasajes WHERE idu='$id' AND fantasma='0' ORDER BY idp DESC";
+        <?php $query1="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' ORDER BY fecha DESC";
 			$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			$cantidad= mysqli_num_rows($result1);?>
-			<h2>Cantidad de pasajes personales:<?php echo $cantidad; ?> </h2>
+			<h2>Cantidad de viajes asignados<?php echo $cantidad; //MOSTRAR INFORMACION DEL PRIMER VIAJE A REALIZAR ?> </h2>
 			
 		<?php	while($pasaje= mysqli_fetch_array($result1)){ 
 				$query2="SELECT * FROM viajes WHERE idv='$pasaje[idv]'";
