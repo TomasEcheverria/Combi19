@@ -341,3 +341,10 @@ padding:0;
 	border-color: white white white white;
   width: 200px;
 }
+.hiddenRow {
+  padding: 0 !important;
+}
+
+.seleccionada {
+  background-color:#b7d7e8;
+}

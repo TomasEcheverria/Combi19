@@ -10,7 +10,9 @@
             <a href="pasajes.php"> Mis Pasajes </a>
             
             <a href="vista_perfil.php">Mi Perfil.</a>
-            
+            <?php if($tipo == "chofer"): ?>
+                <a href="vista_imprevistos.php">Imprevistos</a>
+            <?php endif; ?>
             <?php if($tipo == "administrador") {
             ?>
             <a href="administracion.php">Funciones administrativas </a>
