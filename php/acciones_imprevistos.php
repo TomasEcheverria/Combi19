@@ -17,9 +17,22 @@ if(isset($_POST['save'])){
     $imprevisto = $_POST['detalle_imprevisto'];
     $sql= "UPDATE viajes
     SET 
-        viajes.imprevisto = '$imprevisto'
+        viajes.imprevisto = '$imprevisto',
+        viajes.estado_imprevisto = 'pendiente'
     WHERE viajes.idv = '$id'";
 
 mysqli_query($db,$sql);
     header("Location: ../vista_imprevistos.php?sv=1");
+}
+
+if(isset($_POST['delete'])){
+    $id = $_POST['id'];
+    $sql= "UPDATE viajes
+    SET 
+        viajes.imprevisto = '',
+        viajes.estado_imprevisto = 'desactivado'
+    WHERE viajes.idv = '$id'";
+
+mysqli_query($db,$sql);
+    header("Location: ../vista_imprevistos.php?sv=0");
 }
