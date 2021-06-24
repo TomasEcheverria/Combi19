@@ -74,6 +74,12 @@
 			}
 		}
 		
+		public function chofer($tipo) {
+			if( $tipo != "chofer") {
+				throw new Exception ('usted no es un chofer');
+			}
+		}
+
 		public function noIniciada ($usuarioID) { //tira la exception si la sesion SI esta iniciada
 			if (isset ($usuarioID)) {
 				throw new Exception ('Sesion iniciada');
