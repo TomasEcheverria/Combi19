@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-06-2021 a las 21:01:37
+-- Tiempo de generación: 22-06-2021 a las 03:17:00
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -99,8 +99,7 @@ INSERT INTO `comentarios` (`idcom`, `email`, `idv`, `fecha_y_hora`, `texto_comen
 (7, 'tomas@gmail.com', 11, '2021-06-10 12:47:54', 'HOLA', 0),
 (8, 'tomas@gmail.com', 11, '2021-06-10 12:48:52', 'HOLA', 0),
 (9, 'tomas@gmail.com', 11, '2021-06-10 22:04:20', 'hola', 0),
-(10, 'tomas@gmail.com', 9, '2021-06-10 22:10:27', 'esto se borra', 0),
-(11, 'tomas@gmail.com', 9, '2021-06-24 03:46:10', 'chau\r\n', 0);
+(10, 'tomas@gmail.com', 9, '2021-06-10 22:10:27', 'esto se borra', 1);
 
 -- --------------------------------------------------------
 
@@ -156,10 +155,10 @@ CREATE TABLE `lugares` (
 --
 
 INSERT INTO `lugares` (`idl`, `nombre`, `provincia`, `activo`) VALUES
-(1, 'City Bell', 'Buenos aires', 1),
-(2, 'Buenos Aires', 'bs as', 1),
-(3, 'La Plata', 'B A', 1),
-(4, 'La Matanza', 'BS. AS.', 1);
+(1, 'City Bell', '', 1),
+(2, 'Buenos Aires', '', 1),
+(3, 'La Plata', '', 1),
+(4, 'La Matanza', '', 1);
 
 -- --------------------------------------------------------
 
@@ -200,10 +199,7 @@ CREATE TABLE `pasajeros` (
 INSERT INTO `pasajeros` (`idpasajero`, `nombre`, `apellido`, `sospechoso_covid`, `dni`, `idp`, `presente`, `activo`) VALUES
 (1, 'tomas', 'e', 0, 48, 4, 0, 0),
 (2, 'mateo', 'e', 0, 48, 4, 0, 0),
-(5, 'toams', 'echeverria', 0, 14256398, 9, 0, 1),
-(7, 'toams', 'echeverria', 0, 14256398, 11, 0, 0),
-(8, 'cual', 'quiera', 0, 47, 11, 0, 0),
-(9, 'quien ', 'sea', 0, 49, 11, 0, 0);
+(5, 'toams', 'echeverria', 0, 14256398, 9, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -220,7 +216,6 @@ CREATE TABLE `pasajes` (
   `idu` varchar(30) NOT NULL,
   `idv` int(11) NOT NULL,
   `idcom` int(200) DEFAULT NULL,
-  `tarjeta` bigint(20) NOT NULL,
   `comentario` tinyint(1) NOT NULL DEFAULT 0,
   `fantasma` int(11) NOT NULL DEFAULT 1,
   `activo` tinyint(1) NOT NULL DEFAULT 1
@@ -230,29 +225,15 @@ CREATE TABLE `pasajes` (
 -- Volcado de datos para la tabla `pasajes`
 --
 
-INSERT INTO `pasajes` (`idp`, `cantidad_asientos`, `precio`, `pago`, `sospechoso_covid`, `idu`, `idv`, `idcom`, `tarjeta`, `comentario`, `fantasma`, `activo`) VALUES
-(1, 5, 20, 0, 0, '10', 11, NULL, 0, 0, 0, 1),
-(2, 2, 0, 0, 0, '6', 10, NULL, 0, 0, 0, 1),
-(3, 8, 90, 0, 0, '9', 11, NULL, 0, 0, 0, 1),
-(4, 87, 49, 0, 0, '7', 11, 0, 0, 0, 0, 0),
-(6, 20, 10, 0, 0, '7', 11, NULL, 0, 0, 0, 1),
-(7, 48, 90, 0, 0, '7', 11, NULL, 0, 0, 0, 1),
-(8, 48, 90, 0, 0, '7', 11, 0, 0, 0, 0, 1),
-(9, 1, 4555, 0, 0, '7', 9, 0, 0, 0, 0, 0),
-(11, 3, 13665, 0, 0, '7', 9, NULL, 0, 0, 0, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rembolso`
---
-
-CREATE TABLE `rembolso` (
-  `idrem` int(50) NOT NULL,
-  `precio` int(11) NOT NULL,
-  `tarjeta` int(11) NOT NULL,
-  `activo` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `pasajes` (`idp`, `cantidad_asientos`, `precio`, `pago`, `sospechoso_covid`, `idu`, `idv`, `idcom`, `comentario`, `fantasma`, `activo`) VALUES
+(1, 5, 20, 0, 0, '10', 11, NULL, 0, 0, 1),
+(2, 2, 0, 0, 0, '6', 10, NULL, 0, 0, 1),
+(3, 8, 90, 0, 0, '9', 11, NULL, 0, 0, 1),
+(4, 87, 98, 0, 0, '7', 11, 0, 0, 0, 1),
+(6, 20, 10, 0, 0, '7', 11, NULL, 0, 0, 1),
+(7, 48, 90, 0, 0, '7', 11, NULL, 0, 0, 1),
+(8, 48, 90, 0, 0, '7', 11, 0, 0, 0, 1),
+(9, 1, 4555, 0, 0, '7', 9, 10, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -305,7 +286,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `email`, `nombre`, `apellido`, `DNI`, `clave`, `tipo_usuario`, `suspendido`, `suscrito`, `nro_tarjeta`, `cod_seguridad`, `fecha_vencimiento`, `activo`) VALUES
 (1, 'admin@admin.com', 'admin12', 'admin', 1111111, 'admin12', 'administrador', 0, 0, NULL, NULL, NULL, 1),
-(2, 'diego@example.com', 'diegosss', 'aguilar', 999999, 'clave12', 'chofer', 0, 0, NULL, NULL, NULL, 1),
+(2, 'diego@example.com', 'diegosss', 'aguilar', 999999, '1234', 'chofer', 0, 0, NULL, NULL, NULL, 1),
 (3, 'john@gmail.com', 'john', 'doe', 111119, 'test', 'chofer', 0, 0, NULL, NULL, NULL, 0),
 (4, 'juanperez@example.com', 'juan', 'perez', 9111111, '1234', 'chofer', 0, 0, NULL, NULL, NULL, 1),
 (5, 'juju@gmail.com', 'tomas', 'echeverria', 43015912, 'clave12', 'chofer', 0, 0, NULL, NULL, NULL, 1),
@@ -325,8 +306,7 @@ INSERT INTO `usuarios` (`id`, `email`, `nombre`, `apellido`, `DNI`, `clave`, `ti
 CREATE TABLE `viajes` (
   `idv` int(11) NOT NULL,
   `nro_viaje` int(11) NOT NULL,
-  `imprevisto` varchar(100) NOT NULL,
-  `estado_imprevisto` varchar(100) NOT NULL DEFAULT 'desactivado',
+  `imprevisto` varchar(50) NOT NULL,
   `precio` int(11) NOT NULL,
   `estado` varchar(100) NOT NULL,
   `fecha` date NOT NULL,
@@ -340,14 +320,14 @@ CREATE TABLE `viajes` (
 -- Volcado de datos para la tabla `viajes`
 --
 
-INSERT INTO `viajes` (`idv`, `nro_viaje`, `imprevisto`, `estado_imprevisto`, `precio`, `estado`, `fecha`, `hora`, `idc`, `idr`, `activo`) VALUES
-(6, 10, '', 'desactivado', 100, 'pendiente', '2021-05-12', '00:00:00', 2, 1, 1),
-(7, 0, '', 'desactivado', 45, 'finalizado', '2021-05-11', '00:00:00', 2, 1, 1),
-(8, 45, 'hola', 'desactivado', 4500, 'finalizado', '2021-05-05', '00:00:00', 4, 1, 1),
-(9, 4555, '', 'desactivado', 4555, 'pendiente', '2021-05-07', '23:57:00', 4, 1, 1),
-(10, 6, '', 'desactivado', 4, 'finalizado', '2021-06-03', '23:18:00', 4, 1, 0),
-(11, 89, '', 'desactivado', 8, 'pendiente', '2021-06-24', '21:27:00', 4, 1, 1),
-(12, 99, '', 'desactivado', 16, 'cancelado', '2021-06-28', '20:09:00', 2, 2, 1);
+INSERT INTO `viajes` (`idv`, `nro_viaje`, `imprevisto`, `precio`, `estado`, `fecha`, `hora`, `idc`, `idr`, `activo`) VALUES
+(6, 0, '', 100, 'en curso', '2021-05-12', '00:00:00', 2, 1, 1),
+(7, 0, '', 45, 'finalizado', '2021-05-11', '00:00:00', 2, 1, 1),
+(8, 45, 'hola', 4500, 'finalizado', '2021-05-05', '00:00:00', 4, 1, 1),
+(9, 4555, '', 4555, 'finalizado', '2021-05-07', '23:57:00', 4, 1, 1),
+(10, 6, '', 4, 'finalizado', '2021-06-03', '23:18:00', 4, 1, 0),
+(11, 89, '', 8, 'finalizado', '2021-07-01', '21:27:00', 4, 1, 1),
+(12, 99, '', 16, 'cancelado', '2021-06-28', '20:09:00', 2, 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -405,14 +385,7 @@ ALTER TABLE `pasajeros`
 -- Indices de la tabla `pasajes`
 --
 ALTER TABLE `pasajes`
-  ADD PRIMARY KEY (`idp`),
-  ADD UNIQUE KEY `idp` (`idp`);
-
---
--- Indices de la tabla `rembolso`
---
-ALTER TABLE `rembolso`
-  ADD PRIMARY KEY (`idrem`);
+  ADD PRIMARY KEY (`idp`);
 
 --
 -- Indices de la tabla `rutas`
@@ -446,7 +419,7 @@ ALTER TABLE `combis`
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `idcom` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idcom` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `insumos`
@@ -476,19 +449,13 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `pasajeros`
 --
 ALTER TABLE `pasajeros`
-  MODIFY `idpasajero` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idpasajero` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pasajes`
 --
 ALTER TABLE `pasajes`
-  MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT de la tabla `rembolso`
---
-ALTER TABLE `rembolso`
-  MODIFY `idrem` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `rutas`
