@@ -27,6 +27,43 @@
             return $data;
         } 
     }
+
+    function getCollapseState($idRow){
+        // Si se apreto el boton editar, refresca la pagina, mostrando el detalle correspondiente
+         if(isset($_GET['upd']) and ($_GET['upd'] == $idRow)){
+            echo "collapse show";
+         } else {
+            echo "collapse";
+         }
+    }
+
+    function getInputState($idRow){
+        // Si se apreto el boton editar, refresca la pagina, permite que se modifique el texto del imprevisto
+         if(isset($_GET['upd']) and ($_GET['upd'] == $idRow)){
+            echo "";
+         } else {
+            echo "disabled";
+         }
+    }
+
+    function getTooltip($idRow){
+        // Si se apreto el boton editar, refresca la pagina, permite que se modifique el texto del imprevisto
+         if(isset($_GET['upd']) and ($_GET['upd'] == $idRow)){
+            echo "<p class='text-danger'>Solo se pueden Ingresar hasta 50 caracteres</p>";
+         } else {
+            echo "";
+         }
+    }
+
+    function getButton($idRow,$imprevisto){
+        // Devuelve el boton correspondiente a lo que se quiera hacer
+         if(isset($_GET['upd']) and ($_GET['upd'] == $idRow)){
+            echo "<button type='submit'name='save' class='btn btn-warning'>Guardar</button> </div>";
+         }else{
+            echo $imprevisto != "" ? "<button type='submit'name='update' class='btn btn-primary'>Editar</button> </div>"
+            :"<button type='submit'name='create' class='btn btn-success'>Crear</button> </div>";
+         }
+    }
 ?>
 <!--Funcion para traer insumos de la BD -->
 
@@ -46,7 +83,20 @@
     $usuario-> iniciada($usuarioID);
     ?>
 <body>
-
+    <?php if(isset($_GET['sv'])){
+        switch ($_GET['sv']){
+            case 1:
+                echo "<div class='alert alert-success alert-dismissible fade show' role='alert'> 
+                <strong> El imprevisto Fue modificado con exito </strong> 
+                </div>";
+                break;
+            case 0:
+                echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'> 
+                <strong> El imprevisto Fue eliminado con exito </strong> 
+                </div>";
+                break;
+        }
+    } ?>
     <div class="container text-center">
         <h1>
             Imprevistos de mis viajes
@@ -79,27 +129,31 @@
                       <td> <?php echo $value['fecha']; ?> </td>
                       <td> <?php echo $value['hora']; ?> </td>
                       <td>                   
-                         <button class='btn btn-success' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
+                         <button class='btn btn-outline-info' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
                             Ver Imprevisto
                         </button>
                       </td>
                     </tr>
                     <tr>
                         <td colspan='6' class='hiddenRow'> 
-                            <div class='collapse' id='collapseExample<?php echo $id_viaje?>'>
+                            <div class='<?php getCollapseState($id_viaje) ?>' id='collapseExample<?php echo $id_viaje?>'>
 
                                 <form action ="php/acciones_imprevistos.php" class="row p-2 seleccionada" method ="POST">
-                                    <input type="hidden" name="id" value="<?php echo $id ?>">
+                                    <input type="hidden" name="id" value="<?php echo $id_viaje ?>">
                                     <div class="row-sm">
                                             <h5 class="form-label"> <strong> Detalle </strong> </h5>
                                         </div>
                                     <div class="row">
 
                                         <div class="col-9">
-                                            <input type="text" class="form-control" name="nombre" placeholder="" value="<?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>" required="">
+                                            <input type="text" class="form-control"  name="detalle_imprevisto" placeholder="" maxlength="49" 
+                                             value="<?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>"<?php getInputState($id_viaje) ?>>
+                                            <?php getTooltip($id_viaje) ?>
+
+                                             
                                         </div>
                                         <div class="col-2">
-                                            <button type='submit'name='update' class='btn btn-primary'>Update</button> </div>
+                                            <?php getButton($id_viaje,$imprevisto) ?>
                                         </div>
 
                                     </div>
