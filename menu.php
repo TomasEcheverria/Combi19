@@ -10,7 +10,7 @@
             <?php if($tipo ==  "pasajero"){?>
             <a href="pasajes.php"> Mis Pasajes </a>
             <?php }else{?> 
-            <a href="mis_viajes.php"> Mis Pasajes </a>
+            <a href="mis_viajes.php"> Mis Viajes </a>
                 <?php }?>
             <a href="vista_perfil.php">Mi Perfil.</a>
             <?php if($tipo == "chofer"): ?>

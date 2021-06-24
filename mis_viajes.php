@@ -30,36 +30,86 @@
 			<?php echo menu($tipo); ?><br>
 		<!--Pasjes   -->
 		<div class="text-center" >
-			<h1> Listado de viajes asignados</h1>
+			<h1> Listado de viajes a realizar</h1>
 		</div>
         <?php $query1="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' ORDER BY fecha DESC";
 			$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
-			$cantidad= mysqli_num_rows($result1);?>
-			<h2>Cantidad de viajes asignados<?php echo $cantidad; //MOSTRAR INFORMACION DEL PRIMER VIAJE A REALIZAR ?> </h2>
 			
-		<?php	while($pasaje= mysqli_fetch_array($result1)){ 
-				$query2="SELECT * FROM viajes WHERE idv='$pasaje[idv]'";
+			
+			$query2="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' AND estado!='finalizado' ORDER BY fecha ASC";//solo va a existir 1 viaje en curso
 			$result2= mysqli_query ($link, $query2) or die ('Consuluta query2 fallida: ' .mysqli_error($link));
-			$viaje=	mysqli_fetch_array($result2);
-			?>
+			$primero= mysqli_fetch_array($result2); 
+			$cantidad= mysqli_num_rows($result2);?>
 
-            <div class ="container-fluid">
-			<div class="card text-white bg-primary mb-3">Numero de pasaje:<?php echo $pasaje['idp']; ?>
-				<div class="card-header"><?php if($pasaje['activo'] == 1){
-				echo 'Pasaje activo';}else{ echo "Pasaje cancelado";}?><br>
-				<?php if($pasaje['comentario'] == 1){
-				echo 'Se realizo un comentario';}else{ echo "No se realizo un comentraio";}?></div>
+			
+			<?php if($primero['estado'] == "pendiente") {?>
+			<h3> Siguiente viaje a realizar </h3>
+			<?php }else{?><h3> Viaje en curso </h3> <?php } ?>
+			 <div class ="container-fluid">
+			<div class="card text-white bg-primary mb-3">Numero de viaje :<?php echo $primero['nro_viaje']; ?>
+				<div class="card-header"><?php if($primero['activo'] == 1){
+				echo 'Viaje activo';}else{ echo "Viaje borrado";}?><br>
 				<div class="card-body"> 
-					<h4 class="card-title"> <?php echo "numero de viaje".$viaje['nro_viaje'];?><br>
+					<h4 class="card-title"> 
 					<?php 
-					 echo 'Estado del viaje: '.$viaje['estado'];?><br>
-					<?php echo"Fecha de salida: ".$viaje['fecha']; ?></h4><br>
-					<a class="card-text" href="pasaje.php?idp=<?php echo $pasaje['idp']; ?>" > Mas informacion </a>
+					 echo 'Estado del viaje: '.$primero['estado'];?><br>
+					<?php echo"Fecha de salida: ".$primero['fecha']; ?><br>
+					<?php if($primero['imprevisto'] !=''){ 
+						echo "Imprevisto: ".$primero['imprevisto']; 
+						} ?>
+					</h4><br>
+					<a class="card-text" href="viaje.php?idv=<?php echo $primero['idv']; ?>" > Mas informacion </a>
 				</div>
 			</div>				
 		</div>
-		<?php } ?>
+		
+		<h2>Cantidad de viajes a realizar <?php echo $cantidad; //todos los viajes o los finalizados en otro lado? ?> </h2>
+		<?php	while($viaje= mysqli_fetch_array($result2)){ ?>
 
+			<div class ="container-fluid">
+			<div class="card text-white bg-primary mb-3">Numero de viaje :<?php echo $viaje['nro_viaje']; ?>
+				<div class="card-header"><?php if($viaje['activo'] == 1){
+				echo 'Viaje activo';}else{ echo "Viaje borrado";}?><br>
+				<div class="card-body"> 
+					<h4 class="card-title"> 
+					<?php 
+					 echo 'Estado del viaje: '.$viaje['estado'];?><br>
+					<?php echo"Fecha de salida: ".$viaje['fecha']; ?><br>
+					<?php if($viaje['imprevisto'] !=''){ 
+						echo "Imprevisto: ".$viaje['imprevisto']; 
+						} ?>
+					</h4><br>
+					<a class="card-text" href="viaje.php?idv=<?php echo $viaje['idv']; ?>" > Mas informacion </a>
+				</div>
+			</div>				
+		</div>
+		<?php } ?> 
+ 	<?php	$query3="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' AND estado='finalizado' ORDER BY fecha ASC";//solo va a existir 1 viaje en curso
+		$result3= mysqli_query ($link, $query3) or die ('Consuluta query3 fallida: ' .mysqli_error($link));
+		$cantidadf= mysqli_num_rows($result3);?>
+		
+		<h3> Viajes finalizados </h3>
+		<?php	while($viaje= mysqli_fetch_array($result3)){ ?>
+
+<div class ="container-fluid">
+<div class="card text-white bg-primary mb-3">Numero de viaje :<?php echo $viaje['nro_viaje']; ?>
+	<div class="card-header"><?php if($viaje['activo'] == 1){
+	echo 'Viaje activo';}else{ echo "Viaje borrado";}?><br>
+	<div class="card-body"> 
+		<h4 class="card-title"> 
+		<?php 
+		 echo 'Estado del viaje: '.$viaje['estado'];?><br>
+		<?php echo"Fecha de salida: ".$viaje['fecha']; ?><br>
+		<?php if($viaje['imprevisto'] !=''){ 
+			echo "Imprevisto: ".$viaje['imprevisto']; 
+			} ?>
+		</h4><br>
+		<a class="card-text" href="viaje.php?idv=<?php echo $viaje['idv']; ?>" > Mas informacion </a>
+	</div>
+</div>				
+</div>
+<?php } ?> 
+				
 			<!-- Footer -->
 			<figcaption class="blockquote-footer">
 				<cite title="Source Title">Made by : Grupo 40 </cite>
