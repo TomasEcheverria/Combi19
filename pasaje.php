@@ -39,6 +39,18 @@
         $result3= mysqli_query ($link, $query3) or die ('Consuluta query3 fallida: ' .mysqli_error($link));
         $cantidadinsumos= mysqli_num_rows($result3);
 
+        $query10="SELECT * FROM rutas  r  WHERE idr='$viaje[idr]'";
+        $result10= mysqli_query ($link, $query10) or die ('Consuluta query10 fallida: ' .mysqli_error($link));
+        $ruta= mysqli_fetch_array($result10);
+
+        $query11="SELECT * FROM lugares WHERE idl='$ruta[codigo_postal_origen]'";
+        $result11= mysqli_query ($link, $query11) or die ('Consuluta query11 fallida: ' .mysqli_error($link));
+        $origen= mysqli_fetch_array($result11);
+
+        $query12="SELECT * FROM lugares WHERE idl='$ruta[codigo_postal_destino]'";
+        $result12= mysqli_query ($link, $query12) or die ('Consuluta query12 fallida: ' .mysqli_error($link));
+        $destino= mysqli_fetch_array($result12);
+
         if(($viaje['estado'] == "finalizado") and ($viaje['activo'] == 0)){//revisar
             $informacion="Este viaje finalizo se finalizo exitosamente y fue borrado";
             $cancelado=false;
@@ -59,11 +71,11 @@
 			<div class="mx-auto" style="max-width: 40rem;">
 				<div class="card text-white bg-primary mb-3">  
                 Estado del pasaje   :<?php  if($pasaje['activo']){ echo "activo"; }else{  echo "El pasaje fue cancelado";}?> <br>
-                <?php if($pasaje['activo'] == 1){
+                <?php if($pasaje['activo'] == 1){//pasaje activo
                 ?>
                     Cantidad de asientos reservados :<?php echo $pasaje['cantidad_asientos']?> <br>
                     Precio total del pasaje :<?php echo "$".$pasaje['precio'];?> <br>
-                    <?php if(($viaje['estado'] != "cancelado") and ($viaje['activo'] == 1)){?>
+                    <?php if(($viaje['estado'] != "cancelado") and ($viaje['activo'] == 1)){ // el viaje no cancelado y activo ?>
                         <h1> Datos relacionados con el viaje </h1>
                         Numero del viaje:<?php echo $viaje['nro_viaje']; ?><br>
                         Imprevisto: <?php if($viaje['imprevisto'] == "" ){ echo "No hay ningun imprevisto";}else{ echo $viaje['imprevisto']; }?></br>
@@ -71,6 +83,8 @@
                         Estado del viaje <?php echo $viaje['estado'] ?><br>
                         Fecha  de salida <?php echo $viaje['fecha'] ?><br>
                         Hora de salida <?php echo $viaje['hora'] ?><br>
+                        Lugar de salida <?php echo $origen['nombre']."/".$origen['provincia']; ?> <br>
+                        Lugar de llegada <?php echo $destino['nombre']."/".$destino['provincia']; ?> <br>
                         Cantidad de pasajeros asociados a este viaje:<?php echo$cantidadpasajeros; ?><br>
                         Informacion de los pasajeros:<br>
                         <?php while($pasajero= mysqli_fetch_array($result2)){
@@ -80,13 +94,13 @@
                         <?php while($insumo= mysqli_fetch_array($result3)){
                             echo $insumo['nombre'].": ".$insumo['cantidad']; ?><br>
                             <?php }?>
-                        <?php if($viaje['estado'] == "finalizado") {?>
+                        <?php if($viaje['estado'] == "finalizado") {//viaje finalizado?>
                             Pago viaje:<?php if($pasaje['pago'] == 1){ echo "si";}else { echo "no";}?><br>
                             Marcado como sospechoso de covid : <?php if($pasaje['sospechoso_covid'] == 1){ echo "si, a causa de esto se rembolso la totalidad del precio del pasaje";}else { echo "no";}?><br>
                             Realizo Comentario: <?php if($pasaje['comentario'] == 1){ echo "si";}else { echo "no";}?><br>
                         <?php $comentcondition; } ?>
-                <?php } else { // el viaje no esta activo
-                        if(($viaje['estado'] == "cancelado") and ($viaje['activo'] == 1)){?>
+                <?php } else { 
+                        if(($viaje['estado'] == "cancelado") and ($viaje['activo'] == 1)){//viaje cancelado pero activo?>
                     Este viaje fue cancelado</br>
                     Cantida de plata rembolsada: <?php echo "$".$pasaje['precio']; ?><br>
                             <?php }else{
@@ -98,7 +112,7 @@
             Cantidad de plata rembolsada :<?php echo "$".$pasaje['precio']; ?> 
            <?php }?>
 				</div>
-            <?php if(($pasaje['activo'] == 1 )  and ($viaje['estado'] == "finalizado") and ($viaje['activo'] == 1) and ($pasaje['sospechoso_covid'] == 0) ){?>
+            <?php if(($pasaje['activo'] == 1 )  and ($viaje['estado'] == "finalizado") and ($viaje['activo'] == 1) and ($pasaje['sospechoso_covid'] == 0) ){  //seccion de comentarios?>
                 <?php if($pasaje['comentario'] == 0 ){?>
                         Usted no ha realizado un comentario.
                         <div class="escribir">		
@@ -142,7 +156,7 @@
 		             </form>
             <?php }?>
             <?php }?>
-        <?php if(($pasaje['activo'] ==1 ) and ($viaje['activo'] == 1 ) and ($viaje['estado'] == "pendiente")){?>
+        <?php if(($pasaje['activo'] ==1 ) and ($viaje['activo'] == 1 ) and ($viaje['estado'] == "pendiente")){ //seccion de cancelacion ?>
            <?php
             echo"Puede cancelar el pasaje,pero si lo cancela ahora solo recibira: ";
              date_default_timezone_set("America/Argentina/Buenos_Aires");
