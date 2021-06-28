@@ -33,6 +33,7 @@
 			<div class="list-group" >
 				<h5> <a href="listarviajes.php" class="list-group-item list-group-item-action " > Listar viajes </a> </h5>
 				<h5> <a href="altaviaje.php" class="list-group-item list-group-item-action "> Publicar un viaje </a> </h5>
+				<h5><a href="vista_imprevistos_admin.php" class="list-group-item list-group-item-action "> Administrar Imprevistos </a> </h5>
 				<h5> <a href="vista_choferes.php" class="list-group-item list-group-item-action "> Adminstrar choferes </a> </h5>
 				<h5><a href="vista_insumos.php" class="list-group-item list-group-item-action "> Administrar insumos </a> </h5>
 				<h5><a href="vista_combis.php" class="list-group-item list-group-item-action "> Administrar combis </a> </h5>
