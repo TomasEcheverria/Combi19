@@ -9,15 +9,16 @@
     $usuario -> id($id);
     $idChofer = $id;
 
-    function getViajes($idChofer){
+    function getViajes(){
         $db = conectar();
         // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto.
-        $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino, r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto FROM `viajes` v
+        $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino,
+         r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto, u.nombre, u.apellido FROM `viajes` v
         INNER JOIN usuarios u ON u.id = v.idc
         INNER  JOIN rutas r ON r.idr = v.idr
         INNER JOIN lugares l1 ON r.codigo_postal_origen = l1.idl
         INNER JOIN lugares l2 ON r.codigo_postal_destino = l2.idl
-        WHERE v.estado <> 'pendiente' AND v.idc = $idChofer";
+        WHERE v.estado_imprevisto <> 'desactivado'";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
         if ($numRows > 0) {
@@ -87,7 +88,7 @@
         switch ($_GET['sv']){
             case 1:
                 echo "<div class='alert alert-success alert-dismissible fade show' role='alert'> 
-                <strong> El imprevisto Fue modificado con exito </strong> 
+                <strong> El imprevisto Fue resuelto con exito </strong> 
                 </div>";
                 break;
             case 0:
@@ -103,7 +104,7 @@
         </h1>
     </div>
             <?php
-              $viajes = getViajes($idChofer);
+              $viajes = getViajes();
               if(!empty($viajes)): ?>
                   <table class='table table-striped table-sm p-2'>
                   <thead class='table-primary'>
@@ -113,6 +114,7 @@
                       <th scope='col'>Descripcion</th>
                       <th scope='col'>Fecha</th>
                       <th scope='col'>Hora</th>
+                      <th scope='col'>Chofer</th>
                       <th scope='col'>Imprevisto</th>
                     </tr>
                   </thead>
@@ -122,6 +124,7 @@
                         $id_viaje = $value['idv'];
                         $imprevisto = $value['imprevisto'];
                         $estado_imprevisto = $value['estado_imprevisto'];
+                        $nombre_chofer = $value['nombre']." ".$value['apellido'];
                     ?> 
                     <tr id='tr_$id'>
                       <td> <?php echo $value['origen']; ?> </td>
@@ -129,6 +132,7 @@
                       <td> <?php echo $value['descripcion']; ?> </td>
                       <td> <?php echo $value['fecha']; ?> </td>
                       <td> <?php echo $value['hora']; ?> </td>
+                      <td> <?php echo $nombre_chofer; ?> </td>
                       <td>                   
                          <button class='btn btn-outline-info' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
                             Ver Imprevisto
@@ -137,41 +141,27 @@
                     </tr>
                     <tr class="seleccionada">
                         <!-- Aca va el codigo de la fila oculta -->
-                        <td colspan='6' class='hiddenRow'> 
+                        <td colspan='7' class='hiddenRow'> 
                             <div class='<?php getCollapseState($id_viaje) ?>' id='collapseExample<?php echo $id_viaje?>'>
 
-                            <?php if($estado_imprevisto != "resuelto"): ?>
-
-                                <form action ="php/acciones_imprevistos.php" class="row p-2 seleccionada" method ="POST">
+                                <form action ="php/acciones_imprevistos_admin.php" class="row p-2 seleccionada" method ="POST">
                                     <input type="hidden" name="id" value="<?php echo $id_viaje ?>">
                                     <div class="row-sm">
                                             <h5 class="form-label"> <strong> Detalle </strong> </h5>
                                         </div>
                                     <div class="row">
                                         <div class="col-9">
-                                            <input type="text" class="form-control"  name="detalle_imprevisto" placeholder="" maxlength="49" 
-                                             value="<?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>"<?php getInputState($id_viaje) ?>>
-                                            <?php getTooltip($id_viaje) ?>                                             
+                                            <h6 class="detalle-imprevisto"> 
+                                                <?php echo $imprevisto; ?> 
+                                            </h6>                                       
                                         </div>
                                         <div class="col-2">
-                                            <?php getButton($id_viaje,$imprevisto) ?>
-                                            <?php if($imprevisto != ""): ?>
-                                                <button type='submit'name='delete' class='btn btn-danger'>Borrar</button>
+                                            <?php if($estado_imprevisto != "resuelto"): ?>
+                                                <button type='submit'name='resolver' class='btn btn-warning'>Resolver</button>
                                             <?php endif;?>
                                         </div>
                                     </div>
                                 </form>
-
-                            <?php else: ?>
-                                <div class="row-sm">
-                                    <h5> 
-                                        <strong> Detalle </strong>
-                                    </h5>
-                                    <h6 class="detalle-imprevisto"> 
-                                        <?php echo $imprevisto; ?> 
-                                    </h6>
-                                </div>
-                            <?php endif;?>
 
                             </div>
                         </td>
