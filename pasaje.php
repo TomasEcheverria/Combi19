@@ -172,13 +172,8 @@
                 echo "El total del precio del pasaje:$".$pasaje['precio'];
                 $price=$pasaje['precio'];
             }else{
-                if(($dias >= 1 ) and ($dias < 2)){
                     echo "La mitad del precio del pasaje:$".$mitad;
                     $price=$mitad;
-                }else{
-                    echo "No se le rembolsara nada del dinero porque falta menos de 1 dia";
-                    $price=0;
-                }
             }
              ?><br>
              <form name="cancelarpasaje" method="post" action="php/cancelarpasaje.php" enctype="multipart/form-data">
