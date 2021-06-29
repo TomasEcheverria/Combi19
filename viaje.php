@@ -7,8 +7,7 @@
 	$usuario -> session ($usuarioID);
 	$usuario ->id($id);
     $usuario -> tipoUsuario($tipo);
-    $usuario ->email($email);
-    $idp=$_GET['idp'];
+    $idv=$_GET['idv'];
 ?>
 <html>
 <head>
@@ -22,8 +21,8 @@
 </head>
  <?php 
     try {
-    	$usuario -> iniciada($usuarioID);
-        $query1="SELECT * FROM pasajes p  WHERE idp='$idp' AND fantasma='0'";
+    	$usuario -> chofer($tipo);
+        $query1="SELECT * FROM viajes v  WHERE idv='$idv'";
         $result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
         $pasaje= mysqli_fetch_array($result1);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2021 a las 04:11:50
+-- Tiempo de generación: 24-06-2021 a las 21:01:37
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.5
 
@@ -251,7 +251,6 @@ CREATE TABLE `rembolso` (
   `idrem` int(50) NOT NULL,
   `precio` int(11) NOT NULL,
   `tarjeta` int(11) NOT NULL,
-  `fecha` date NOT NULL,
   `activo` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -342,7 +341,7 @@ CREATE TABLE `viajes` (
 --
 
 INSERT INTO `viajes` (`idv`, `nro_viaje`, `imprevisto`, `estado_imprevisto`, `precio`, `estado`, `fecha`, `hora`, `idc`, `idr`, `activo`) VALUES
-(6, 10, '', 'desactivado', 100, 'en curso', '2021-05-12', '00:00:00', 2, 1, 1),
+(6, 10, '', 'desactivado', 100, 'pendiente', '2021-05-12', '00:00:00', 2, 1, 1),
 (7, 0, '', 'desactivado', 45, 'finalizado', '2021-05-11', '00:00:00', 2, 1, 1),
 (8, 45, 'hola', 'desactivado', 4500, 'finalizado', '2021-05-05', '00:00:00', 4, 1, 1),
 (9, 4555, '', 'desactivado', 4555, 'pendiente', '2021-05-07', '23:57:00', 4, 1, 1),
