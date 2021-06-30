@@ -133,7 +133,7 @@
             if (isset($_GET['express'])){ ?>
                 <input type="hidden" name="express" value="1">
             <?php } else{ ?>
-                <input type="hidden" name="express" value="0">
+                <input type="hidden" name="idpasajero" value="<?php echo $_GET['idpasajero'] ?>">
             <?php } ?>
             <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Siguiente</button> </div>
         </form>

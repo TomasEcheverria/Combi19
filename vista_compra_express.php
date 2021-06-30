@@ -55,6 +55,28 @@
         $dni = $_GET['d'];
         $pasajero_info = consulta("SELECT * FROM `usuarios` WHERE (dni='$dni') AND (activo=1)");
         $id_pasajero = $pasajero_info['id'];
+        
+        if (isset($_GET['msg'])){
+            if ($_GET['msg']=1){
+            ?>
+                <div class="alert alert-dismissible alert-warning">
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no es posible venderle un pasaje.</p>
+                    <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> </div>
+                </div>
+
+            <?php }
+            if ($_GET['msg']=2){
+                ?>
+                <div class="alert alert-dismissible alert-warning">
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no podrá realizar el viaje.</p>
+                </div>
+                <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> </div>
+                <?php  //insertar enlace a la lista de pasajeros
+            }
+        } else {
+
     ?>
 	
     <div class="card">
@@ -84,6 +106,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 <?php
+    }
 	} catch (Exception $e){
 			echo $e->getMessage();
 	?>

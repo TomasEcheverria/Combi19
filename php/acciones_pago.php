@@ -7,15 +7,17 @@
         if ($_POST['suscrito']==1){
             $total = $_POST['total'];
 
-                $sql = "UPDATE pasajes SET precio='$total', fantasma=0 WHERE idp='$idp'";
+                $tarjeta=$_POST['nro_tarjeta'];
+                $sql = "UPDATE pasajes SET precio='$total', fantasma=0, tarjeta='$tarjeta' WHERE idp='$idp'";
                 $db->query($sql) or die("error". mysqli_error ($db));
+                
+
                 $sql = "UPDATE pasajeros SET activo=1 WHERE idp='$idp'";
                 $db->query($sql) or die("error". mysqli_error ($db)); 
 
                 $sql = "UPDATE insumos_usuarios_viajes SET activo=1 WHERE idp='$idp'";
                 $db->query($sql) or die("error". mysqli_error ($db)); 
-
-                
+   
                 $sql = "SELECT * FROM `insumos_usuarios_viajes` WHERE (idp='$idp') AND (activo=1) ";
                 $result = mysqli_query($db,$sql);
                 $numRows = $result->num_rows;
@@ -45,13 +47,14 @@
         }  else{
             if ( (is_numeric($_POST['nro1'])) && (is_numeric($_POST['nro2'])) && (is_numeric($_POST['nro3'])) && (is_numeric($_POST['nro4'])) && (is_numeric($_POST['nro5'])) ){
                 $total = $_POST['total'];
-                $sql = "UPDATE pasajes SET precio='$total', fantasma=0 WHERE idp='$idp'";
+                $tarjeta = $_POST['nro1'].$_POST['nro2'].$_POST['nro3'].$_POST['nro4'];
+
+                $sql = "UPDATE pasajes SET precio='$total', fantasma=0, tarjeta='$tarjeta' WHERE idp='$idp'";
                 $db->query($sql) or die("error". mysqli_error ($db));
+
                 $sql = "UPDATE pasajeros SET activo=1 WHERE idp='$idp'";
                 $db->query($sql) or die("error". mysqli_error ($db));  
 
-                $sql = "UPDATE insumos_usuarios_viajes SET activo=1 WHERE idp='$idp'";
-                $db->query($sql) or die("error". mysqli_error ($db)); 
 
                 $sql = "UPDATE insumos_usuarios_viajes SET activo=1 WHERE idp='$idp'";
                 $db->query($sql) or die("error". mysqli_error ($db)); 
