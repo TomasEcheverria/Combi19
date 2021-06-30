@@ -11,7 +11,7 @@
 
     function getViajes($idChofer){
         $db = conectar();
-        // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto.
+        // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto. Solo si el viaje no esta pendiente
         $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino, r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto FROM `viajes` v
         INNER JOIN usuarios u ON u.id = v.idc
         INNER  JOIN rutas r ON r.idr = v.idr
@@ -83,6 +83,14 @@
     $usuario-> iniciada($usuarioID);
     ?>
 <body>
+        <!--Imagen   -->
+    <div>
+        <h1 class ="text-center"> 
+            <a  href="pagprincipal.php" >
+                <img src="css/images/logo_is.png" class="div_icono">
+            </a>
+        </h1>			
+    </div>
     <?php if(isset($_GET['sv'])){
         switch ($_GET['sv']){
             case 1:
