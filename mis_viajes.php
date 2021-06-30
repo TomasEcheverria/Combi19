@@ -28,6 +28,29 @@
 		</div>
 		<!--Boton menu   -->
 			<?php echo menu($tipo); ?><br>
+			<?php $query0="SELECT * FROM combis  WHERE idu='$id' AND activo='1' ";
+			$result0= mysqli_query ($link, $query0) or die ('Consuluta query0 fallida: ' .mysqli_error($link));
+			$combi= mysqli_fetch_array($result0); 
+			?>
+			
+		<!--Datos de combi  -->
+			<div class="text-center" >
+			<h1> Datos de la combi asignada</h1>
+			<div class ="container-fluid">
+			<div class="card text-white bg-primary mb-3">Patente :<?php echo $combi['patente']; ?>
+				<div class="card-header"><br>
+				<div class="card-body"> 
+					<h4 class="card-title"> 
+					<?php 
+					 echo 'Cantidad de asientos: '.$combi['cantidad_asientos'];?><br>
+					<?php echo"Tipo de combi: ".$combi['tipo']; ?><br>
+					<?php echo"Modelo: ".$combi['modelo']; ?><br>
+					</h4><br>
+				</div>
+			</div>				
+		</div>
+			</div>
+		</div>
 		<!--Pasjes   -->
 		<div class="text-center" >
 			<h1> Listado de viajes a realizar</h1>
@@ -36,7 +59,7 @@
 			$result1= mysqli_query ($link, $query1) or die ('Consuluta query1 fallida: ' .mysqli_error($link));
 			
 			
-			$query2="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' AND estado!='finalizado' ORDER BY fecha ASC";//solo va a existir 1 viaje en curso
+			$query2="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' AND (estado='pendiente' OR estado='en curso') ORDER BY fecha ASC";//solo va a existir 1 viaje en curso
 			$result2= mysqli_query ($link, $query2) or die ('Consuluta query2 fallida: ' .mysqli_error($link));
 			$primero= mysqli_fetch_array($result2); 
 			$cantidad= mysqli_num_rows($result2);?>
@@ -83,6 +106,7 @@
 				</div>
 			</div>				
 		</div>
+			</div>
 		<?php } ?> 
  	<?php	$query3="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' AND estado='finalizado' ORDER BY fecha ASC";//solo va a existir 1 viaje en curso
 		$result3= mysqli_query ($link, $query3) or die ('Consuluta query3 fallida: ' .mysqli_error($link));
@@ -108,6 +132,34 @@
 	</div>
 </div>				
 </div>
+</div>
+
+<?php	$query4="SELECT * FROM viajes  WHERE idc='$id' AND activo='1' AND estado='cancelado' ORDER BY fecha ASC";
+		$result4= mysqli_query ($link, $query4) or die ('Consuluta query4 fallida: ' .mysqli_error($link));
+		$cantidadf= mysqli_num_rows($result4);?>
+		
+		<h3> Viajes cancelados </h3>
+		<?php	while($viaje= mysqli_fetch_array($result4)){ ?>
+
+<div class ="container-fluid">
+<div class="card text-white bg-primary mb-3">Numero de viaje :<?php echo $viaje['nro_viaje']; ?>
+	<div class="card-header"><?php if($viaje['activo'] == 1){
+	echo 'Viaje activo';}else{ echo "Viaje borrado";}?><br>
+	<div class="card-body"> 
+		<h4 class="card-title"> 
+		<?php 
+		 echo 'Estado del viaje: '.$viaje['estado'];?><br>
+		<?php echo"Fecha de salida: ".$viaje['fecha']; ?><br>
+		<?php if($viaje['imprevisto'] !=''){ 
+			echo "Imprevisto: ".$viaje['imprevisto']; 
+			} ?>
+		</h4><br>
+		<a class="card-text" href="viaje.php?idv=<?php echo $viaje['idv']; ?>" > Mas informacion </a>
+	</div>
+</div>				
+</div>
+<?php } ?> 
+
 <?php } ?> 
 				
 			<!-- Footer -->
