@@ -15,6 +15,8 @@
 		$idp=$_POST['idp'];
 		$exito=false;
 		$price=$_POST['precio'];
+		date_default_timezone_set("America/Argentina/Buenos_Aires");
+		$today = date("Y-m-d");
 		
         
         $query1="SELECT * FROM pasajes p  WHERE idp='$idp'";
@@ -36,7 +38,12 @@
            
             $query12="UPDATE insumos_usuarios_viajes SET activo='0' WHERE idp='$idp'";//Desactivo insumos comprados
             $result12= mysqli_query($link, $query12) or die('Consulta 12 fallida ' .mysqli_error($link));
-            if ($result12) {
+            
+			
+			$query13= "INSERT INTO rembolso (precio, tarjeta, fecha) values ('$price', '$pasaje[tarjeta]', '$today')";
+			$result13= mysqli_query ($link, $query13) or die ('Consuluta query13 fallida: ' .mysqli_error($link) );
+			$exito= true;
+			if ($result13) {
                 $exito=true;
             }
         }

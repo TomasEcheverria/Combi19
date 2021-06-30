@@ -8,6 +8,17 @@
 	//$usuario -> id($id);
 	$usuario -> id($id);
 	$usuario -> tipoUsuario($tipo);
+
+	function getViajesPendientes(){
+        $db = conectar();
+        // Trae un numero que cuenta la cantidad de viajes con estado_imprevisto pendiente
+        $sql = "SELECT COUNT(*) as 'pendientes'
+		FROM `viajes` v 
+		WHERE v.estado_imprevisto = 'pendiente' ";
+        $result = mysqli_query($db,$sql);
+		$data = $result->fetch_assoc();
+		return $data['pendientes'];
+    }
 ?>
 <html>
 	<head>
@@ -28,6 +39,16 @@
 		</div>
 		<!--Boton menu   -->
 			<?php echo menu($tipo); ?><br>
+		<!--Notifiaciones de imprevistos pendientes  -->	
+			<div class="row">
+				<?php if(getViajesPendientes() > 0): ?>
+					<h4>Imprevistos pendientes <span class="badge rounded-pill bg-warning"><?php echo getViajesPendientes(); ?></span> </h4>
+				<?php else: ?>
+					<h4>No hay imprevistos pendientes</h4>
+				<?php endif; ?>							
+				
+			</div>
+			
 			<?php if(!isset($_SESSION['id'])){?>
 				No se ha iniciado sesion , solo podra ver comentarios y buscar viajes.<br><br>
 			<a href="index.php"> Click aqui para iniciar sesion</a>

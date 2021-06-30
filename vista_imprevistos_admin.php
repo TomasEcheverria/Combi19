@@ -13,12 +13,13 @@
         $db = conectar();
         // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto.
         $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino,
-         r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto, u.nombre, u.apellido FROM `viajes` v
+         r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto, u.nombre, u.apellido FROM `viajes` v 
         INNER JOIN usuarios u ON u.id = v.idc
         INNER  JOIN rutas r ON r.idr = v.idr
         INNER JOIN lugares l1 ON r.codigo_postal_origen = l1.idl
         INNER JOIN lugares l2 ON r.codigo_postal_destino = l2.idl
-        WHERE v.estado_imprevisto <> 'desactivado'";
+        WHERE v.estado_imprevisto <> 'desactivado'
+        ORDER BY v.fecha DESC, v.hora DESC";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
         if ($numRows > 0) {
@@ -79,11 +80,30 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" >
         <link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" >
-</head>
+        <script>
+            function confirmarResolucionImprevisto(){
+                if (confirm("¿Estas seguro que quieres resolver el imprevisto?") == false ){
+                    return false;
+                } else {
+                    document.formulario_imprevisto.submit();
+                    return true;
+                }
+            }
+        </script>
+    </head>
+
 <?php try{ 
     $usuario-> iniciada($usuarioID);
     ?>
 <body>
+    <!--Imagen   -->
+    <div>
+		<h1 class ="text-center"> 
+            <a  href="pagprincipal.php" >
+                <img src="css/images/logo_is.png" class="div_icono">
+            </a>
+        </h1>			
+	</div>
     <?php if(isset($_GET['sv'])){
         switch ($_GET['sv']){
             case 1:
@@ -115,6 +135,7 @@
                       <th scope='col'>Fecha</th>
                       <th scope='col'>Hora</th>
                       <th scope='col'>Chofer</th>
+                      <th scope='col'>Estado</th>
                       <th scope='col'>Imprevisto</th>
                     </tr>
                   </thead>
@@ -133,6 +154,9 @@
                       <td> <?php echo $value['fecha']; ?> </td>
                       <td> <?php echo $value['hora']; ?> </td>
                       <td> <?php echo $nombre_chofer; ?> </td>
+                      <td class="<?php echo $estado_imprevisto == "pendiente" ? 'text-warning' : 'text-success'?>" >
+                        <strong> <?php echo $estado_imprevisto; ?> </strong>
+                     </td>
                       <td>                   
                          <button class='btn btn-outline-info' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
                             Ver Imprevisto
@@ -141,10 +165,10 @@
                     </tr>
                     <tr class="seleccionada">
                         <!-- Aca va el codigo de la fila oculta -->
-                        <td colspan='7' class='hiddenRow'> 
+                        <td colspan='8' class='hiddenRow'> 
                             <div class='<?php getCollapseState($id_viaje) ?>' id='collapseExample<?php echo $id_viaje?>'>
 
-                                <form action ="php/acciones_imprevistos_admin.php" class="row p-2 seleccionada" method ="POST">
+                                <form name="formulario_imprevisto" action ="php/acciones_imprevistos_admin.php" class="row p-2 seleccionada" method ="POST">
                                     <input type="hidden" name="id" value="<?php echo $id_viaje ?>">
                                     <div class="row-sm">
                                             <h5 class="form-label"> <strong> Detalle </strong> </h5>
@@ -157,7 +181,7 @@
                                         </div>
                                         <div class="col-2">
                                             <?php if($estado_imprevisto != "resuelto"): ?>
-                                                <button type='submit'name='resolver' class='btn btn-warning'>Resolver</button>
+                                                <button type='submit'name='resolver' class='btn btn-warning' onclick="return confirmarResolucionImprevisto()">Resolver</button>
                                             <?php endif;?>
                                         </div>
                                     </div>
