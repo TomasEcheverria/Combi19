@@ -351,3 +351,6 @@ padding:0;
 .detalle-imprevisto {
   color: #574c42;
 }
+.btn-link:hover {
+  background-color: rgb(252, 252, 252) !important;
+}

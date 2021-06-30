@@ -112,8 +112,8 @@
                 </div>";
                 break;
             case 0:
-                echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'> 
-                <strong> El imprevisto Fue eliminado con exito </strong> 
+                echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'> 
+                <strong> Todos los imprevistos fueron resueltos </strong> 
                 </div>";
                 break;
         }
