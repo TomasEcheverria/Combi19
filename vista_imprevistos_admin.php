@@ -13,12 +13,12 @@
         $db = conectar();
         // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto.
         $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino,
-         r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto, u.nombre, u.apellido FROM `viajes` v 
+         r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto, u.nombre, u.apellido, v.estado FROM `viajes` v 
         INNER JOIN usuarios u ON u.id = v.idc
         INNER  JOIN rutas r ON r.idr = v.idr
         INNER JOIN lugares l1 ON r.codigo_postal_origen = l1.idl
         INNER JOIN lugares l2 ON r.codigo_postal_destino = l2.idl
-        WHERE v.estado_imprevisto <> 'desactivado'
+        WHERE v.estado_imprevisto <> 'desactivado' AND v.estado <> 'cancelado'
         ORDER BY v.fecha DESC, v.hora DESC";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
@@ -134,8 +134,9 @@
                       <th scope='col'>Descripcion</th>
                       <th scope='col'>Fecha</th>
                       <th scope='col'>Hora</th>
+                      <th scope='col'>Estado Viaje</th>
                       <th scope='col'>Chofer</th>
-                      <th scope='col'>Estado</th>
+                      <th scope='col'>Estado Imprevisto</th>
                       <th scope='col'>Imprevisto</th>
                     </tr>
                   </thead>
@@ -153,6 +154,7 @@
                       <td> <?php echo $value['descripcion']; ?> </td>
                       <td> <?php echo $value['fecha']; ?> </td>
                       <td> <?php echo $value['hora']; ?> </td>
+                      <td> <?php echo $value['estado']; ?> </td>
                       <td> <?php echo $nombre_chofer; ?> </td>
                       <td class="<?php echo $estado_imprevisto == "pendiente" ? 'text-warning' : 'text-success'?>" >
                         <strong> <?php echo $estado_imprevisto; ?> </strong>
@@ -165,7 +167,7 @@
                     </tr>
                     <tr class="seleccionada">
                         <!-- Aca va el codigo de la fila oculta -->
-                        <td colspan='8' class='hiddenRow'> 
+                        <td colspan='9' class='hiddenRow'> 
                             <div class='<?php getCollapseState($id_viaje) ?>' id='collapseExample<?php echo $id_viaje?>'>
 
                                 <form name="formulario_imprevisto" action ="php/acciones_imprevistos_admin.php" class="row p-2 seleccionada" method ="POST">
