@@ -48,34 +48,35 @@
 <body>
 
 	<?php
-		$id_usuario="";
-		$usuario -> id($id_usuario);
-        $viaje_info = consulta("SELECT * FROM `viajes` WHERE (idc='$id_usuario') AND (activo=1) AND (estado='en curso')");
-        $idv = $viaje_info['idv'];
-        $dni = $_GET['d'];
-        $pasajero_info = consulta("SELECT * FROM `usuarios` WHERE (dni='$dni') AND (activo=1)");
-        $id_pasajero = $pasajero_info['id'];
-        
+		
         if (isset($_GET['msg'])){
-            if ($_GET['msg']=1){
+            if ($_GET['msg']==1){
             ?>
                 <div class="alert alert-dismissible alert-warning">
                     <h4 class="alert-heading">Warning!</h4>
-                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no es posible venderle un pasaje.</p>
-                    <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> </div>
+                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no es posible venderle un pasaje.</p>                    
                 </div>
-
+                <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> </div>
             <?php }
-            if ($_GET['msg']=2){
+            if ($_GET['msg']==2){
+                $linkv = "viaje.php?idv=".$idv
                 ?>
                 <div class="alert alert-dismissible alert-warning">
                     <h4 class="alert-heading">Warning!</h4>
                     <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no podrá realizar el viaje.</p>
                 </div>
-                <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> </div>
-                <?php  //insertar enlace a la lista de pasajeros
+                <div class='col-12'> <a class='btn btn-outline-primary' href="<?php echo $linkv ?>">Volver</a> </div>
+                <?php  
             }
         } else {
+
+        $id_usuario="";
+		$usuario -> id($id_usuario);
+        $viaje_info = consulta("SELECT * FROM `viajes` WHERE (idc='$id_usuario') AND (activo=1) AND (estado='en curso')");
+        $idv = $viaje_info['idv'];
+        $dni = $_GET['d'];
+        $pasajero_info = consulta("SELECT * FROM `usuarios` WHERE (dni='$dni') AND (activo=1)");
+        $id_pasajero = $pasajero_info['id'];    
 
     ?>
 	

@@ -135,7 +135,7 @@
             <?php } else{ ?>
                 <input type="hidden" name="idpasajero" value="<?php echo $_GET['idpasajero'] ?>">
             <?php } ?>
-            <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Siguiente</button> </div>
+            <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Siguiente</button> </div>
         </form>
 
         </div>

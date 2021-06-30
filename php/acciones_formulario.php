@@ -16,7 +16,7 @@
                 //resolver express cuando tiene covid
                 $suspender = "UPDATE usuarios SET suspendido=1 WHERE dni='$dni'";
                 mysqli_query($db,$suspender);
-                //agregar header
+                header("Location: ../vista_compra_express.php?msg=1");
 
             } else {
                 //resolver cuando no es express y tiene covid
@@ -67,7 +67,7 @@
                 //resolver no express y compra
                 $presente = "UPDATE pasajeros SET presente=1 WHERE idpasajero='$idp'";
                 mysqli_query($db,$presente);
-                //agregar header
+                header("Location: ../viaje.php?idv=".$idv);
             }
         }
 
