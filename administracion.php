@@ -39,6 +39,7 @@
 				<h5><a href="vista_combis.php" class="list-group-item list-group-item-action "> Administrar combis </a> </h5>
 				<h5> <a href="vista_lugares.php" class="list-group-item list-group-item-action "> Administrar lugares </a> </h5>
 				<h5><a href="vista_rutas.php" class="list-group-item list-group-item-action "> Administrar rutas </a> </h5>
+				<h5><a href="rembolsos.php" class="list-group-item list-group-item-action "> Administrar rembolsos </a> </h5>
 			</div> 
 		</div>
 		<a class="btn btn-outline-primary" href="pagprincipal.php">Volver</a>
