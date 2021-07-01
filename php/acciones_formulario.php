@@ -73,7 +73,7 @@
                 header("Location: ../vista_compra_express.php?d=".$dni);
             } else {
                 //resolver no express y compra
-                $presente = "UPDATE pasajeros SET presente=1 WHERE idpasajero='$idp'";
+                $presente = "UPDATE pasajeros SET presente=1 WHERE idpasajero='$idpasajero'";
                 mysqli_query($db,$presente);
                 header("Location: ../viaje.php?idv=".$idv);
             }

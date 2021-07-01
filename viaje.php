@@ -69,6 +69,7 @@
                         Hora de salida <?php echo $viaje['hora'] ?><br>
                         Lugar de salida <?php echo $origen['nombre']."/".$origen['provincia']; ?> <br>
                         Lugar de llegada <?php echo $destino['nombre']."/".$destino['provincia']; ?> <br>
+                        Descripcion de la ruta <?php echo $ruta['descripcion']; ?>
                         Cantidad de pasajeros asociados a este viaje:<?php echo$cantidadpasajeros; ?><br>
                         Informacion de los pasajeros:<br>
                        <?php }else{ 
@@ -124,6 +125,19 @@
             </div>
         
         <?php } ?>
+        <?php if(($viaje['estado'] == "pendiente") and ($viaje['activo'] == 1 )){?>
+            <form name="iniciar_viaje" method="post" action="php/iniciar_viaje.php" enctype="multipart/form-data">
+             <input type="hidden" class="form-control"  name="idv"   value=<?php  echo $idv ?> ></input>
+             <input type="button"  name="Iniciar viaje" value="iniciar viaje" class="btn btn-outline-danger ml-1"  onclick="return SubmitForm(this.form)" value="Eliminar" >
+             </form>
+        <?php } ?>
+        <?php if(($viaje['estado'] == "en curso") and ($viaje['activo'] == 1)){?>
+            <form name="finalizar_viaje" method="post" action="php/finalizar_viaje.php" enctype="multipart/form-data">
+             <input type="hidden" class="form-control"  name="idv"   value=<?php  echo $idv ?> ></input>
+             <input type="button"  name="Finalizar viaje" value="Finalizar viaje" class="btn btn-outline-danger ml-1"  onclick="return SubmitForm(this.form)" value="Eliminar" >
+             </form>
+        <?php }?>
+
 </body>
 
 	<div class="div-foot">
