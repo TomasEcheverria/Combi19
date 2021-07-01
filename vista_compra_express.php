@@ -50,9 +50,11 @@
 	<?php
         $id_usuario="";
 		$usuario -> id($id_usuario);
-        $viaje_info = consulta("SELECT * FROM `viajes` WHERE (idc='$id_usuario') AND (activo=1) AND (estado='en curso')");
-        $idv = $viaje_info['idv'];
-		
+        if (!isset($_GET['idv'])){
+            $viaje_info = consulta("SELECT * FROM `viajes` WHERE (idc='$id_usuario') AND (activo=1) AND (estado='en curso')");
+            $idv = $viaje_info['idv'];
+        }
+
         if (isset($_GET['msg'])){
             if ($_GET['msg']==1){
             ?>  <div class="text-center">
@@ -64,7 +66,7 @@
                 </div>
             <?php }
             if ($_GET['msg']==2){
-                $linkv = "viaje.php?idv=".$idv
+                $linkv = "viaje.php?idv=".$_GET['idv'];
                 ?>
                 <div class="text-center">
                 <div class="alert alert-dismissible alert-warning">

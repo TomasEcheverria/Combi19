@@ -63,7 +63,7 @@
                 mysqli_query($db,$agregar_rembolso);
                 
 
-                header("Location: ../vista_compra_express.php?msg=2");
+                header("Location: ../vista_compra_express.php?msg=2$idv=".$idv);
             }
 
         }else {
@@ -83,7 +83,7 @@
                 $pasaje_info = mysqli_fetch_assoc($pasaje_sql);
                 var_dump($pasaje_info);
                 $idv = $pasaje_info['idv'];
-                
+
                 $presente = "UPDATE pasajeros SET presente=1 WHERE idpasajero='$idpasajero'";
                 mysqli_query($db,$presente);
                 header("Location: ../viaje.php?idv=".$idv);
