@@ -65,7 +65,7 @@
                 mysqli_query($db,$agregar_rembolso);
                 
 
-                header("Location: ../vista_compra_express.php?msg=2$idv=".$idv);
+                header("Location: ../vista_compra_express.php?msg=2&idv=".$idv);
             }
 
         }else {

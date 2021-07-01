@@ -75,6 +75,7 @@
                 ?>
                     Cantidad de asientos reservados :<?php echo $pasaje['cantidad_asientos']?> <br>
                     Precio total del pasaje :<?php echo "$".$pasaje['precio'];?> <br>
+                    Numero de tarjera asociado:<?php echo $pasaje['tarjeta']; ?>
                     <?php if(($viaje['estado'] != "cancelado") and ($viaje['activo'] == 1)){ // el viaje no cancelado y activo ?>
                         <h1> Datos relacionados con el viaje </h1>
                         Numero del viaje:<?php echo $viaje['nro_viaje']; ?><br>
