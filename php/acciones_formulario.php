@@ -2,15 +2,17 @@
 
     $db = mysqli_connect('localhost', 'root', '','combi19') or die("error". mysqli_error ($db));
     
-    if (isset ($_POST['dni'])){
-        $dni = $_POST['dni'];  
-    } else{
-        if (isset ($_GET['idpasajero'])){
-            $idpasajero = $_GET['idpasajero'];
-        }
-    }
-
+    
     if(isset($_POST['submit'])){
+        if (isset ($_POST['dni'])){
+                $dni = $_POST['dni'];  
+            } else{
+                if (isset ($_POST['idpasajero'])){
+                    $idpasajero = $_POST['idpasajero'];
+                }
+            }
+
+
         if ((($_POST['temperatura'] + $_POST['olfato'] + $_POST['afeccion'] + $_POST['garganta']) >= 2) || ($_POST['temperatura']==1)){
             if (isset ($_POST['express'])){
                 //resolver express cuando tiene covid
@@ -25,20 +27,24 @@
                 $row = mysqli_fetch_assoc($pasajero_info);
                 $idp=$row['idp'];
                 $dni=$row['dni'];
-                $sql="SELECT * FROM pasajes WHERE (idpasajero='$idp') AND (activo=1)";
+                $sql="SELECT * FROM pasajes WHERE (idp='$idp') AND (activo=1)";
                 $pasaje_sql = mysqli_query($db,$sql);
                 $pasaje_info = mysqli_fetch_assoc($pasaje_sql);
+                var_dump($pasaje_info);
                 $idv = $pasaje_info['idv'];
                 $tarjeta = $pasaje_info['tarjeta'];
                 $sql="SELECT * FROM viajes WHERE (idv='$idv') AND (activo=1)";
                 $viaje_sql = mysqli_query($db,$sql);
                 $viaje_info = mysqli_fetch_assoc($viaje_sql);
+                var_dump($viaje_info);
                 $precio = $viaje_info['precio'];
+                $fecha = $viaje_info['fecha'];
                 //info necesaria
 
                 $presente = "UPDATE pasajeros SET presente=1, sospechoso_covid=1 WHERE idpasajero='$idpasajero'";
                 mysqli_query($db,$presente);
                 $pasaje = "UPDATE pasajes SET sospechoso_covid=1 WHERE idp='$idp'";
+                mysqli_query($db,$pasaje);
                 // sospechosos y presente
 
                 //Si tiene usuario se suspende BEGIN
@@ -49,12 +55,14 @@
                     $usuario_sus = "UPDATE usuarios SET suspendido=1 WHERE (DNI='$dni') AND (activo=1)";
                     mysqli_query($db,$usuario_sus);
                 }
+                var_dump($usuario);
                 //END
 
-                $agregar_pasaje = "INSERT INTO reembolso (`precio`, `tarjeta`, `fecha`, `activo`) VALUES
-                    ('$precio', '$tarjeta', 0, 1);";
-                mysqli_query($db,$agregar_pasaje);
+                $agregar_rembolso = "INSERT INTO rembolso (`precio`, `tarjeta`, `fecha`, `activo`) VALUES
+                    ('$precio', '$tarjeta', '$fecha', 1);";
+                mysqli_query($db,$agregar_rembolso);
                 
+
                 header("Location: ../vista_compra_express.php?msg=2");
             }
 

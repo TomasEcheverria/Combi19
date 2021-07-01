@@ -48,32 +48,47 @@
 <body>
 
 	<?php
-		
-        if (isset($_GET['msg'])){
-            if ($_GET['msg']==1){
-            ?>
-                <div class="alert alert-dismissible alert-warning">
-                    <h4 class="alert-heading">Warning!</h4>
-                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no es posible venderle un pasaje.</p>                    
-                </div>
-                <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> </div>
-            <?php }
-            if ($_GET['msg']==2){
-                $linkv = "viaje.php?idv=".$idv
-                ?>
-                <div class="alert alert-dismissible alert-warning">
-                    <h4 class="alert-heading">Warning!</h4>
-                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no podrá realizar el viaje.</p>
-                </div>
-                <div class='col-12'> <a class='btn btn-outline-primary' href="<?php echo $linkv ?>">Volver</a> </div>
-                <?php  
-            }
-        } else {
-
         $id_usuario="";
 		$usuario -> id($id_usuario);
         $viaje_info = consulta("SELECT * FROM `viajes` WHERE (idc='$id_usuario') AND (activo=1) AND (estado='en curso')");
         $idv = $viaje_info['idv'];
+		
+        if (isset($_GET['msg'])){
+            if ($_GET['msg']==1){
+            ?>  <div class="text-center">
+                <div class="alert alert-dismissible alert-warning">
+                    <h4 class="alert-heading">Atención.</h4>
+                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no es posible venderle un pasaje.</p>                    
+                </div>
+                <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> </div>
+                </div>
+            <?php }
+            if ($_GET['msg']==2){
+                $linkv = "viaje.php?idv=".$idv
+                ?>
+                <div class="text-center">
+                <div class="alert alert-dismissible alert-warning">
+                    <h4 class="alert-heading">Atención.</h4>
+                    <p class="mb-0">El pasajero es sospechoso de covid-19, por lo que no podrá realizar el viaje.</p>
+                </div>
+                <div class='col-12'> <a class='btn btn-outline-primary' href="<?php echo $linkv ?>">Volver</a> </div>
+                </div>
+                <?php  
+            }
+            if ($_GET['msg']==3){
+                ?>
+                <div class="text-center">
+                <div class="alert alert-dismissible alert-success">
+                    <h4 class="alert-heading">Atención.</h4>
+                    <p class="mb-0">Se ha realizado exitosamente la compra del pasaje express.</p>
+                </div>
+                <div class='col-12'> <a class='btn btn-outline-primary' href="pagprincipal.php">Volver</a> </div>
+                </div>
+                <?php  
+            }
+        } else {
+
+        $precio = $viaje_info['precio'];
         $dni = $_GET['d'];
         $pasajero_info = consulta("SELECT * FROM `usuarios` WHERE (dni='$dni') AND (activo=1)");
         $id_pasajero = $pasajero_info['id'];    
@@ -87,15 +102,14 @@
         <div class="mx-auto" style="width: 40rem;">
         <form action ="php/acciones_compra_express.php" method ="POST">	
 
-                
                 <div class="card-body">
                     <?php echo "<h3> Importe a recibir: $".$viaje_info['precio']."<br>"; ?>
                 </div>
             
             <input type="hidden" name="idv" value="<?php echo $idv ?>">
+            <input type="hidden" name="idv" value="<?php echo $precio ?>">
             <input type="hidden" name="id_pasajero" value="<?php echo $id_pasajero ?>">
-            <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Confirmar pago</button> </div>
-        
+            <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Confirmar pago</button> </div>     
         </form>
 
         </div>
