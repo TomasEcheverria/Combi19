@@ -73,6 +73,17 @@
                 header("Location: ../vista_compra_express.php?d=".$dni);
             } else {
                 //resolver no express y compra
+                $sql="SELECT * FROM pasajeros WHERE (idpasajero='$idpasajero') AND (activo=1)";
+                $pasajero_info = mysqli_query($db,$sql);
+                $row = mysqli_fetch_assoc($pasajero_info);
+                $idp=$row['idp'];
+                $dni=$row['dni'];
+                $sql="SELECT * FROM pasajes WHERE (idp='$idp') AND (activo=1)";
+                $pasaje_sql = mysqli_query($db,$sql);
+                $pasaje_info = mysqli_fetch_assoc($pasaje_sql);
+                var_dump($pasaje_info);
+                $idv = $pasaje_info['idv'];
+                
                 $presente = "UPDATE pasajeros SET presente=1 WHERE idpasajero='$idpasajero'";
                 mysqli_query($db,$presente);
                 header("Location: ../viaje.php?idv=".$idv);
