@@ -36,3 +36,7 @@ if(isset($_POST['delete'])){
 mysqli_query($db,$sql);
     header("Location: ../vista_imprevistos.php?sv=0");
 }
+
+if(isset($_POST['refresh'])){
+    header("Location: ../vista_imprevistos.php");
+}
