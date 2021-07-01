@@ -85,7 +85,7 @@
                         Hora de salida <?php echo $viaje['hora'] ?><br>
                         Lugar de salida <?php echo $origen['nombre']."/".$origen['provincia']; ?> <br>
                         Lugar de llegada <?php echo $destino['nombre']."/".$destino['provincia']; ?> <br>
-                        Cantidad de pasajeros asociados a este viaje:<?php echo$cantidadpasajeros; ?><br>
+                        Cantidad de pasajeros asociados a este pasaje: <?php echo $cantidadpasajeros; ?> <br>
                         Informacion de los pasajeros:<br>
                         <?php while($pasajero= mysqli_fetch_array($result2)){
                             echo "Nombre:".$pasajero['nombre']."Apellido:".$pasajero['apellido']."DNI:".$pasajero['dni']. "|" ;?><br>

@@ -29,6 +29,22 @@
 		<link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" > 
 		<script  src= "js/menu.js"></script>
 		<script type="text/javascript" src="js/confirmarCerrarSesion.js"></script>
+		<script >
+			var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+			return new bootstrap.Tooltip(tooltipTriggerEl)
+			})
+		</script>
+		<script>
+            function confirmarResolucionImprevisto(){
+                if (confirm("¿Estas seguro que quieres resolver Todos los imprevistos?\nLos choferes no los podran volver a modifcar") == false ){
+                    return false;
+                } else {
+                    document.formulario_imprevisto.submit();
+                    return true;
+                }
+            }
+        </script>
 	</head>
 	<body style="margin: 1%">
 		<!--Imagen   -->
@@ -39,15 +55,23 @@
 		</div>
 		<!--Boton menu   -->
 			<?php echo menu($tipo); ?><br>
-		<!--Notifiaciones de imprevistos pendientes  -->	
+		<!--Notifiaciones de imprevistos pendientes  -->
+			<?php if($tipo == "administrador"): ?>	
 			<div class="row">
 				<?php if(getViajesPendientes() > 0): ?>
-					<h4>Imprevistos pendientes <span class="badge rounded-pill bg-warning"><?php echo getViajesPendientes(); ?></span> </h4>
+
+					<form name="imprevistos_pendientes" action ="php/acciones_notificaciones.php" method ="POST">
+						<button name="resolver" type="submit" class="btn btn-link"
+						 data-bs-toggle="tooltip" data-bs-placement="top" title="Presione para resolver imprevistos pendientes" onclick="return confirmarResolucionImprevisto()">
+						<h4>Imprevistos pendientes <span class="badge rounded-pill bg-warning"><?php echo getViajesPendientes(); ?></span> </h4>
+						</button>
+					<form>
+						
 				<?php else: ?>
 					<h4>No hay imprevistos pendientes</h4>
-				<?php endif; ?>							
-				
+				<?php endif; ?>											
 			</div>
+			<?php endif; ?>
 			
 			<?php if(!isset($_SESSION['id'])){?>
 				No se ha iniciado sesion , solo podra ver comentarios y buscar viajes.<br><br>

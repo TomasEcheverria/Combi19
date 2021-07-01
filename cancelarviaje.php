@@ -66,6 +66,7 @@
                 
                         $asientos=$pasaje['cantidad_asientos'];
                         $precio=$pasaje['precio'];
+						$tarjeta=$pasaje['tarjeta'];
                         $email= $usuario['email'];  ?>
 						
 				<div class="div_info_usuario" >
@@ -73,6 +74,7 @@
 						<p>Nombre de pasajero: <?php  echo $email; ?></p>
 						<p>Cantidad de asientos:<?php echo $asientos; ?></P>
 						<p>Precio total del pasaje:<?php echo $precio;?></br>
+						<p>Numero de tarjeta:<?php echo $tarjeta;?></br>
 						<label> <input type="checkbox" class="ces"id='c' name="<?php echo $cantidad; ?>"> Rembolsar este pasaje </label> </br>
 						
 				</div>							

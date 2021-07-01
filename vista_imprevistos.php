@@ -11,13 +11,13 @@
 
     function getViajes($idChofer){
         $db = conectar();
-        // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto.
-        $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino, r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto FROM `viajes` v
+        // Trae id del viaje, origen, destino, descripcion, fecha, hora e imprevisto. Solo si el viaje no esta pendiente
+        $sql = "SELECT v.idv, l1.nombre as origen, l2.nombre as destino, r.descripcion,v.fecha, v.hora, v.imprevisto, v.estado_imprevisto, v.estado FROM `viajes` v
         INNER JOIN usuarios u ON u.id = v.idc
         INNER  JOIN rutas r ON r.idr = v.idr
         INNER JOIN lugares l1 ON r.codigo_postal_origen = l1.idl
         INNER JOIN lugares l2 ON r.codigo_postal_destino = l2.idl
-        WHERE v.estado <> 'pendiente' AND v.idc = $idChofer";
+        WHERE v.estado <> 'pendiente' AND v.estado <> 'cancelado' AND v.idc = $idChofer";
         $result = mysqli_query($db,$sql);
         $numRows = $result->num_rows;
         if ($numRows > 0) {
@@ -83,6 +83,14 @@
     $usuario-> iniciada($usuarioID);
     ?>
 <body>
+        <!--Imagen   -->
+    <div>
+        <h1 class ="text-center"> 
+            <a  href="pagprincipal.php" >
+                <img src="css/images/logo_is.png" class="div_icono">
+            </a>
+        </h1>			
+    </div>
     <?php if(isset($_GET['sv'])){
         switch ($_GET['sv']){
             case 1:
@@ -113,6 +121,7 @@
                       <th scope='col'>Descripcion</th>
                       <th scope='col'>Fecha</th>
                       <th scope='col'>Hora</th>
+                      <th scope='col'>Estado viaje</th>
                       <th scope='col'>Imprevisto</th>
                     </tr>
                   </thead>
@@ -127,8 +136,9 @@
                       <td> <?php echo $value['origen']; ?> </td>
                       <td> <?php echo $value['destino']; ?> </td>
                       <td> <?php echo $value['descripcion']; ?> </td>
-                      <td> <?php echo $value['fecha']; ?> </td>
+                      <td> <?php echo $value['fecha']; ?> </td>                      
                       <td> <?php echo $value['hora']; ?> </td>
+                      <td> <?php echo $value['estado']; ?> </td>
                       <td>                   
                          <button class='btn btn-outline-info' type='button' data-bs-toggle='collapse' data-bs-target='#collapseExample<?php echo $id_viaje?>' aria-expanded='false' aria-controls='collapseExample'>
                             Ver Imprevisto
@@ -137,7 +147,7 @@
                     </tr>
                     <tr class="seleccionada">
                         <!-- Aca va el codigo de la fila oculta -->
-                        <td colspan='6' class='hiddenRow'> 
+                        <td colspan='7' class='hiddenRow'> 
                             <div class='<?php getCollapseState($id_viaje) ?>' id='collapseExample<?php echo $id_viaje?>'>
 
                             <?php if($estado_imprevisto != "resuelto"): ?>
