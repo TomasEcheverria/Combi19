@@ -78,6 +78,16 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href= "css/Estilos.css" media="all" >
         <link rel="stylesheet" type="text/css" href= "css/bootstrap.min.css" media="all" >
+    <script>
+        function confirmarBorrarImprevisto(){
+            if (confirm("¿Estas seguro que quieres borrar este imprevisto?") == false ){
+                return false;
+            } else {
+                document.formulario_borrar_imprevisto.submit();
+                return true;
+            }
+        }
+    </script>
 </head>
 <?php try{ 
     $usuario-> iniciada($usuarioID);
@@ -108,6 +118,14 @@
     <div class="container text-center">
         <h1>
             Imprevistos de mis viajes
+            <form action ="php/acciones_imprevistos.php" method ="POST">
+                    <button class="btn btn-outline-secondary" id type='submit'name='refresh'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                        </svg>
+                    </button>
+            </form>
         </h1>
     </div>
             <?php
@@ -159,15 +177,12 @@
                                         </div>
                                     <div class="row">
                                         <div class="col-9">
-                                            <input type="text" class="form-control"  name="detalle_imprevisto" placeholder="" maxlength="49" 
+                                            <input type="text" class="form-control"  name="detalle_imprevisto" placeholder="" maxlength="100" 
                                              value="<?php echo $imprevisto != "" ? $imprevisto : "No hay Imprevistos"; ?>"<?php getInputState($id_viaje) ?>>
                                             <?php getTooltip($id_viaje) ?>                                             
                                         </div>
                                         <div class="col-2">
                                             <?php getButton($id_viaje,$imprevisto) ?>
-                                            <?php if($imprevisto != ""): ?>
-                                                <button type='submit'name='delete' class='btn btn-danger'>Borrar</button>
-                                            <?php endif;?>
                                         </div>
                                     </div>
                                 </form>
@@ -177,9 +192,19 @@
                                     <h5> 
                                         <strong> Detalle </strong>
                                     </h5>
-                                    <h6 class="detalle-imprevisto"> 
-                                        <?php echo $imprevisto; ?> 
-                                    </h6>
+                                </div>
+                                <div class="row p-2">
+                                    <div class="col-9">
+                                        <h6 class="detalle-imprevisto"> 
+                                            <?php echo $imprevisto; ?> 
+                                        </h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <form name="formulario_borrar_imprevisto" action ="php/acciones_imprevistos.php" method ="POST" onclick="return confirmarBorrarImprevisto()">
+                                            <input type="hidden" name="id" value="<?php echo $id_viaje ?>">
+                                            <button id type='submit'name='delete' class='btn btn-danger'>Borrar</button>
+                                        </form>
+                                    </div>
                                 </div>
                             <?php endif;?>
 

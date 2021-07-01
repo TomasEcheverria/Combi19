@@ -58,8 +58,10 @@
                 var_dump($usuario);
                 //END
 
+                date_default_timezone_set("America/Argentina/Buenos_Aires");
+		        $today = date("Y-m-d");
                 $agregar_rembolso = "INSERT INTO rembolso (`precio`, `tarjeta`, `fecha`, `activo`) VALUES
-                    ('$precio', '$tarjeta', '$fecha', 1);";
+                    ('$precio', '$tarjeta', '$today', 1);";
                 mysqli_query($db,$agregar_rembolso);
                 
 
