@@ -107,7 +107,7 @@
                 </div>
             
             <input type="hidden" name="idv" value="<?php echo $idv ?>">
-            <input type="hidden" name="idv" value="<?php echo $precio ?>">
+            <input type="hidden" name="precio" value="<?php echo $precio ?>">
             <input type="hidden" name="id_pasajero" value="<?php echo $id_pasajero ?>">
             <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Confirmar pago</button> </div>     
         </form>
