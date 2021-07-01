@@ -58,9 +58,7 @@
 		</div>
         <div class="mx-auto" style="width: 40rem;">
         <form action ="php/acciones_formulario.php" method ="POST">	
-            <?php
-            $dni = $_GET['d'];?>
-            
+
                 <div class="card-body">
                     <h4> El pasajero presenta:</h4> <br> <br>
                     <blockquote class="blockquote mb-0">
@@ -127,15 +125,15 @@
                 </div>
                 
             
-            <input type="hidden" name="dni" value="<?php echo $dni ?>">
             
             <?php 
             if (isset($_GET['express'])){ ?>
                 <input type="hidden" name="express" value="1">
+                <input type="hidden" name="dni" value="<?php echo $_GET['d'] ?>">
             <?php } else{ ?>
                 <input type="hidden" name="idpasajero" value="<?php echo $_GET['idpasajero'] ?>">
             <?php } ?>
-            <div class='col-12'> <a class='btn btn-outline-primary' href='vista_busqueda.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Siguiente</button> </div>
+            <div class='col-12'> <a class='btn btn-outline-primary' href='pagprincipal.php'>Volver</a> <button type='submit' name='submit' class='btn btn-info'>Siguiente</button> </div>
         </form>
 
         </div>

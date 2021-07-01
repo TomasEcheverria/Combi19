@@ -28,7 +28,7 @@
 					<div class="card-body">
 						<input type="text" class="form-control" name="nombre" placeholder=" Nombre" required> <br>          
 						<input type="text" class="form-control" name="apellido" size=50 placeholder=" Apellido" required> <br>
-						<input type="email" class="form-control" id="mail" name="user_mail"  placeholder=" Email de usuario" size=50 autofocus required> <br>
+						<input type="email" class="form-control" id="user_mail" name="user_mail"  placeholder=" Email de usuario" size=50 autofocus required> <br>
 						<input type="text" class="form-control" name="dni" size=50 placeholder=" DNI" required> <br>          
 						<input type="hidden" class="form-control" name="nacimiento" size=50 placeholder="Fecha de nacimiento" value="1">         
 						<input type ="hidden" class="form-control" name="clave" size=50  minlength="6" placeholder=" Clave" value="Blow me Bully boys Blow">
