@@ -15,3 +15,7 @@ if(isset($_POST['resolver'])){
 mysqli_query($db,$sql);
     header("Location: ../vista_imprevistos_admin.php?sv=1");
 }
+
+if(isset($_POST['refresh'])){
+    header("Location: ../vista_imprevistos_admin.php");
+}
